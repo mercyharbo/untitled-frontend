@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
   const router = useRouter()
-  //   const { username } = router.query
   const [data, setData] = useState([])
   const [errorMsg, setErrorMsg] = useState(null)
   const [isLoading, setIsloading] = useState(true)
