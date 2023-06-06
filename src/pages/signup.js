@@ -16,20 +16,26 @@ const Signup = () => {
   }
 
   return (
-    <main className='flex lg:gap-8'>
-      <section className='relative lg:w-[50%] h-screen '>
+    <main className='flex gap-5'>
+      <section className='relative lg:w-[50%] lg:h-screen '>
         <Image
-          src={'/img1.jpg'}
+          src={'/home.jpg'}
           alt='Login aside'
           width={500}
           height={500}
           className='h-full w-full object-cover'
         />
-        <div className='absolute top-0 left-0 h-screen w-full bg-[#00000060] flex flex-col justify-center items-start gap-5 m-auto 2xl:pl-24 lg:pl-20'>
-          <h1 className='capitalize font-bold text-white 2xl:text-7xl 2xl:w-[60%] lg:text-5xl lg:w-[60%]  '>
+        <div
+          className='absolute top-0 left-0  w-full bg-[#00000060] gap-5 m-auto flex flex-col xl:justify-center xl:items-start lg:h-screen  2xl:pl-24 lg:pl-20 
+        md:items-center md:justify-center md:h-full sm:h-full sm:justify-center sm:items-center'
+        >
+          <h1 className='capitalize font-bold text-white 2xl:text-7xl 2xl:w-[60%] lg:text-5xl lg:w-[60%] md:text-4xl sm:text-3xl  '>
             Welcome to Untitled
           </h1>
-          <p className='text-white font-medium 2xl:w-[80%] lg:w-[80%] '>
+          <p
+            className='text-white font-medium 2xl:w-[80%] lg:w-[80%] lg:text-xl lg:text-left md:w-[80%] md:text-center md:text-xl sm:w-[90%] sm:text-center 
+          sm:text-base '
+          >
             We understand that buying or selling a home is a big decision, and
             we are here to make the process as smooth and stress-free as
             possible. We will work with you every step of the way to ensure that

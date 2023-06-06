@@ -45,7 +45,7 @@ const Login = () => {
         // Store the token in localStorage
         localStorage.setItem('token', data.token)
 
-        router.push('/profile')
+        router.push('/dashboard')
       } else {
         setIsloading(false)
         setErrorMsg(data.error)
@@ -58,7 +58,7 @@ const Login = () => {
   }
 
   return (
-    <main className='grid xl:grid-cols-2 lg:grid-cols-2 lg:gap-8 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-5'>
+    <main className='grid xl:grid-cols-2 lg:grid-cols-2 lg:gap-8 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-3'>
       <section className='relative '>
         <Image
           src={'/home.jpg'}
@@ -71,7 +71,7 @@ const Login = () => {
           <h1 className='capitalize font-bold text-white 2xl:text-7xl 2xl:w-[60%] xl:text-5xl lg:text-5xl md:text-5xl sm:text-4xl  '>
             Welcome back!
           </h1>
-          <p className='text-white font-medium 2xl:w-[80%] xl:w-[70%] md:w-[70%] md:text-lg sm:text-base sm:w-full '>
+          <p className='text-white font-medium 2xl:w-[80%] xl:w-full md:w-[70%] md:text-lg sm:text-base sm:w-full '>
             We understand that buying or selling a home is a big decision, and
             we are here to make the process as smooth and stress-free as
             possible. We will work with you every step of the way to ensure that
@@ -80,7 +80,7 @@ const Login = () => {
         </div>
       </section>
 
-      <section className='flex flex-col justify-between items-start gap-5 my-auto 2xl:h-[50%] 2xl:w-[80%] xl:w-[80%] xl:h-[60%] md:px-10 md:py-14 sm:px-5 sm:py-10 '>
+      <section className='flex flex-col justify-between items-start gap-5 2xl:mt-[5rem] 2xl:h-[50%] 2xl:w-[80%] xl:w-[90%] xl:h-[60%] xl:mt-[4rem] md:px-10 md:py-14 sm:px-5 sm:py-10 '>
         <header className='flex flex-col gap-4'>
           <h1 className='2xl:text-5xl lg:text-4xl md:text-4xl sm:text-2xl font-bold'>
             Login
@@ -131,7 +131,7 @@ const Login = () => {
                 <button
                   type='button'
                   onClick={() => setShowPassword(!showPassword)}
-                  className='absolute right-3 xl:top-[11px] md:top-[14px] sm:top-12 '
+                  className='absolute right-3 xl:top-[11px] md:top-[14px] sm:top-3 '
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
@@ -147,22 +147,19 @@ const Login = () => {
               <li className='text-red-500 font-medium'>{errorMsg}</li>
             )}
 
-            <div className='flex lg:flex-row lg:justify-between lg:items-center md:flex-row md:justify-between md:items-center sm:flex-col sm:justify-start sm:items-center  '>
+            <div className='flex flex-row justify-between items-center  '>
               <div className=''>
                 <Field type='checkbox' name='rememberMe' id='rememberMe' />{' '}
                 Remember me
               </div>
-              <Link
-                href={'/forgetpassword'}
-                className='border-0 font-medium text-red-600'
-              >
+              <Link href={'/forgetpassword'} className='border-0 font-medium '>
                 Forget your password
               </Link>
             </div>
 
             <button
               type='submit'
-              className='h-[45px] w-full rounded-lg bg-red-500 text-white font-medium hover:bg-black hover:text-white'
+              className='h-[45px] w-full rounded-lg bg-[#ffb703] font-semibold hover:bg-black hover:text-white'
             >
               Login
             </button>
@@ -171,8 +168,11 @@ const Login = () => {
 
         <div className='flex justify-center items-center gap-1 '>
           <span className='font-medium'>Don&#39;t have an account?</span>
-          <Link href={'/signup'} className='text-red-500 font-medium underline'>
-            Signup
+          <Link
+            href={'/signup'}
+            className='text-[#023047] font-medium underline'
+          >
+            Register
           </Link>
         </div>
       </section>
