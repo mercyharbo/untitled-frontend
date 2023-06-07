@@ -51,16 +51,17 @@ const NavHeader = () => {
         <div className='xl:flex xl:flex-row xl:justify-start md:flex md:flex-row md:justify-between sm:flex sm:justify-between items-center gap-10 w-full'>
           <Link
             href={'/'}
-            className='logo font-extrabold xl:text-2xl lg:2xl md:text-xl sm:text'
+            className='logo font-bold xl:text-2xl lg:2xl md:text-xl sm:text'
           >
             Untitlted
           </Link>
 
-          <div className='xl:flex md:flex sm:hidden flex-row gap-5 font-medium'>
+          <div className='xl:flex md:flex sm:hidden flex-row gap-5 '>
             <Link href={'/rent'}>Rent</Link>
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
             <Link href={'/trending'}>Trending</Link>
+            {token && <Link href={'/dashboard'}>Dashboard</Link>}
           </div>
 
           <button
@@ -72,17 +73,17 @@ const NavHeader = () => {
           </button>
         </div>
 
-        <div className='2xl:gap-10 xl:gap-5 xl:flex lg:gap-5 md:hidden sm:hidden items-center '>
+        <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:w-[30%] md:hidden sm:hidden  '>
           {token && (
             <button type='button' className='relative'>
-              <FontAwesomeIcon icon={faMessage} className='text-[25px] ' />
-              <span className='absolute bg-[#ffb703] top-0 -right-1 p-[5px] rounded-full'></span>
+              <FontAwesomeIcon icon={faMessage} className='text-[30px] ' />
+              <span className='absolute bg-[#ef476f] top-0 -right-1 p-[5px] rounded-full'></span>
             </button>
           )}
           {token && (
             <button type='button' className='relative'>
-              <FontAwesomeIcon icon={faBell} className='text-[25px] ' />
-              <span className='absolute bg-[#ffb703] top-0 right-0 p-[6px] rounded-full'></span>
+              <FontAwesomeIcon icon={faBell} className='text-[30px] ' />
+              <span className='absolute bg-[#ef476f] top-0 right-0 p-[6px] rounded-full'></span>
             </button>
           )}
           <Link href={'/profile'}>
@@ -92,7 +93,7 @@ const NavHeader = () => {
                 alt='Profile Picture'
                 width={100}
                 height={100}
-                className='rounded-full 2xl:h-[40px] 2xl:w-[60px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
+                className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
               />
             ) : (
               <FontAwesomeIcon icon={faUser} className='text-[25px]' />
@@ -101,7 +102,7 @@ const NavHeader = () => {
           {token && (
             <button
               type='button'
-              className='bg-[#ffb703] h-[45px] w-[170px] xl:px-5 md:px-2 rounded-lg shadow-2xl font-semibold text-black '
+              className='bg-[#ef476f] text-white h-[45px] 2xl:px-5 xl:px-5 md:px-2 rounded-lg shadow-2xl font-medium '
             >
               Add Listing
             </button>
@@ -111,7 +112,7 @@ const NavHeader = () => {
             <button
               type='button'
               onClick={handleLogout}
-              className='bg-[#8ecae6] text-black font-medium h-[45px] px-4 rounded-lg '
+              className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg '
             >
               Logout
             </button>
@@ -121,14 +122,14 @@ const NavHeader = () => {
             <div className='xl:flex md:flex sm:hidden flex-row gap-5 '>
               <Link
                 href={'/login'}
-                className='bg-[#8ecae6] text-black font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
               >
                 Login
               </Link>
 
               <Link
                 href={'/signup'}
-                className='bg-[#8ecae6] text-black font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
               >
                 Register
               </Link>
@@ -157,6 +158,7 @@ const NavHeader = () => {
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
             <Link href={'/trending'}>Trending</Link>
+            {token && <Link href={'/dashboard'}>Dashboard</Link>}
             {token && (
               <Link
                 href={'/messages'}
@@ -200,7 +202,7 @@ const NavHeader = () => {
               <button
                 type='button'
                 onClick={handleLogout}
-                className='bg-[#8ecae6] text-black font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
+                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               >
                 Logout
               </button>
@@ -211,7 +213,7 @@ const NavHeader = () => {
                 <Link
                   href={'/login'}
                   onClick={handleLogout}
-                  className='bg-[#8ecae6] text-black h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
+                  className='bg-[#ef476f] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
                 >
                   Login
                 </Link>
@@ -219,7 +221,7 @@ const NavHeader = () => {
                 <Link
                   href={'/signup'}
                   onClick={handleLogout}
-                  className='bg-[#8ecae6] text-black h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
+                  className='bg-[#ef476f] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
                 >
                   Register
                 </Link>

@@ -19,8 +19,8 @@ const SignupStep2 = () => {
     password: Yup.string().required('Password is required'),
     first_name: Yup.string().required('Firstname is required'),
     last_name: Yup.string().required('Lastname is required'),
-    state: Yup.string().required('State is required'),
-    city: Yup.string().required('City is required'),
+    // state: Yup.string().required('State is required'),
+    // city: Yup.string().required('City is required'),
     address: Yup.string().required('Address is required'),
   })
 
