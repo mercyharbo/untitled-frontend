@@ -60,7 +60,7 @@ const SignupStep2 = () => {
   }
 
   return (
-    <main className='flex flex-col justify-between items-start gap-5 2xl:m-auto 2xl:h-[50%] 2xl:w-[80%] xl:px-10 xl:h-full xl:w-full xl:justify-center lg:ml-auto'>
+    <main className='flex flex-col justify-between items-start gap-5 2xl:m-auto 2xl:h-[50%] 2xl:w-[80%] xl:px-10 xl:h-full xl:w-full xl:justify-center lg:ml-auto md:px-5 sm:px-5'>
       <header className='flex flex-col gap-4'>
         <p className='text-base lg:w-[80%] '>
           Fill out the following details to complete your registration.

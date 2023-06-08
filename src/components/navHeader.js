@@ -73,7 +73,7 @@ const NavHeader = () => {
           </button>
         </div>
 
-        <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:w-[30%] xl:w-[45%] xl:justify-between lg:w-[45%] lg:justify-between md:hidden sm:hidden  '>
+        <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:w-[40%] xl:w-[50%] xl:justify-between lg:w-[50%] lg:justify-between md:hidden sm:hidden  '>
           {token && (
             <button type='button' className='relative'>
               <FontAwesomeIcon icon={faMessage} className='text-[30px] ' />

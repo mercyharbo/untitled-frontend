@@ -55,7 +55,7 @@ const Signup = () => {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex gap-5'>
+      <main className='flex lg:flex-row md:flex-col sm:flex-col gap-5'>
         <section className='relative lg:w-[50%] lg:h-screen '>
           <Image
             src={'/home.jpg'}
