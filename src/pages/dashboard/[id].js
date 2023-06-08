@@ -170,22 +170,23 @@ const ListingDetail = () => {
             </div>
           </header>
           <p className='leading-[30px] text-base'>
-            I'm Ridwan Damilare, a real estate agent in San Diego. I've been
-            helping people buy and sell homes in the area for over 10 years, and
-            I'm passionate about helping people find the perfect home for their
-            needs. I know that buying or selling a home is a big decision, and
-            I'm committed to providing my clients with the best possible
-            service. I'll work with you every step of the way, from finding the
-            right home to closing the deal. I'll also make sure you understand
-            all of your options and that you're getting the best possible price
-            for your home. I'm a member of the National Association of Realtors,
-            and I'm committed to upholding the highest ethical standards in the
-            real estate industry. I'm also a certified buyer's agent and a
-            certified seller's agent, which means that I have the training and
-            experience to help you with your real estate needs. If you're
-            looking for a real estate agent who will work hard to get you the
-            best possible outcome, I'm the agent for you. Contact me today to
-            schedule a consultation.
+            I&rsquo;m Ridwan Damilare, a real estate agent in San Diego.
+            I&rsquo;ve been helping people buy and sell homes in the area for
+            over 10 years, and I&rsquo;m passionate about helping people find
+            the perfect home for their needs. I know that buying or selling a
+            home is a big decision, and I&rsquo;m committed to providing my
+            clients with the best possible service. I&rsquo;ll work with you
+            every step of the way, from finding the right home to closing the
+            deal. I&rsquo;ll also make sure you understand all of your options
+            and that you&rsquo;re getting the best possible price for your home.
+            I&rsquo;m a member of the National Association of Realtors, and
+            I&rsquo;m committed to upholding the highest ethical standards in
+            the real estate industry. I&rsquo;m also a certified buyer&rsquo;s
+            agent and a certified seller&rsquo;s agent, which means that I have
+            the training and experience to help you with your real estate needs.
+            If you&rsquo;re looking for a real estate agent who will work hard
+            to get you the best possible outcome, I&rsquo;m the agent for you.
+            Contact me today to schedule a consultation.
           </p>
           <div className='flex flex-col gap-3'>
             <p className='flex items-center gap-2 font-medium'>
