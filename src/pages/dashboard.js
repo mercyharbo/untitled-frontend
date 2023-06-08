@@ -10,6 +10,8 @@ import {
   faBed,
   faBuilding,
   faList,
+  faLocationArrow,
+  faLocationDot,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -102,8 +104,8 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex  2xl:px-14 xl:px-10 lg:px-10 lg:py-10 lg:gap-5 md:px-5 sm:px-5 sm:py-5 '>
-        <section className='flex lg:flex-col lg:gap-5 lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
+      <main className='flex  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 md:px-5 sm:px-5 sm:py-5 '>
+        <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
           <article className='tabs flex lg:flex-row lg:justify-between lg:items-center sm:flex-col sm:gap-5 '>
             <div className='flex lg:flex-row lg:justify-start lg:items-center md:justify-start md:items-center md:gap-8 sm:flex-row sm:justify-between sm:gap-5'>
               <button
@@ -203,7 +205,13 @@ export default function Home() {
                         height={500}
                         className='rounded-lg object-cover md:h-[150px] md:w-[200px] sm:w-[100%] sm:h-[180px]  '
                       />
-                      <div className='flex flex-col gap-5 w-full 2xl:gap-2 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-3 '>
+                      <div className='flex flex-col gap-5 w-full 2xl:gap-2 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-2 '>
+                        <div className='flex items-center gap-2 text-gray-500 sm:text-sm '>
+                          Posted
+                          <p className='lowercase'>
+                            {homes.user || 'by Code With Mercy'}
+                          </p>
+                        </div>
                         <div className='flex md:justify-between md:items-start sm:justify-between sm:items-start'>
                           <h1 className='lg:text-2xl md:text-3xl md:w-[70%] sm:w-[80%] font-extrabold '>
                             {homes.title}
@@ -216,26 +224,26 @@ export default function Home() {
                           </button>
                         </div>
 
-                        <div className='flex items-center gap-2 text-[#ef476f] sm:text-sm '>
-                          Apartment
-                          <p className=''>
-                            {homes.user || 'by Code With Mercy'}
-                          </p>
-                        </div>
+                        <span className='flex justify-start items-center gap-2'>
+                          <FontAwesomeIcon icon={faLocationDot} className='' />
+                          <span className='text-sm font-medium'>
+                            {homes.location}
+                          </span>
+                        </span>
 
                         <div className='flex lg:justify-between lg:items-center md:flex-row md:justify-between sm:flex-col sm:gap-4'>
                           <div className='flex justify-between items-center gap-5'>
-                            <span className='flex items-center gap-1 font-medium'>
+                            <span className='flex items-center gap-1 font-medium lg:text-base md:text-base sm:text-sm'>
                               <FontAwesomeIcon icon={faBuilding} color='grey' />
                               {homes.isNewProperty === true
                                 ? 'Newly Built'
                                 : 'Used Property'}
                             </span>
-                            <p className='font-medium flex items-center gap-2'>
+                            <p className='font-medium flex items-center gap-2 lg:text-base md:text-base sm:text-sm'>
                               <FontAwesomeIcon icon={faBed} color='grey' />
                               {homes.bedrooms}
                             </p>
-                            <p className='font-medium flex items-center gap-2'>
+                            <p className='font-medium flex items-center gap-2 lg:text-base md:text-base sm:text-sm'>
                               <FontAwesomeIcon
                                 icon={faVectorSquare}
                                 color='grey'
@@ -253,7 +261,77 @@ export default function Home() {
                 })}
             </article>
           ) : (
-            <main className=''>Grid view</main>
+            <article className='bg-white shadow-2xl rounded-2xl grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
+              {listings
+                .filter((homes) =>
+                  homes.title.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .map((homes) => {
+                  return (
+                    <Link
+                      key={homes.id}
+                      href={`/dashboard/${homes.id}`}
+                      className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
+                    >
+                      <Image
+                        src={homes?.images?.[0]}
+                        alt='homes'
+                        width={500}
+                        height={500}
+                        className='rounded-lg object-cover w-full lg:h-[250px]  '
+                      />
+                      <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
+                        <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>
+                          Posted
+                          <p className='lowercase'>
+                            {homes.user || 'by Code With Mercy'}
+                          </p>
+                        </span>
+                        <h1 className='w-full'>{homes.title}</h1>
+
+                        <div className='flex lg:flex-col sm:flex-col gap-5'>
+                          <span className='flex justify-start items-start gap-2'>
+                            <FontAwesomeIcon
+                              icon={faLocationDot}
+                              className='pt-1'
+                            />
+                            <span className='text-sm text-gray-500'>
+                              {homes.location}
+                            </span>
+                          </span>
+
+                          <div className='flex justify-between items-center'>
+                            <span className='flex items-center gap-1 font-medium text-sm'>
+                              <FontAwesomeIcon icon={faBuilding} color='grey' />
+                              {homes.isNewProperty === true
+                                ? 'Newly Built'
+                                : 'Used Property'}
+                            </span>
+                            <p className='font-medium flex items-center gap-2 text-sm'>
+                              <FontAwesomeIcon icon={faBed} color='grey' />
+                              {homes.bedrooms}
+                            </p>
+                            <p className='font-medium flex items-center gap-2 text-sm'>
+                              <FontAwesomeIcon
+                                icon={faVectorSquare}
+                                color='grey'
+                              />
+                              {homes.areaSpace}
+                            </p>
+                          </div>
+
+                          <h1 className='sm:ml-auto text-[#ef476f]'>
+                            {homes.price.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                          </h1>
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                })}
+            </article>
           )}
 
           {activeTab === 'Recently Added' && (
@@ -269,7 +347,7 @@ export default function Home() {
           )}
         </section>
 
-        <section className='flex bg-white shadow-2xl rounded-xl lg:w-[30%] lg:flex-col lg:justify-start lg:items-start lg:gap-4'>
+        <section className='flex bg-white shadow-2xl rounded-xl xl:w-[20%] lg:w-[30%] lg:flex-col lg:justify-start lg:items-start lg:gap-4'>
           <span className=''></span>
           <span className=''></span>
           <span className=''></span>
