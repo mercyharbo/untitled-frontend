@@ -1,35 +1,51 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-regular-svg-icons'
-import {
-  faBed,
-  faBuilding,
-  faList,
-  faLocationArrow,
-  faLocationDot,
-  faVectorSquare,
-} from '@fortawesome/free-solid-svg-icons'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 
 import { setListings, setLoading } from '@/slice/listingSlice'
-import Head from 'next/head'
+
+import FilterListings from '@/components/filter'
+import ListView from '@/components/ListView'
+import GridView from '@/components/GridView'
+import HeaderFilter from '@/components/topHeader'
+import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
 
 export default function Home() {
   const router = useRouter()
   const dispatch = useDispatch()
 
+  const numbers = [1, 2, 3, 4, 5]
+
+  const amenities = [
+    'Swimming pool',
+    'Garden',
+    'Garage',
+    'Fireplace',
+    'Balcony',
+    'Fitness center',
+    'Home theater',
+    'Study room',
+    'Laundry room',
+    'Walk-in closet',
+    'Smart home technology',
+    'Security system',
+    'Outdoor BBQ area',
+    'Spa or hot tub',
+    'Game room',
+  ]
+
   const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('All Listings')
-
   const [viewMode, setViewMode] = useState('list')
-  console.log(viewMode, 'as view mode')
+  const [mobileFilter, setMobileFilter] = useState(false)
+
+  const [selectedAmenities, setSelectedAmenities] = useState([])
 
   const loading = useSelector((state) => state.listings.loading)
-  const listings = useSelector((state) => state.listings.listings)
   // const token = useSelector((state) => state.user.token)
 
   const getListings = async () => {
@@ -86,6 +102,14 @@ export default function Home() {
     setViewMode('grid')
   }
 
+  const handleAmenityChange = (amenity) => {
+    if (selectedAmenities.includes(amenity)) {
+      setSelectedAmenities(selectedAmenities.filter((item) => item !== amenity))
+    } else {
+      setSelectedAmenities([...selectedAmenities, amenity])
+    }
+  }
+
   if (loading) {
     return <p className='text.3xl font-bold'>Loading...</p>
   }
@@ -94,7 +118,6 @@ export default function Home() {
     <>
       <Head>
         <title>
-          {' '}
           Discover Your Dream Home: Untitlted Realty - Your Key to Extraordinary
           Properties
         </title>
@@ -104,254 +127,168 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 md:px-5 sm:px-5 sm:py-5 '>
-        <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
-          <article className='tabs flex lg:flex-row lg:justify-between lg:items-center sm:flex-col sm:gap-5 '>
-            <div className='flex lg:flex-row lg:justify-start lg:items-center md:justify-start md:items-center md:gap-8 sm:flex-row sm:justify-between sm:gap-5'>
-              <button
-                onClick={() => setActiveTab('All Listings')}
-                className={`lg:text-lg font-semibold relative ${
-                  activeTab === 'All Listings'
-                    ? 'text-[#023047] absolute lg:after:w-1/2 lg:after:h-[10px] md:after:top-10 sm:after:top-7 border-b-4 border-[#023047] lg:after:top-4 left-0 '
-                    : ''
-                }`}
-              >
-                All Listings
+      <main className='flex  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 lg:flex-row md:flex-col-reverse md:px-5 sm:px-5 sm:py-5 '>
+        {mobileFilter && (
+          <article className='bg-white p-5 absolute top-0 left-0 w-full h-auto z-10 '>
+            <header className='flex justify-between items-center'>
+              <p className='text-2xl font-semibold'>Filter</p>
+              <button type='button' onClick={() => setMobileFilter(false)}>
+                <FontAwesomeIcon icon={faClose} className='text-[30px]' />
               </button>
-              <button
-                onClick={() => setActiveTab('Recently Added')}
-                className={`lg:text-lg font-semibold ${
-                  activeTab === 'Recently Added'
-                    ? 'text-[#023047] relative after:absolute after:w-1/2 after:h-[10px] border-b-4 border-[#023047] after:top-4 left-0 '
-                    : ''
-                }`}
-              >
-                Recently Added
-              </button>
-              <button
-                onClick={() => setActiveTab('Featured')}
-                className={`lg:text-lg font-semibold ${
-                  activeTab === 'Featured'
-                    ? 'text-[#023047] relative after:absolute after:w-1/2 after:h-[10px] border-b-4 border-[#023047] after:top-4 left-0 '
-                    : ''
-                }`}
-              >
-                Featured
-              </button>
-            </div>
+            </header>
 
-            <div className='relative'>
-              <input
-                type='text'
-                name='search'
-                placeholder='Search property'
-                className='lg:h-[45px] lg:w-[350px] sm:w-full sm:h-[50px] border rounded-full indent-3 '
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
+            <article className='flex flex-col justify-start items-start gap-8 pt-8'>
+              {/* <h1 className=''>Property Type</h1> */}
+              <div className='flex gap-4'>
+                <button
+                  type='button'
+                  className='bg-transparent border py-2 px-4 rounded-md'
+                >
+                  Housing
+                </button>
+                <button
+                  type='button'
+                  className='bg-transparent border py-2 px-4 rounded-md'
+                >
+                  Commercials
+                </button>
+                <button
+                  type='button'
+                  className='bg-transparent border py-2 px-4 rounded-md'
+                >
+                  Lands
+                </button>
+                <button
+                  type='button'
+                  className='bg-transparent border py-2 px-4 rounded-md'
+                >
+                  Apartment
+                </button>
+                <button
+                  type='button'
+                  className='bg-transparent border py-2 px-4 rounded-md'
+                >
+                  Select All
+                </button>
+              </div>
+
+              <div className='flex flex-col gap-5'>
+                <h1>Property Type</h1>
+                <div className='flex gap-4'>
+                  <button className='bg-transparent border py-2 px-4 rounded-md'>
+                    Newly Built
+                  </button>
+                  <button className='bg-transparent border py-2 px-4 rounded-md'>
+                    Used Property
+                  </button>
+                </div>
+              </div>
+
+              <div className='md:w-[50%] '>
+                <h1 className=''> Budget </h1>
+                <PriceRangeFilter />
+              </div>
+
+              <div className='flex flex-col gap-2'>
+                <h1 className=''>Bedrooms</h1>
+                <div className='flex gap-5'>
+                  {numbers.map((num) => {
+                    return (
+                      <button
+                        type='button'
+                        className='bg-tranparent border p-1 px-3 rounded-md'
+                      >
+                        {num}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className='flex flex-col gap-2'>
+                <h1 className=''>Bathrooms</h1>
+                <div className='flex gap-5'>
+                  {numbers.map((num) => {
+                    return (
+                      <button
+                        type='button'
+                        className='bg-tranparent border p-1 px-3 rounded-md'
+                      >
+                        {num}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className='flex flex-col justify-start items-start gap-2'>
+                <h1 className=''>Amenities</h1>
+                <div className='flex flex-col gap-3'>
+                  {amenities.map((amenity) => (
+                    <label key={amenity} className='grid grid-cols-2'>
+                      {amenity}
+                      <input
+                        type='checkbox'
+                        checked={selectedAmenities.includes(amenity)}
+                        onChange={() => handleAmenityChange(amenity)}
+                      />
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className='flex justify-end items-end gap-4 w-full'>
+                <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+                  Reset
+                </button>
+                <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+                  Save
+                </button>
+              </div>
+            </article>
           </article>
+        )}
 
-          <div className='flex justify-end items-center gap-4'>
-            <button type='button' onClick={handleListViewClick}>
-              {' '}
-              <FontAwesomeIcon icon={faList} className='text-[25px]' />
-            </button>
-            <button type='button' onClick={handleGridViewClick}>
-              <svg
-                id='Capa_1'
-                x='0px'
-                y='0px'
-                viewBox='0 0 512 512'
-                width='25'
-                height='25'
-              >
-                <g>
-                  <path d='M85.333,0h64c47.128,0,85.333,38.205,85.333,85.333v64c0,47.128-38.205,85.333-85.333,85.333h-64   C38.205,234.667,0,196.462,0,149.333v-64C0,38.205,38.205,0,85.333,0z' />
-                  <path d='M362.667,0h64C473.795,0,512,38.205,512,85.333v64c0,47.128-38.205,85.333-85.333,85.333h-64   c-47.128,0-85.333-38.205-85.333-85.333v-64C277.333,38.205,315.538,0,362.667,0z' />
-                  <path d='M85.333,277.333h64c47.128,0,85.333,38.205,85.333,85.333v64c0,47.128-38.205,85.333-85.333,85.333h-64   C38.205,512,0,473.795,0,426.667v-64C0,315.538,38.205,277.333,85.333,277.333z' />
-                  <path d='M362.667,277.333h64c47.128,0,85.333,38.205,85.333,85.333v64C512,473.795,473.795,512,426.667,512h-64   c-47.128,0-85.333-38.205-85.333-85.333v-64C277.333,315.538,315.538,277.333,362.667,277.333z' />
-                </g>
-              </svg>
-            </button>
-          </div>
+        <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
+          <HeaderFilter
+            setActiveTab={setActiveTab}
+            setMobileFilter={setMobileFilter}
+            activeTab={activeTab}
+            searchQuery={searchQuery}
+            handleGridViewClick={handleGridViewClick}
+            handleListViewClick={handleListViewClick}
+            setSearchQuery={setSearchQuery}
+          />
 
-          {viewMode === 'list' && activeTab === 'All Listings' ? (
-            <article
-              className='bg-white shadow-2xl rounded-2xl flex w-full lg:flex-col lg:gap-5 lg:h-full lg:px-5 md:flex-col md:justify-center md:items-center 
-              md:gap-8 md:p-5 sm:flex-col sm:gap-7 sm:px-5 '
-            >
-              {listings
-                .filter((homes) =>
-                  homes.title.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-                .map((homes) => {
-                  const formattedPrice = homes.price.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'NGN',
-                  })
-
-                  return (
-                    <Link
-                      key={homes.id}
-                      href={`/dashboard/${homes.id}`}
-                      className='flex bg-white shadow-2xl rounded-xl lg:w-full md:flex-row md:justify-start md:items-center md:gap-5 md:p-5 sm:p-5 sm:flex-col 
-                      sm:gap-3'
-                    >
-                      <Image
-                        src={homes?.images?.[0]}
-                        alt='homes'
-                        width={500}
-                        height={500}
-                        className='rounded-lg object-cover md:h-[150px] md:w-[200px] sm:w-[100%] sm:h-[180px]  '
-                      />
-                      <div className='flex flex-col gap-5 w-full 2xl:gap-2 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-2 '>
-                        <div className='flex items-center gap-2 text-gray-500 sm:text-sm '>
-                          Posted
-                          <p className='lowercase'>
-                            {homes.user || 'by Code With Mercy'}
-                          </p>
-                        </div>
-                        <div className='flex md:justify-between md:items-start sm:justify-between sm:items-start'>
-                          <h1 className='lg:text-2xl md:text-3xl md:w-[70%] sm:w-[80%] font-extrabold '>
-                            {homes.title}
-                          </h1>
-                          <button className='likebtn'>
-                            <FontAwesomeIcon
-                              icon={faHeart}
-                              className='md:text-[25px] '
-                            />
-                          </button>
-                        </div>
-
-                        <span className='flex justify-start items-center gap-2'>
-                          <FontAwesomeIcon icon={faLocationDot} className='' />
-                          <span className='text-sm font-medium'>
-                            {homes.location}
-                          </span>
-                        </span>
-
-                        <div className='flex lg:justify-between lg:items-center md:flex-row md:justify-between sm:flex-col sm:gap-4'>
-                          <div className='flex justify-between items-center gap-5'>
-                            <span className='flex items-center gap-1 font-medium lg:text-base md:text-base sm:text-sm'>
-                              <FontAwesomeIcon icon={faBuilding} color='grey' />
-                              {homes.isNewProperty === true
-                                ? 'Newly Built'
-                                : 'Used Property'}
-                            </span>
-                            <p className='font-medium flex items-center gap-2 lg:text-base md:text-base sm:text-sm'>
-                              <FontAwesomeIcon icon={faBed} color='grey' />
-                              {homes.bedrooms}
-                            </p>
-                            <p className='font-medium flex items-center gap-2 lg:text-base md:text-base sm:text-sm'>
-                              <FontAwesomeIcon
-                                icon={faVectorSquare}
-                                color='grey'
-                              />
-                              {homes.areaSpace}
-                            </p>
-                          </div>
-                          <h1 className='lg:text-2xl md:text-xl sm:text-lg sm:ml-auto font-bold text-[#ef476f] '>
-                            {formattedPrice}
-                          </h1>
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })}
-            </article>
-          ) : (
-            <article className='bg-white shadow-2xl rounded-2xl grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
-              {listings
-                .filter((homes) =>
-                  homes.title.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-                .map((homes) => {
-                  return (
-                    <Link
-                      key={homes.id}
-                      href={`/dashboard/${homes.id}`}
-                      className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
-                    >
-                      <Image
-                        src={homes?.images?.[0]}
-                        alt='homes'
-                        width={500}
-                        height={500}
-                        className='rounded-lg object-cover w-full lg:h-[250px]  '
-                      />
-                      <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
-                        <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>
-                          Posted
-                          <p className='lowercase'>
-                            {homes.user || 'by Code With Mercy'}
-                          </p>
-                        </span>
-                        <h1 className='w-full'>{homes.title}</h1>
-
-                        <div className='flex lg:flex-col sm:flex-col gap-5'>
-                          <span className='flex justify-start items-start gap-2'>
-                            <FontAwesomeIcon
-                              icon={faLocationDot}
-                              className='pt-1'
-                            />
-                            <span className='text-sm text-gray-500'>
-                              {homes.location}
-                            </span>
-                          </span>
-
-                          <div className='flex justify-between items-center'>
-                            <span className='flex items-center gap-1 font-medium text-sm'>
-                              <FontAwesomeIcon icon={faBuilding} color='grey' />
-                              {homes.isNewProperty === true
-                                ? 'Newly Built'
-                                : 'Used Property'}
-                            </span>
-                            <p className='font-medium flex items-center gap-2 text-sm'>
-                              <FontAwesomeIcon icon={faBed} color='grey' />
-                              {homes.bedrooms}
-                            </p>
-                            <p className='font-medium flex items-center gap-2 text-sm'>
-                              <FontAwesomeIcon
-                                icon={faVectorSquare}
-                                color='grey'
-                              />
-                              {homes.areaSpace}
-                            </p>
-                          </div>
-
-                          <h1 className='sm:ml-auto text-[#ef476f]'>
-                            {homes.price.toLocaleString('en-US', {
-                              style: 'currency',
-                              currency: 'NGN',
-                            })}
-                          </h1>
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })}
-            </article>
-          )}
-
-          {activeTab === 'Recently Added' && (
+          {activeTab === 'All Listings' && viewMode === 'list' ? (
+            <ListView searchQuery={searchQuery} />
+          ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
+            <GridView searchQuery={searchQuery} />
+          ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
             <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
               <h1>Recently added</h1>
             </article>
-          )}
-
-          {activeTab === 'Featured' && (
+          ) : activeTab === 'Recently Added' && viewMode === 'grid' ? (
+            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+              <h1>Recently added grid</h1>
+            </article>
+          ) : activeTab === 'Featured' && viewMode === 'list' ? (
             <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
               <h1>Featured post </h1>
             </article>
-          )}
+          ) : activeTab === 'Featured' && viewMode === 'grid' ? (
+            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+              <h1>Featured post grid </h1>
+            </article>
+          ) : null}
         </section>
 
-        <section className='flex bg-white shadow-2xl rounded-xl xl:w-[20%] lg:w-[30%] lg:flex-col lg:justify-start lg:items-start lg:gap-4'>
-          <span className=''></span>
-          <span className=''></span>
-          <span className=''></span>
-          <span className=''></span>
+        <section
+          className={`flex bg-white shadow-2xl rounded-xl xl:w-[20%] lg:w-[30%] lg:flex lg:flex-col lg:justify-start lg:items-start lg:gap-4 md:hidden sm:hidden ${
+            mobileFilter ? 'mt-72' : ''
+          }`}
+        >
+          <FilterListings />
         </section>
       </main>
     </>
