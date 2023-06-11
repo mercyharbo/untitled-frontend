@@ -192,9 +192,10 @@ export default function Home() {
               <div className='flex flex-col gap-2'>
                 <h1 className=''>Bedrooms</h1>
                 <div className='flex gap-5'>
-                  {numbers.map((num) => {
+                  {numbers.map((num, index) => {
                     return (
                       <button
+                        key={index}
                         type='button'
                         className='bg-tranparent border p-1 px-3 rounded-md'
                       >
@@ -208,9 +209,10 @@ export default function Home() {
               <div className='flex flex-col gap-2'>
                 <h1 className=''>Bathrooms</h1>
                 <div className='flex gap-5'>
-                  {numbers.map((num) => {
+                  {numbers.map((num, index) => {
                     return (
                       <button
+                        key={index}
                         type='button'
                         className='bg-tranparent border p-1 px-3 rounded-md'
                       >
