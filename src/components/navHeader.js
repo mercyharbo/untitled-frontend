@@ -10,8 +10,9 @@ import {
 import { faBell, faMessage } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
-import { setToken } from '@/slice/userSlice'
+import { setToken, setUserProfile } from '@/slice/userSlice'
 import Image from 'next/image'
+import { setAddListingModal, setLoading } from '@/slice/listingSlice'
 
 const NavHeader = () => {
   const router = useRouter()
@@ -20,6 +21,31 @@ const NavHeader = () => {
 
   const token = useSelector((state) => state.user.token)
   const userProfile = useSelector((state) => state.user.userProfile)
+
+  const getUserProfile = async () => {
+    const token = localStorage.getItem('token')
+    try {
+      const response = await fetch(`http://localhost:3000/api/profile`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      const data = await response.json()
+
+      if (data?.status === true) {
+        dispatch(setUserProfile(data.user))
+        dispatch(setLoading(false))
+      } else {
+        dispatch(setLoading(false))
+        // setErrorMsg(data.error)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const handleLogout = async () => {
     try {
@@ -41,14 +67,18 @@ const NavHeader = () => {
   }
 
   useEffect(() => {
+    getUserProfile()
+  }, [])
+
+  useEffect(() => {
     const token = localStorage.getItem('token')
     dispatch(setToken(token || null)) // Set token to null if undefined
   }, [dispatch])
 
   return (
     <main className=''>
-      <nav className='relative w-full bg-[#023047] text-white shadow-xl flex justify-between items-center px-10 h-[80px] md:flex md:px-5 sm:flex sm:px-5 '>
-        <div className='xl:flex xl:flex-row xl:justify-start md:flex md:flex-row md:justify-between sm:flex sm:justify-between items-center gap-10 w-full'>
+      <nav className='relative w-full bg-[#0C3C78] text-white shadow-xl flex justify-between items-center px-10 h-[80px] md:flex md:px-5 sm:flex sm:px-5 '>
+        <div className='xl:flex xl:flex-row xl:justify-start md:flex md:flex-row md:justify-between sm:flex sm:justify-between items-center gap-10 '>
           <Link
             href={'/'}
             className='logo font-bold xl:text-2xl lg:2xl md:text-xl sm:text'
@@ -73,26 +103,30 @@ const NavHeader = () => {
           </button>
         </div>
 
-        <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:w-[30%] xl:w-[30%] xl:justify-between lg:w-[50%] lg:justify-between md:hidden sm:hidden  '>
+        <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:gap-6 xl:justify-between xl:gap-5 lg:gap-5 lg:justify-between md:hidden sm:hidden  '>
           {token && (
             <button type='button' className='relative'>
               <FontAwesomeIcon icon={faMessage} className='text-[30px] ' />
-              <span className='absolute bg-[#ef476f] top-0 -right-1 p-[5px] rounded-full'></span>
+              <span className='absolute bg-[#F30A49] top-0 -right-1 p-[5px] rounded-full'></span>
             </button>
           )}
           {token && (
             <button type='button' className='relative'>
               <FontAwesomeIcon icon={faBell} className='text-[30px] ' />
-              <span className='absolute bg-[#ef476f] top-0 right-0 p-[6px] rounded-full'></span>
+              <span className='absolute bg-[#F30A49] top-0 right-0 p-[6px] rounded-full'></span>
             </button>
           )}
           <Link href={'/profile'}>
             {token ? (
               <Image
-                src='https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                src={
+                  userProfile.avatarUrl
+                    ? userProfile.avatarUrl
+                    : 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                }
                 alt='Profile Picture'
-                width={100}
-                height={100}
+                width={500}
+                height={500}
                 className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
               />
             ) : (
@@ -102,7 +136,8 @@ const NavHeader = () => {
           {token && (
             <button
               type='button'
-              className='bg-[#ef476f] text-white h-[45px] 2xl:px-5 xl:px-5 md:px-2 rounded-lg shadow-2xl font-medium '
+              onClick={() => dispatch(setAddListingModal(true))}
+              className='bg-[#F30A49] text-white h-[45px] 2xl:px-5 xl:px-5 md:px-2 rounded-lg shadow-2xl font-medium '
             >
               Add Listing
             </button>
@@ -112,7 +147,7 @@ const NavHeader = () => {
             <button
               type='button'
               onClick={handleLogout}
-              className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg '
+              className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg '
             >
               Logout
             </button>
@@ -122,14 +157,14 @@ const NavHeader = () => {
             <div className='xl:flex md:flex sm:hidden flex-row gap-5 '>
               <Link
                 href={'/login'}
-                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
               >
                 Login
               </Link>
 
               <Link
                 href={'/signup'}
-                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
               >
                 Register
               </Link>
@@ -202,7 +237,7 @@ const NavHeader = () => {
               <button
                 type='button'
                 onClick={handleLogout}
-                className='bg-[#ef476f] text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
+                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               >
                 Logout
               </button>
@@ -213,7 +248,7 @@ const NavHeader = () => {
                 <Link
                   href={'/login'}
                   onClick={handleLogout}
-                  className='bg-[#ef476f] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
+                  className='bg-[#F30A49] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
                 >
                   Login
                 </Link>
@@ -221,7 +256,7 @@ const NavHeader = () => {
                 <Link
                   href={'/signup'}
                   onClick={handleLogout}
-                  className='bg-[#ef476f] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
+                  className='bg-[#F30A49] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
                 >
                   Register
                 </Link>

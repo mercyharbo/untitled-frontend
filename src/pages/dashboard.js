@@ -6,13 +6,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 
-import { setListings, setLoading } from '@/slice/listingSlice'
+import {
+  setAddListingModal,
+  setListings,
+  setLoading,
+  setTotal,
+} from '@/slice/listingSlice'
 
 import FilterListings from '@/components/filter'
 import ListView from '@/components/ListView'
 import GridView from '@/components/GridView'
 import HeaderFilter from '@/components/topHeader'
 import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
+import AddListingModal from '@/components/addListing'
 
 export default function Home() {
   const router = useRouter()
@@ -46,6 +52,7 @@ export default function Home() {
   const [selectedAmenities, setSelectedAmenities] = useState([])
 
   const loading = useSelector((state) => state.listings.loading)
+  const addListingModal = useSelector((state) => state.listings.addListingModal)
   // const token = useSelector((state) => state.user.token)
 
   const getListings = async () => {
@@ -60,6 +67,7 @@ export default function Home() {
 
       if (data.status === true) {
         dispatch(setListings(data.listings))
+        dispatch(setTotal(data.total))
         dispatch(setLoading(false))
       } else {
         console.log('there is an error')
@@ -127,7 +135,7 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 lg:flex-row md:flex-col-reverse md:px-5 sm:px-5 sm:py-5 '>
+      <main className='flex relative  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 lg:flex-row md:flex-col-reverse md:px-5 sm:px-5 sm:py-5 '>
         {mobileFilter && (
           <article className='bg-white p-5 absolute top-0 left-0 w-full h-auto z-10 '>
             <header className='flex justify-between items-center'>
@@ -240,10 +248,10 @@ export default function Home() {
               </div>
 
               <div className='flex justify-end items-end gap-4 w-full'>
-                <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+                <button className='bg-[#F30A49] font-semibold border py-2 px-4 rounded-md'>
                   Reset
                 </button>
-                <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+                <button className='bg-[#F30A49] font-semibold border py-2 px-4 rounded-md'>
                   Save
                 </button>
               </div>
@@ -251,6 +259,7 @@ export default function Home() {
           </article>
         )}
 
+        {addListingModal && <AddListingModal />}
         <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
           <HeaderFilter
             setActiveTab={setActiveTab}
@@ -267,19 +276,19 @@ export default function Home() {
           ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
             <GridView searchQuery={searchQuery} />
           ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
-            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+            <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Recently added</h1>
             </article>
           ) : activeTab === 'Recently Added' && viewMode === 'grid' ? (
-            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+            <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Recently added grid</h1>
             </article>
           ) : activeTab === 'Featured' && viewMode === 'list' ? (
-            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+            <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Featured post </h1>
             </article>
           ) : activeTab === 'Featured' && viewMode === 'grid' ? (
-            <article className='bg-white shadow-2xl rounded-xl w-full p-10 h-full'>
+            <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Featured post grid </h1>
             </article>
           ) : null}

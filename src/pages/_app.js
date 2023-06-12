@@ -2,6 +2,7 @@ import { Provider } from 'react-redux'
 import Layout from '@/components/Layout'
 import store from '@/slice/store'
 import '@/styles/globals.css'
+import { ToastContainer } from 'react-toastify'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -9,6 +10,7 @@ export default function App({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
+      <ToastContainer />
     </Provider>
   )
 }

@@ -1,5 +1,6 @@
 import { faFilter, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
 const HeaderFilter = ({
   setActiveTab,
@@ -10,6 +11,8 @@ const HeaderFilter = ({
   handleListViewClick,
   activeTab,
 }) => {
+  const total = useSelector((state) => state.listings.total)
+
   return (
     <main className=''>
       <article className='tabs flex lg:flex-row lg:justify-between lg:items-center sm:flex-col sm:gap-5 '>
@@ -61,7 +64,7 @@ const HeaderFilter = ({
         </div>
       </article>
 
-      <article className='flex sm:justify-between sm:items-center md:justify-between md:items-center lg:justify-end lg:items-end relative py-4'>
+      <article className='flex sm:justify-between sm:items-center md:justify-between md:items-center lg:justify-between lg:items-center relative py-4'>
         <button
           type='button'
           onClick={() => setMobileFilter(true)}
@@ -69,6 +72,10 @@ const HeaderFilter = ({
         >
           <FontAwesomeIcon icon={faFilter} className='text-[25px]' />
         </button>
+
+        <h1 className='flex justify-start items-center gap-2 2xl:text-2xl'>
+          Total: {total}
+        </h1>
 
         <div className='flex justify-end items-center gap-4'>
           <button type='button' onClick={handleListViewClick}>

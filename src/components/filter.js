@@ -24,6 +24,7 @@ const FilterListings = () => {
   ]
 
   const [selectedAmenities, setSelectedAmenities] = useState([])
+  const [showAllAmenities, setShowAllAmenities] = useState(false)
 
   const handleAmenityChange = (amenity) => {
     if (selectedAmenities.includes(amenity)) {
@@ -32,6 +33,10 @@ const FilterListings = () => {
       setSelectedAmenities([...selectedAmenities, amenity])
     }
   }
+
+  
+  const visibleAmenities = showAllAmenities ? amenities : amenities.slice(0, 6)
+
 
   return (
     <main className='w-full flex flex-col gap-5 lg:p-5'>
@@ -44,7 +49,7 @@ const FilterListings = () => {
               alt='Homes png'
               width={500}
               height={500}
-              className='lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px] sm:w-[40px] sm:h-[40px] '
+              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
             />
             <span className=''>Housing</span>
           </div>
@@ -54,7 +59,7 @@ const FilterListings = () => {
               alt='Homes png'
               width={500}
               height={500}
-              className='lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px] sm:w-[40px] sm:h-[40px] '
+              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
             />
             <span className=''>Commercial</span>
           </div>
@@ -64,7 +69,7 @@ const FilterListings = () => {
               alt='Homes png'
               width={500}
               height={500}
-              className='lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px] sm:w-[40px] sm:h-[40px] '
+              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
             />
             <span className=''>Lands</span>
           </div>
@@ -74,14 +79,14 @@ const FilterListings = () => {
               alt='Homes png'
               width={500}
               height={500}
-              className='lg:w-[40px] lg:h-[40px] md:w-[40px] md:h-[40px] sm:w-[40px] sm:h-[40px] '
+              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
             />
             <span className=''>Apartment</span>
           </div>
         </header>
 
         <div className='budget'>
-          <h1 className='lg:text-xl'> Budget </h1>
+          <h1 className=''> Budget </h1>
           <PriceRangeFilter />
         </div>
 
@@ -135,7 +140,7 @@ const FilterListings = () => {
       <div className='flex flex-col justify-start items-start gap-2'>
         <h1 className=''>Amenities</h1>
         <div className='flex flex-col gap-3'>
-          {amenities.map((amenity) => (
+          {visibleAmenities.map((amenity) => (
             <label key={amenity} className='grid grid-cols-2 gap-10'>
               {amenity}
               <input
@@ -146,14 +151,22 @@ const FilterListings = () => {
               />
             </label>
           ))}
+          {amenities.length > 6 && (
+            <button
+              className='flex justify-start items-start text-[#F30A49] underline cursor-pointer'
+              onClick={() => setShowAllAmenities(!showAllAmenities)}
+            >
+              {showAllAmenities ? 'See Less' : 'See More'}
+            </button>
+          )}
         </div>
       </div>
 
-      <div className='flex justify-end items-end gap-4 w-full'>
-        <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+      <div className='flex justify-end items-end gap-4 w-full '>
+        <button className='bg-[#F30A49] text-white font-semibold border py-2 px-4 rounded-md'>
           Reset
         </button>
-        <button className='bg-[#ffd166] font-semibold border py-2 px-4 rounded-md'>
+        <button className='bg-[#F30A49] text-white font-semibold border py-2 px-4 rounded-md'>
           Save
         </button>
       </div>

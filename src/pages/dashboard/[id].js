@@ -225,8 +225,8 @@ const ListingDetail = () => {
 
           <div className=''>
             <h3 className='font-semibold text-xl py-2'>Key Features</h3>
-            {listingDetails?.keyFeatures?.map((feat, index) => {
-              return <li key={index}>{feat}</li>
+            {listingDetails?.amenities?.map((amenty, index) => {
+              return <li key={index}>{amenty}</li>
             })}
           </div>
         </section>

@@ -13,11 +13,13 @@ import { useSelector } from 'react-redux'
 const ListView = ({ searchQuery }) => {
   const listings = useSelector((state) => state.listings.listings)
 
+
   return (
     <article
-      className='bg-white shadow-2xl rounded-2xl flex w-full lg:flex-col lg:gap-5 lg:h-full lg:px-5 md:flex-col md:justify-center md:items-center 
-        md:gap-8 md:p-5 sm:flex-col sm:gap-7 sm:px-5 '
+      className='bg-white shadow-2xl rounded-2xl flex w-full lg:flex-col lg:justify-start lg:items-start lg:gap-5 lg:py-5 lg:px-5 md:flex-col 
+      md:justify-center md:items-center md:gap-8 md:px-5 sm:flex-col sm:gap-7 sm:px-5 '
     >
+  
       {listings
         .filter((homes) =>
           homes.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -33,7 +35,7 @@ const ListView = ({ searchQuery }) => {
               key={homes.id}
               href={`/dashboard/${homes.id}`}
               className='flex bg-white shadow-2xl rounded-xl lg:w-full md:flex-row md:justify-start md:items-center md:gap-5 md:p-5 sm:p-5 sm:flex-col 
-                      sm:gap-3'
+                sm:gap-3'
             >
               <Image
                 src={homes?.images?.[0]}
@@ -42,7 +44,7 @@ const ListView = ({ searchQuery }) => {
                 height={500}
                 className='rounded-lg object-cover md:h-[150px] md:w-[200px] sm:w-[100%] sm:h-[180px]  '
               />
-              <div className='flex flex-col gap-5 w-full 2xl:gap-2 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-2 '>
+              <div className='flex flex-col gap-5 w-full 2xl:gap-3 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-2 '>
                 <div className='flex items-center gap-2 text-gray-500 sm:text-sm '>
                   Posted
                   <p className='lowercase'>
@@ -83,7 +85,7 @@ const ListView = ({ searchQuery }) => {
                       {homes.areaSpace}
                     </p>
                   </div>
-                  <h1 className='lg:text-2xl md:text-xl sm:text-lg sm:ml-auto font-bold text-[#ef476f] '>
+                  <h1 className='lg:text-2xl md:text-xl sm:text-lg sm:ml-auto font-bold text-[#F30A49] '>
                     {formattedPrice}
                   </h1>
                 </div>

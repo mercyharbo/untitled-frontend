@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Raleway:wght@500;700;800&family=Roboto+Slab:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800&family=Sacramento&family=Varela+Round&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +9,8 @@ h2,
 h3,
 h4,
 h5 {
- font-family: 'Roboto Slab', serif;
+ font-family: 'Raleway', sans-serif;
+ font-weight: 700;
 }
 
 p,
@@ -18,5 +19,9 @@ input,
 ::placeholder,
 link,
 button {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.logo {
+  font-family: 'Sacramento', cursive;
 }

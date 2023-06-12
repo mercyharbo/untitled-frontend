@@ -1,58 +1,54 @@
-import { setLoading } from '@/slice/listingSlice'
-import { setUserProfile } from '@/slice/userSlice'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
+import { setUserProfile } from '@/slice/userSlice'
+import { useRouter } from 'next/router'
+import { setLoading } from '@/slice/listingSlice'
+
+import 'react-toastify/dist/ReactToastify.css'
 
 const Profile = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
-
-  const [errorMsg, setErrorMsg] = useState(null)
-  const [isLoading, setIsloading] = useState(true)
 
   const [activeTab, setActiveTab] = useState('Profile')
 
   const userProfile = useSelector((state) => state.user.userProfile)
-  // const token = useSelector((state) => state.user.token)
   const loading = useSelector((state) => state.listings.loading)
 
-  /**
-   * This function retrieves a user's profile information from a server using an authentication token.
-   */
-  const getUserProfile = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await fetch(`http://localhost:3000/api/profile`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
+  const [selectedImage, setSelectedImage] = useState(null)
 
-      const data = await response.json()
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    const reader = new FileReader()
 
-      if (data?.status === true) {
-        setIsloading(false)
-        dispatch(setUserProfile(data.user))
-        dispatch(setLoading(false))
-      } else {
-        setIsloading(false)
-        setErrorMsg(data.error)
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        const base64Image = reader.result
+        setSelectedImage(base64Image)
       }
-    } catch (error) {
-      console.error(error)
+    }
+
+    if (file) {
+      reader.readAsDataURL(file)
     }
   }
 
-  const updateUserProfile = async (updatedProfile) => {
+  const handleRemoveImage = () => {
+    setSelectedImage(null)
+  }
+
+  const updateUserProfile = async () => {
     const token = localStorage.getItem('token')
+    const updatedProfile = { ...userProfile, avatarUrl: selectedImage }
     try {
       const response = await fetch(`http://localhost:3000/api/profile`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -63,9 +59,27 @@ const Profile = () => {
       const data = await response.json()
 
       if (data?.status === true) {
-        console.log('Profile updated successfully')
+        dispatch(setLoading(false))
+        toast.success(data.message, {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        })
+        router.reload(window.location.pathname)
       } else {
-        console.error('Failed to update profile:', data.error)
+        toast.failure('Failed to update your profile', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        })
       }
     } catch (error) {
       console.error(error)
@@ -96,7 +110,6 @@ const Profile = () => {
 
   useEffect(() => {
     getProtectedRoute()
-    getUserProfile()
   }, [])
 
   const handleTabClick = (tabName) => {
@@ -124,7 +137,7 @@ const Profile = () => {
         >
           <span
             className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
-              activeTab === 'Profile' ? 'bg-[#ffb703] h-[40px] rounded-md' : ''
+              activeTab === 'Profile' ? 'bg-[#F30A49] h-[40px] rounded-md' : ''
             }`}
             onClick={() => handleTabClick('Profile')}
           >
@@ -133,7 +146,7 @@ const Profile = () => {
           <span
             className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
               activeTab === 'Notification'
-                ? 'bg-[#ffb703] h-[40px] rounded-md'
+                ? 'bg-[#F30A49] h-[40px] rounded-md'
                 : ''
             }`}
             onClick={() => handleTabClick('Notification')}
@@ -143,7 +156,7 @@ const Profile = () => {
           <span
             className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
               activeTab === 'Password'
-                ? 'bg-[#ffb703] h-[40px] rounded-md '
+                ? 'bg-[#F30A49] h-[40px] rounded-md '
                 : ''
             }`}
             onClick={() => handleTabClick('Password')}
@@ -152,7 +165,7 @@ const Profile = () => {
           </span>
           <span
             className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
-              activeTab === 'Privacy' ? 'bg-[#ffb703] h-[40px] rounded-md' : ''
+              activeTab === 'Privacy' ? 'bg-[#F30A49] h-[40px] rounded-md' : ''
             }`}
             onClick={() => handleTabClick('Privacy')}
           >
@@ -173,22 +186,34 @@ const Profile = () => {
             </Link>
             <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
               <Image
-                src='https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                src={
+                  selectedImage ||
+                  userProfile.avatarUrl ||
+                  'https://via.placeholder.com/500'
+                }
                 alt='Profile Picture'
                 width={500}
                 height={500}
-                className='rounded-full 2xl:h-[80px] 2xl:w-[80px] xl:w-[80px] xl:h-[80px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] '
+                className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[80px] 2xl:w-[80px] xl:w-[80px] xl:h-[80px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] '
               />
-
               <div className='flex flex-row justify-start items-start gap-5'>
                 <input
-                  type='button'
-                  value='Upload'
-                  className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer hover:bg-black hover:text-white'
+                  type='file'
+                  accept='image/*'
+                  onChange={handleImageUpload}
+                  className='hidden'
+                  id='upload-input'
                 />
+                <label
+                  htmlFor='upload-input'
+                  className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer flex justify-center items-center hover:bg-[#F30A49] hover:text-white'
+                >
+                  Upload
+                </label>
                 <button
                   type='button'
-                  className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer hover:bg-black hover:text-white'
+                  onClick={handleRemoveImage}
+                  className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer hover:bg-[#F30A49] hover:text-white'
                 >
                   Remove
                 </button>
@@ -333,14 +358,33 @@ const Profile = () => {
                       className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                     />
                   </div>
+                  <div className='flex flex-col gap-3'>
+                    <label htmlFor='dob' className='font-medium'>
+                      Date of birth
+                    </label>
+                    <input
+                      type='date'
+                      id='dob'
+                      name='dob'
+                      value={userProfile.dob}
+                      onChange={(e) => {
+                        const updatedProfile = {
+                          ...userProfile,
+                          dob: e.target.value,
+                        }
+                        dispatch(setUserProfile(updatedProfile))
+                      }}
+                      className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
+                    />
+                  </div>
                 </div>
 
                 <button
                   type='submit'
-                  className='bg-red-500 text-white px-4 py-2 rounded-lg  h-[45px] flex justify-center items-center ml-auto xl:mt-10 lg:mt-5 lg:w-[150px] 
+                  className='bg-[#F30A49] text-white px-4 py-2 rounded-lg  h-[45px] flex justify-center items-center ml-auto xl:mt-10 lg:mt-5 lg:w-[150px] 
               md:w-[150px] sm:w-full '
                 >
-                  Save
+                  {loading ? 'Loading...' : 'Save'}
                 </button>
               </Form>
             </Formik>
