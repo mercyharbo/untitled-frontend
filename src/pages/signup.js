@@ -21,7 +21,7 @@ const Signup = () => {
 
       const data = await response.json()
       if (data.status === true) {
-        router.push('/dashboard')
+        router.push('/listings')
       } else {
         router.push('/login')
       }

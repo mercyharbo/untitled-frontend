@@ -50,7 +50,7 @@ const SignupStep2 = () => {
         setErrorMsg(data.error)
       } else {
         setIsloading(false)
-        router.push('/dashboard')
+        router.push('/listings')
       }
     } catch (error) {
       console.error(error)

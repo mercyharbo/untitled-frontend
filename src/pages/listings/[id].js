@@ -112,38 +112,40 @@ const ListingDetail = () => {
                 )
               })}
             </div>
-            <article className='flex lg:flex-col lg:gap-4 md:flex-col md:gap-5 sm:flex-col sm:gap-5'>
-              <div className='flex lg:justify-between lg:items-start md:justify-between md:flex-row sm:flex-col sm:gap-5'>
-                <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full '>
-                  {listingDetails.title}
-                </h1>
-                <span className='flex text-[#ef476f] font-bold lg:text-xl md:text-lg sm:text-lg '>
-                  Price:{' '}
-                  {listingDetails?.price?.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'NGN',
-                  })}
-                </span>
+            <article className='flex 2xl:gap-8 xl:gap-6 lg:flex-col lg:gap-4 md:flex-col md:gap-5 sm:flex-col sm:gap-5'>
+              <div className='flex flex-col gap-3'>
+                <div className='flex lg:justify-between lg:items-start md:justify-between md:flex-row sm:flex-col sm:gap-5'>
+                  <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full '>
+                    {listingDetails.title}
+                  </h1>
+                  <span className='flex text-[#ef476f] font-bold lg:text-xl md:text-lg sm:text-lg '>
+                    Price:{' '}
+                    {listingDetails?.price?.toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'NGN',
+                    })}
+                  </span>
+                </div>
+                <p className='text-gray-400'>{listingDetails.address}</p>
               </div>
-              <p className='text-gray-400'>{listingDetails.address}</p>
               <div className='flex lg:justify-between lg:items-center 2xl:w-[30%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
                 <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
                   Bathroom
-                  <span className='flex items-center gap-2 font-semibold'>
+                  <span className='flex items-center gap-2 font-normal'>
                     <FontAwesomeIcon icon={faSink} />
                     {listingDetails.bathroom}
                   </span>
                 </span>
                 <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
                   Bedrooms
-                  <span className='flex items-center gap-2 font-semibold'>
+                  <span className='flex items-center gap-2 font-normal'>
                     <FontAwesomeIcon icon={faBed} />
                     {listingDetails.bedrooms}
                   </span>
                 </span>
                 <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
                   Area Space
-                  <div className='span flex items-center gap-2 font-semibold'>
+                  <div className='span flex items-center gap-2 font-normal'>
                     <FontAwesomeIcon icon={faVectorSquare} />
                     {listingDetails.areaSpace}
                   </div>
@@ -156,6 +158,13 @@ const ListingDetail = () => {
                 </h1>
                 <p className=''>{listingDetails.description}</p>
               </article>
+
+              <div className=''>
+                <h3 className='font-semibold text-xl py-2'>Amenities</h3>
+                {listingDetails?.amenities?.map((amenty, index) => {
+                  return <li key={index}>{amenty}</li>
+                })}
+              </div>
             </article>
           </section>
         </section>
@@ -205,26 +214,19 @@ const ListingDetail = () => {
             <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
               <Link
                 href={'mailto:testing123@gmail.com'}
-                className='border-2 border-[#ffb703] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                className='border-2 border-[#ef476f] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faEnvelope} />
                 Email
               </Link>
               <Link
                 href={'tel:090988888888'}
-                className='border-2 border-[#ffb703] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                className='border-2 border-[#ef476f] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faPhone} />
                 Call
               </Link>
             </div>
-          </div>
-
-          <div className=''>
-            <h3 className='font-semibold text-xl py-2'>Key Features</h3>
-            {listingDetails?.amenities?.map((amenty, index) => {
-              return <li key={index}>{amenty}</li>
-            })}
           </div>
         </section>
       </main>

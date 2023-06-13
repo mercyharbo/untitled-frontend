@@ -49,7 +49,7 @@ const Login = () => {
         // Store the token in localStorage
         localStorage.setItem('token', data.token)
         // dispatch(setToken(data.token))
-        router.push('/dashboard')
+        router.push('/listings')
       } else {
         setIsloading(false)
         setErrorMsg(data.error)
@@ -74,7 +74,7 @@ const Login = () => {
 
       const data = await response.json()
       if (data.status === true) {
-        router.push('/dashboard')
+        router.push('/listings')
       } else {
         router.push('/login')
       }
