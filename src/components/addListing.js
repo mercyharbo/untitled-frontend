@@ -1,13 +1,17 @@
+import { setAddListingModal } from '@/slice/listingSlice'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Field, Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 const AddListingModal = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const [step, setStep] = useState(1)
   const [bedrooms, setBedrooms] = useState(null)
   const [bathrooms, setBathrooms] = useState(null)
@@ -16,13 +20,15 @@ const AddListingModal = () => {
   const [selectedAmenities, setSelectedAmenities] = useState([])
   const [selectedPictures, setSelectedPictures] = useState([])
   const [previewPictures, setPreviewPictures] = useState([])
+  const [errorMsg, setErrorMsg] = useState([])
+  console.log(errorMsg, 'as err')
 
   const addListingModal = useSelector((state) => state.listings.addListingModal)
 
   const initialValues = {
     title: '',
     description: '',
-    location: '',
+    address: '',
     price: '',
     areaSpace: '',
   }
@@ -74,7 +80,7 @@ const AddListingModal = () => {
           isNewProperty: isNewProperty,
           isPropertyForSale: isPropertyForSale,
           amenities: selectedAmenities,
-          images: selectedPictures,
+          images: previewPictures,
         }),
       })
 
@@ -84,11 +90,12 @@ const AddListingModal = () => {
         toast.success('You listing as been posted successfully')
         router.reload(window.location.pathname)
       } else {
-        toast.failure(data.error)
+        // toast.failure(data.errors)
+        setErrorMsg(data.errors)
         return
       }
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
   }
 
@@ -121,23 +128,33 @@ const AddListingModal = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex justify-center items-center bg-[#000000dd] bg-opacity-50 ${
+      className={`fixed inset-0 z-50 flex justify-center items-center bg-[#000000dd] overflow-auto bg-opacity-50 ${
         addListingModal ? '' : 'hidden'
       }`}
+    //   onClick={() => dispatch(setAddListingModal(false))}
     >
-      <main className='flex absolute z-20 flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:top=[8rem] 2xl:left-[30rem] 2xl:w-[50%] xl:w-[60%] xl:my-5 xl:p-8'>
+      <main
+        className=' flex flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:relative 2xl:top-[0] 2xl:left-[0] 2xl:w-[60%] 
+      xl:w-[80%] lg:w-[80%] xl:my-5 xl:p-8 lg:relative lg:top-0 lg:p-10 md:relative md:top-0 md:w-full md:mx-10 sm:mx-2 sm:w-full sm:relative sm:top-0'
+      >
+        <button
+          type='button'
+          onClick={() => dispatch(setAddListingModal(false))}
+          className='flex justify-end items-end ml-auto p-2'
+        >
+          <FontAwesomeIcon icon={faClose} className='text-[25px]' />
+        </button>
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           <Form className='w-full'>
             {step === 1 && (
-              <div className='flex flex-col justify-start items-start gap-7 '>
-                <div className=''>
-                  <h2 className='xl:text-xl '>
+              <div className='flex flex-col justify-start items-start gap-7 sm:p-5'>
+                <div className='flex flex-col gap-3'>
+                  <h2 className='text-xl '>
                     Add listing title and description
                   </h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Praesent efficitur erat a euismod dignissim. Praesent eu
-                    ipsum tempor, vulputate nibh sed, feugiat quam.{' '}
+                    Provides machants with detailed information of your list to
+                    make them know more about your offer.
                   </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
@@ -148,7 +165,7 @@ const AddListingModal = () => {
                     type='text'
                     id='title'
                     name='title'
-                    className='border h-[40px] rounded-md w-[70%] outline-[#F30A49] '
+                    className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-2 '
                   />
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
@@ -159,12 +176,13 @@ const AddListingModal = () => {
                     as='textarea'
                     id='description'
                     name='description'
-                    className='h-[150px] border rounded-md w-[70%] outline-[#F30A49] '
+                    className='h-[150px] border rounded-md w-full outline-[#F30A49] p-2 '
                   />
                 </div>
                 <button
+                  type='button'
                   onClick={handleNext}
-                  className='bg-[#F30A49] text-white py-2 px-5 rounded-md flex justify-center items-center ml-auto '
+                  className='bg-[#F30A49] text-white py-2 px-5 rounded-md flex justify-end items-end ml-auto '
                 >
                   Next
                 </button>
@@ -172,24 +190,27 @@ const AddListingModal = () => {
             )}
 
             {step === 2 && (
-              <div className='flex flex-col justify-start items-start gap-7 '>
-                <div className=''>
-                  <h2 className='xl:text-xl '>Fill all the required</h2>
-                  <p>Complete the listing address, price, and area space</p>
+              <div className='flex flex-col justify-start items-start gap-7 sm:p-5 '>
+                <div className='flex flex-col gap-3'>
+                  <h2 className='text-xl '>Fill all the required</h2>
+                  <p>
+                    Machants will want to know the price, address, and length of
+                    their new home.
+                  </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='location' className='font-semibold'>
+                  <label htmlFor='address' className='font-semibold'>
                     Location:
                   </label>
                   <Field
-                    type='address'
-                    id='location'
-                    name='location'
-                    className='border h-[40px] rounded-md w-[70%] outline-[#F30A49] '
+                    type='text'
+                    id='address'
+                    name='address'
+                    className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
                   />
                 </div>
 
-                <div className='grid grid-cols-2 w-[70%]'>
+                <div className='grid grid-cols-2 gap-5 w-full'>
                   <div className='flex flex-col justify-start items-start gap-2 w-full'>
                     <label htmlFor='price' className='font-semibold'>
                       Price:
@@ -198,7 +219,7 @@ const AddListingModal = () => {
                       type='number'
                       id='price'
                       name='price'
-                      className='border h-[40px] rounded-md w-[70%] outline-[#F30A49] indent-3 '
+                      className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
                     />
                   </div>
 
@@ -210,13 +231,14 @@ const AddListingModal = () => {
                       type='number'
                       id='areaSpace'
                       name='areaSpace'
-                      className='border h-[40px] rounded-md w-[70%] outline-[#F30A49] indent-3 '
+                      className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
                     />
                   </div>
                 </div>
 
                 <div className='flex justify-center items-center gap-4 ml-auto '>
                   <button
+                    type='button'
                     onClick={handlePrevious}
                     className='bg-gray-400 text-white py-2 px-5 rounded-md '
                   >
@@ -234,7 +256,7 @@ const AddListingModal = () => {
             )}
 
             {step === 3 && (
-              <div className='flex flex-col justify-start items-start gap-7  '>
+              <div className='flex flex-col justify-start items-start gap-7 sm:p-5  '>
                 {previewPictures && (
                   <div className='flex flex-col h-auto justify-center items-center gap-4 w-full'>
                     <label
@@ -250,26 +272,28 @@ const AddListingModal = () => {
                         style={{ display: 'none' }}
                       />
                     </label>
-                    <span className='w-[50%] text-center text-sm '>
+                    <span className='xl:w-[50%] text-center text-sm '>
                       Select at least 3 pictures of your listing and maximium of
                       10 picture per listing.{' '}
                     </span>
                   </div>
                 )}
 
-                <div className='grid 2xl:grid-cols-4 xl:gap-5 2xl:py-5 '>
+                <div className='grid 2xl:grid-cols-5 2xl:py-5 xl:grid-cols-4 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 md:gap-5 sm:grid-cols-2 sm:gap-5 w-full '>
                   {previewPictures.map((preview, index) => (
                     <img
                       key={index}
                       src={preview}
                       alt={`Preview ${index}`}
-                      className='object-cover rounded-md 2xl:h-[200px] 2xl:w-[200px] '
+                      className='object-cover rounded-md 2xl:h-[200px] xl:h-[150px] lg:h-[150px] md:h-[120px]
+                      w-full sm:h-[100px] '
                     />
                   ))}
                 </div>
 
                 <div className='flex justify-center items-center gap-4 ml-auto '>
                   <button
+                    type='button'
                     onClick={handlePrevious}
                     className='bg-gray-400 text-white py-2 px-5 rounded-md '
                   >
@@ -287,7 +311,7 @@ const AddListingModal = () => {
             )}
 
             {step === 4 && (
-              <div className='flex flex-col justify-start items-start gap-7 '>
+              <div className='flex flex-col xl:justify-start xl:items-start gap-7 sm:p-5 '>
                 <h2 className='xl:text-xl '>Fill all the required</h2>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
@@ -368,6 +392,7 @@ const AddListingModal = () => {
                   </label>
                   <div className='flex gap-4'>
                     <button
+                      type='button'
                       onClick={() => setIsNewProperty(true)}
                       className={`${
                         isNewProperty === true
@@ -378,6 +403,7 @@ const AddListingModal = () => {
                       Newly Built
                     </button>
                     <button
+                      type='button'
                       onClick={() => setIsNewProperty(false)}
                       className={`${
                         isNewProperty === false
@@ -396,6 +422,7 @@ const AddListingModal = () => {
                   </label>
                   <div className='flex gap-4'>
                     <button
+                      type='button'
                       onClick={() => setIsPropertyForSale(true)}
                       className={`${
                         isPropertyForSale === true
@@ -406,6 +433,7 @@ const AddListingModal = () => {
                       Sale
                     </button>
                     <button
+                      type='button'
                       onClick={() => setIsPropertyForSale(false)}
                       className={`${
                         isPropertyForSale === false
@@ -418,8 +446,19 @@ const AddListingModal = () => {
                   </div>
                 </div>
 
+                <div className=''>
+                  {errorMsg.map((err, index) => {
+                    return (
+                      <li key={index} className='text-[#F30A49]'>
+                        {err}
+                      </li>
+                    )
+                  })}
+                </div>
+
                 <div className='flex justify-center items-center gap-4 ml-auto '>
                   <button
+                    type='button'
                     onClick={handlePrevious}
                     className='bg-gray-400 text-white py-2 px-5 rounded-md '
                   >

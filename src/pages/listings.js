@@ -53,7 +53,42 @@ export default function Home() {
 
   const loading = useSelector((state) => state.listings.loading)
   const addListingModal = useSelector((state) => state.listings.addListingModal)
-  // const token = useSelector((state) => state.user.token)
+  const listings = useSelector((state) => state.listings.listings)
+
+  // Filter state
+  const [propertyType, setPropertyType] = useState('')
+  const [bedrooms, setBedrooms] = useState('')
+  const [bathrooms, setBathrooms] = useState('')
+
+  // Filter handler
+  const handleFilter = () => {
+    // Filter your data based on the selected filters
+    const filteredData = listings.filter((home) => {
+      let matchesFilter = true
+
+      // Filter by property type
+      if (propertyType && home.propertyType !== propertyType) {
+        matchesFilter = false
+      }
+
+      // Filter by bedrooms
+      if (bedrooms && home.bedrooms !== bedrooms) {
+        matchesFilter = false
+      }
+
+      // Filter by bathrooms
+      if (bathrooms && home.bathrooms !== bathrooms) {
+        matchesFilter = false
+      }
+
+      return matchesFilter
+    })
+
+    return filteredData // Return the filtered data
+  }
+
+  // Render the filtered data
+  const filteredData = handleFilter()
 
   const getListings = async () => {
     try {
@@ -272,9 +307,9 @@ export default function Home() {
           />
 
           {activeTab === 'All Listings' && viewMode === 'list' ? (
-            <ListView searchQuery={searchQuery} />
+            <ListView searchQuery={searchQuery} data={filteredData} />
           ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
-            <GridView searchQuery={searchQuery} />
+            <GridView searchQuery={searchQuery} data={filteredData} />
           ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
             <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Recently added</h1>
@@ -299,7 +334,7 @@ export default function Home() {
             mobileFilter ? 'mt-72' : ''
           }`}
         >
-          <FilterListings />
+          <FilterListings handleFilter={handleFilter} />
         </section>
       </main>
     </>

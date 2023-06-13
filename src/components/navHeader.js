@@ -78,7 +78,7 @@ const NavHeader = () => {
   return (
     <main className=''>
       <nav className='relative w-full bg-[#0C3C78] text-white shadow-xl flex justify-between items-center px-10 h-[80px] md:flex md:px-5 sm:flex sm:px-5 '>
-        <div className='xl:flex xl:flex-row xl:justify-start md:flex md:flex-row md:justify-between sm:flex sm:justify-between items-center gap-10 '>
+        <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
             className='logo font-bold xl:text-2xl lg:2xl md:text-xl sm:text'
@@ -90,8 +90,8 @@ const NavHeader = () => {
             <Link href={'/rent'}>Rent</Link>
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
-            <Link href={'/trending'}>Trending</Link>
-            {token && <Link href={'/dashboard'}>Dashboard</Link>}
+            {/* <Link href={'/trending'}>Trending</Link> */}
+            {token && <Link href={'/listings'}>Listings</Link>}
           </div>
 
           <button
@@ -136,7 +136,10 @@ const NavHeader = () => {
           {token && (
             <button
               type='button'
-              onClick={() => dispatch(setAddListingModal(true))}
+              onClick={() => {
+                dispatch(setAddListingModal(true))
+                setShowModal(false)
+              }}
               className='bg-[#F30A49] text-white h-[45px] 2xl:px-5 xl:px-5 md:px-2 rounded-lg shadow-2xl font-medium '
             >
               Add Listing
@@ -192,8 +195,8 @@ const NavHeader = () => {
             <Link href={'/rent'}>Rent</Link>
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
-            <Link href={'/trending'}>Trending</Link>
-            {token && <Link href={'/dashboard'}>Dashboard</Link>}
+            {/* <Link href={'/trending'}>Trending</Link> */}
+            {token && <Link href={'/listings'}>Listings</Link>}
             {token && (
               <Link
                 href={'/messages'}
@@ -227,9 +230,10 @@ const NavHeader = () => {
             {token && (
               <button
                 type='button'
+                onClick={() => dispatch(setAddListingModal(true))}
                 className='bg-red-500 h-[45px] w-full rounded-lg shadow-2xl font-medium text-white hover:bg-black  '
               >
-                Post a house{' '}
+                Add Listing
               </button>
             )}
 

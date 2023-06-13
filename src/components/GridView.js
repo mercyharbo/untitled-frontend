@@ -2,6 +2,7 @@ import {
   faBed,
   faBuilding,
   faLocationDot,
+  faStar,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -22,7 +23,7 @@ const GridView = ({ searchQuery }) => {
           return (
             <Link
               key={homes.id}
-              href={`/dashboard/${homes.id}`}
+              href={`/listing/${homes.id}`}
               className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
             >
               <Image
@@ -45,7 +46,7 @@ const GridView = ({ searchQuery }) => {
                   <span className='flex justify-start items-start gap-2'>
                     <FontAwesomeIcon icon={faLocationDot} className='pt-1' />
                     <span className='text-sm text-gray-500'>
-                      {homes.location}
+                      {homes.address}
                     </span>
                   </span>
 
@@ -55,6 +56,10 @@ const GridView = ({ searchQuery }) => {
                       {homes.isNewProperty === true
                         ? 'Newly Built'
                         : 'Used Property'}
+                    </span>
+                    <span className='flex items-center gap-1 font-medium text-sm'>
+                      <FontAwesomeIcon icon={faStar} color='grey' />
+                      {homes.isPropertyForSale === true ? 'Sale' : 'Rent'}
                     </span>
                     <p className='font-medium flex items-center gap-2 text-sm'>
                       <FontAwesomeIcon icon={faBed} color='grey' />
@@ -76,7 +81,8 @@ const GridView = ({ searchQuery }) => {
               </div>
             </Link>
           )
-        })}
+        })
+        .reverse()}
     </article>
   )
 }

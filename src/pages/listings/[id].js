@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setListingDetail, setLoading } from '@/slice/listingSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+  faArrowRight,
   faBed,
+  faChevronLeft,
   faEnvelope,
   faPhone,
   faSink,
@@ -70,8 +72,15 @@ const ListingDetail = () => {
         <meta name='description' content={listingDetails.description} />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <button
+        onClick={() => router.back()}
+        className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 rounded-md mx-10 mt-5 '
+      >
+        <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
+        Go back
+      </button>
       <main className='flex 2xl:p-10 lg:flex-row lg:justify-start lg:gap-5 lg:p-10 md:flex-col md:gap-5 md:p-10 sm:flex-col sm:gap-5 sm:p-5 '>
-        <div className='xl:w-[70%] lg:w-[80%] lg:p-10 md:w-full sm:w-full sm:p-5 bg-white rounded-xl shadow-2xl '>
+        <section className='xl:w-[70%] lg:w-[80%] lg:p-10 md:w-full sm:w-full sm:p-5 bg-white rounded-xl shadow-2xl '>
           <section className='flex flex-col gap-5 lg:p-5'>
             <div className='selected-image'>
               {selectedImage && (
@@ -116,7 +125,7 @@ const ListingDetail = () => {
                   })}
                 </span>
               </div>
-              <p className='text-gray-400'>{listingDetails.location}</p>
+              <p className='text-gray-400'>{listingDetails.address}</p>
               <div className='flex lg:justify-between lg:items-center 2xl:w-[30%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
                 <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
                   Bathroom
@@ -149,7 +158,7 @@ const ListingDetail = () => {
               </article>
             </article>
           </section>
-        </div>
+        </section>
 
         <section className='bg-white shadow-2xl rounded-xl flex flex-col gap-5 2xl:p-10 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:p-5 md:w-full sm:w-full sm:p-5   '>
           <header className='flex justify-start items-center gap-4'>
@@ -175,18 +184,6 @@ const ListingDetail = () => {
             over 10 years, and I&rsquo;m passionate about helping people find
             the perfect home for their needs. I know that buying or selling a
             home is a big decision, and I&rsquo;m committed to providing my
-            clients with the best possible service. I&rsquo;ll work with you
-            every step of the way, from finding the right home to closing the
-            deal. I&rsquo;ll also make sure you understand all of your options
-            and that you&rsquo;re getting the best possible price for your home.
-            I&rsquo;m a member of the National Association of Realtors, and
-            I&rsquo;m committed to upholding the highest ethical standards in
-            the real estate industry. I&rsquo;m also a certified buyer&rsquo;s
-            agent and a certified seller&rsquo;s agent, which means that I have
-            the training and experience to help you with your real estate needs.
-            If you&rsquo;re looking for a real estate agent who will work hard
-            to get you the best possible outcome, I&rsquo;m the agent for you.
-            Contact me today to schedule a consultation.
           </p>
           <div className='flex flex-col gap-3'>
             <p className='flex items-center gap-2 font-medium'>
