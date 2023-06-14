@@ -2,6 +2,7 @@ import { setAddListingModal } from '@/slice/listingSlice'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Field, Form, Formik } from 'formik'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -281,10 +282,12 @@ const AddListingModal = () => {
 
                 <div className='grid 2xl:grid-cols-5 2xl:py-5 xl:grid-cols-4 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 md:gap-5 sm:grid-cols-2 sm:gap-5 w-full '>
                   {previewPictures.map((preview, index) => (
-                    <img
+                    <Image
                       key={index}
                       src={preview}
                       alt={`Preview ${index}`}
+                      width={1000}
+                      height={1000}
                       className='object-cover rounded-md 2xl:h-[200px] xl:h-[150px] lg:h-[150px] md:h-[120px]
                       w-full sm:h-[100px] '
                     />

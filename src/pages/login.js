@@ -32,7 +32,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/login`,
+        `https://plum-worried-anemone.cyclic.app/api/login`,
         {
           method: 'POST',
           headers: {
