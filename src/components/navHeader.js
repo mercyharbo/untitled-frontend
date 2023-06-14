@@ -76,8 +76,8 @@ const NavHeader = () => {
   }, [dispatch])
 
   return (
-    <main className=''>
-      <nav className='relative w-full bg-[#0C3C78] text-white shadow-xl flex justify-between items-center px-10 h-[80px] md:flex md:px-5 sm:flex sm:px-5 '>
+    <main>
+      <nav className='relative w-full bg-[#090030] text-white shadow-xl flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
@@ -90,7 +90,7 @@ const NavHeader = () => {
             <Link href={'/rent'}>Rent</Link>
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
-            {/* <Link href={'/trending'}>Trending</Link> */}
+
             {token && <Link href={'/listings'}>Listings</Link>}
           </div>
 
@@ -116,23 +116,25 @@ const NavHeader = () => {
               <span className='absolute bg-[#F30A49] top-0 right-0 p-[6px] rounded-full'></span>
             </button>
           )}
-          <Link href={'/profile'}>
-            {token ? (
-              <Image
-                src={
-                  userProfile.avatarUrl
-                    ? userProfile.avatarUrl
-                    : 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
-                }
-                alt='Profile Picture'
-                width={500}
-                height={500}
-                className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
-              />
-            ) : (
-              <FontAwesomeIcon icon={faUser} className='text-[25px]' />
-            )}
-          </Link>
+          {token && (
+            <Link href={'/profile'}>
+              {token ? (
+                <Image
+                  src={
+                    userProfile.avatarUrl
+                      ? userProfile.avatarUrl
+                      : 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                  }
+                  alt='Profile Picture'
+                  width={500}
+                  height={500}
+                  className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
+                />
+              ) : (
+                <FontAwesomeIcon icon={faUser} className='text-[25px]' />
+              )}
+            </Link>
+          )}
           {token && (
             <button
               type='button'
@@ -160,16 +162,16 @@ const NavHeader = () => {
             <div className='xl:flex md:flex sm:hidden flex-row gap-5 '>
               <Link
                 href={'/login'}
-                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-transparent text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
               >
                 Login
               </Link>
 
               <Link
                 href={'/signup'}
-                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg flex justify-center items-center '
+                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-full flex justify-center items-center '
               >
-                Register
+                Signup
               </Link>
             </div>
           )}
@@ -195,7 +197,6 @@ const NavHeader = () => {
             <Link href={'/rent'}>Rent</Link>
             <Link href={'/sell'}>Sell</Link>
             <Link href={'/buy'}>Buy</Link>
-            {/* <Link href={'/trending'}>Trending</Link> */}
             {token && <Link href={'/listings'}>Listings</Link>}
             {token && (
               <Link
@@ -262,7 +263,7 @@ const NavHeader = () => {
                   onClick={handleLogout}
                   className='bg-[#F30A49] text-white h-[45px] px-5 font-semibold rounded-lg flex justify-center items-center '
                 >
-                  Register
+                  Signup
                 </Link>
               </div>
             )}
