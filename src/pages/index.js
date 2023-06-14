@@ -24,7 +24,7 @@ export default function Home() {
           alt='home'
           width={1000}
           height={1000}
-          className='xl:rounded-r-lg xl:rounded-t-none xl:flex lg:flex md:flex md:w-[50%] sm:flex sm:rounded-r-none sm:rounded-t-lg sm:w-full'
+          className='xl:rounded-r-lg xl:rounded-t-none xl:flex lg:flex md:flex md:w-[50%] sm:flex sm:rounded-r-none sm:rounded-t-lg sm:w-full object-cover'
         />
       </div>
     </main>

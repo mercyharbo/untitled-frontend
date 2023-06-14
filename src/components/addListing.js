@@ -69,7 +69,7 @@ const AddListingModal = () => {
   const handleSubmit = async (values) => {
     try {
       // Perform the post request to the backend with the collected form values
-      const response = await fetch('http://localhost:3000/api/listings', {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/listings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

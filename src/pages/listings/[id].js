@@ -76,7 +76,7 @@ const ListingDetail = () => {
       </Head>
       <button
         onClick={() => router.back()}
-        className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 rounded-md mx-10 mt-5 '
+        className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md xl:mx-10 md:mx-10 sm:mx-5 '
       >
         <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
         Go back
@@ -91,7 +91,7 @@ const ListingDetail = () => {
                   alt='Selected Image'
                   width={1000}
                   height={1000}
-                  className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] '
+                  className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] md:h-[300px] sm:h-[250px] '
                 />
               )}
             </div>
@@ -104,7 +104,7 @@ const ListingDetail = () => {
                     alt='thumbnail'
                     width={200}
                     height={200}
-                    className={`rounded-lg cursor-pointer object-cover lg:w-[100px] lg:h-[80px] md:w-[120px] sm:w-[110px]  ${
+                    className={`rounded-lg cursor-pointer object-cover lg:w-[100px] lg:h-[80px] md:w-[120px] md:h-[80px] sm:w-[110px] sm:h-[80px]  ${
                       selectedImage === thumbnail
                         ? 'border-[3px] border-black p-1'
                         : ''
