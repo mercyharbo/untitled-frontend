@@ -31,16 +31,19 @@ const Login = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          identifier: values.email,
-          password: values.password,
-        }),
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/login`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identifier: values.email,
+            password: values.password,
+          }),
+        }
+      )
 
       const data = await response.json()
 
@@ -64,13 +67,16 @@ const Login = () => {
   const getProtectedRoute = async () => {
     const token = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:3000/api/protected', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/protected`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
       const data = await response.json()
       if (data.status === true) {

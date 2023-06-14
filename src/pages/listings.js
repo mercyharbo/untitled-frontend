@@ -92,7 +92,7 @@ export default function Home() {
 
   const getListings = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/listings', {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/listings`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -113,13 +113,16 @@ export default function Home() {
   const getProtectedRoute = async () => {
     const token = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:3000/api/protected', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/protected`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
       const data = await response.json()
       if (data.status === true) {

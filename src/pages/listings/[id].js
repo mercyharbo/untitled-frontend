@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setListingDetail, setLoading } from '@/slice/listingSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faArrowRight,
   faBed,
   faChevronLeft,
   faEnvelope,
@@ -31,12 +30,15 @@ const ListingDetail = () => {
 
   const getListingDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/listings/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/listings/${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       const data = await response.json()
 
       if (data.status === true) {

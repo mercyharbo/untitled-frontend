@@ -25,7 +25,7 @@ const NavHeader = () => {
   const getUserProfile = async () => {
     const token = localStorage.getItem('token')
     try {
-      const response = await fetch(`http://localhost:3000/api/profile`, {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/profile`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const NavHeader = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/logout', {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/logout`, {
         method: 'POST',
       })
 

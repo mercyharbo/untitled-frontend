@@ -26,7 +26,7 @@ const SignupStep2 = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/signup', {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

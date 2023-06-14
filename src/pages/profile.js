@@ -43,7 +43,7 @@ const Profile = () => {
     const token = localStorage.getItem('token')
     const updatedProfile = { ...userProfile, avatarUrl: selectedImage }
     try {
-      const response = await fetch(`http://localhost:3000/api/profile`, {
+      const response = await fetch(`${process.env.API_ENDPOINT}/api/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -86,13 +86,16 @@ const Profile = () => {
   const getProtectedRoute = async () => {
     const token = localStorage.getItem('token')
     try {
-      const response = await fetch('http://localhost:3000/api/protected', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/protected`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
       const data = await response.json()
       if (data.status === true) {
