@@ -127,7 +127,7 @@ const Profile = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main
-        className='2xl:w-[70%] 2xl:my-10 xl:w-[70%] lg:p-10 md:w-[80%] md:p-10 sm:p-5 sm:w-[100%] flex flex-col justify-start items-start gap-4 
+        className='2xl:w-[70%] 2xl:my-10 xl:w-[70%] lg:p-10 md:w-[90%] md:p-10 md:my-10 sm:p-5 sm:w-[100%] sm:py-10 flex flex-col justify-start items-start gap-4 
       bg-white shadow-2xl rounded-lg mx-auto relative  '
       >
         <header className='flex flex-col justify-center items-center gap-5'>
@@ -141,7 +141,8 @@ const Profile = () => {
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] '
+              className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
+              sm:w-[100px] sm:h-[100px] '
             />
             {/* <div className='flex flex-row justify-start items-start gap-5'>
               <input
@@ -161,7 +162,7 @@ const Profile = () => {
           </div>
 
           <div className='flex flex-col justify-center items-center gap-2'>
-            <h1 className='2xl:text-5xl '>
+            <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-2xl '>
               {userProfile.firstname} {userProfile.lastname}
             </h1>
             <span className='text-base text-gray-400'>
@@ -257,8 +258,11 @@ const Profile = () => {
               className='bg-[#000000d8] fixed w-full h-full top-0 left-0 '
               onClick={() => setEditProfileModal(false)}
             ></div>
-            <section className='absolute top-0  m-auto bg-white rounded-lg 2xl:w-[80%] 2xl:p-10 2xl:left-[10rem] flex flex-col gap-7'>
-              <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
+            <section
+              className='absolute top-0 bg-white rounded-lg flex flex-col gap-7 2xl:m-auto 2xl:w-[80%] 2xl:p-10 2xl:left-[10rem] md:w-full md:left-0 
+              md:p-10 sm:p-5 sm:w-full sm:top-0 sm:left-0 sm:m-0'
+            >
+              <div className='flex justify-start items-center gap-4 lg:flex-row md:flex-row sm:flex-row'>
                 <Image
                   src={
                     selectedImage ||
@@ -266,9 +270,10 @@ const Profile = () => {
                     'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
-                  width={500}
-                  height={500}
-                  className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] '
+                  width={1000}
+                  height={1000}
+                  className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[130px] xl:h-[130px] md:w-[120px] 
+                  md:h-[120px] sm:w-[100px] sm:h-[100px] '
                 />
                 <div className='flex flex-row justify-start items-start gap-5'>
                   <input
