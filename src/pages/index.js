@@ -158,8 +158,8 @@ export default function Home() {
             Looking for the perfect home? Look no further than our featured
             properties! These homes have been hand-picked by our team of
             experienced realtors and offer the best of everything. Whether
-            you're looking for a spacious family home, a cozy starter home, or a
-            luxurious condo, we have the perfect property for you.
+            you&apos;re looking for a spacious family home, a cozy starter home,
+            or a luxurious condo, we have the perfect property for you.
           </p>
         </div>
 
@@ -168,7 +168,7 @@ export default function Home() {
             {listings.map((home) => {
               return (
                 <div
-                  slides={home}
+                  key={home.id}
                   className='2xl:w-[380px] xl:w-[400px] md:w-[400px] sm:w-[400px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
                 >
                   <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>
