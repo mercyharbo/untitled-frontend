@@ -35,7 +35,7 @@ export default function Home() {
         <h1 className='xl:text-5xl md:text-4xl sm:text-3xl '>Our Services</h1>
         <section
           className='grid mx-auto 2xl:w-[80%] xl:grid-cols-3 xl:gap-5 xl:place-items-center xl:p-14 xl:w-[90%] md:p-5 md:grid-cols-1 md:gap-5 md:w-full
-      sm:p-5 sm:gap-5 '
+          sm:p-5 sm:gap-5 '
         >
           <article className='grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '>
             <Image
@@ -50,7 +50,7 @@ export default function Home() {
             </h1>
             <p className=' xl:w-full md:w-[70%] '>
               Find your place with an immersive photo experience and the most
-              listings, including the things you won't find anywhere else.
+              listings, including the things you won&apos;t find anywhere else.
             </p>
             <Link
               href='/learnmore'
@@ -71,8 +71,8 @@ export default function Home() {
               Rent a home
             </h1>
             <p className=' xl:w-full md:w-[70%] '>
-              We're creating a seamless online experience - from shopping on the
-              largest rental network, to applying to paying rents.
+              We&apos;re creating a seamless online experience - from shopping
+              on the largest rental network, to applying to paying rents.
             </p>
             <Link
               href='/learnmore'
