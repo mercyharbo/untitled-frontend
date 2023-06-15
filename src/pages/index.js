@@ -68,7 +68,7 @@ export default function Home() {
               className='bg-[#4d27f79c] p-5 rounded-md flex justify-center items-center w-[100px] h-[100px] object-cover '
             />
             <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl '>
-              Buy a home
+              Rent a home
             </h1>
             <p className=' xl:w-full md:w-[70%] '>
               We're creating a seamless online experience - from shopping on the
@@ -90,7 +90,7 @@ export default function Home() {
               className='bg-[#4d27f79c] p-5 rounded-md flex justify-center items-center w-[100px] h-[100px] object-cover '
             />
             <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl '>
-              Buy a home
+              Sell a home
             </h1>
             <p className=' xl:w-full md:w-[70%] '>
               Whether you get a cash offer through offers or choose to sell
