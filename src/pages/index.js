@@ -163,65 +163,60 @@ export default function Home() {
           </p>
         </div>
 
-        <div className='flex gap-7'>
-          <div className='flex gap-10 overflow-x-auto'>
-            {listings.map((home) => {
-              return (
-                <div
-                  key={home.id}
-                  className='2xl:w-[380px] xl:w-[400px] md:w-[400px] sm:w-[400px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
-                >
-                  <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>
-                    {home.title}
-                  </h1>
-                  <div className='flex justify-between items-center text-gray-500'>
-                    <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                      Bathroom
-                      <span className='flex items-center gap-2 font-normal'>
-                        <FontAwesomeIcon icon={faSink} />
-                        {home.bathroom}
-                      </span>
+        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 '>
+          {listings.map((home) => {
+            return (
+              <div
+                key={home.id}
+                className='flex-shrink-0 2xl:w-[380px] xl:w-[400px] md:w-[400px] sm:w-[400px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
+              >
+                <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>
+                  {home.title}
+                </h1>
+                <div className='flex justify-between items-center text-gray-500'>
+                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
+                    Bathroom
+                    <span className='flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faSink} />
+                      {home.bathroom}
                     </span>
-                    <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                      Bedrooms
-                      <span className='flex items-center gap-2 font-normal'>
-                        <FontAwesomeIcon icon={faBed} />
-                        {home.bedrooms}
-                      </span>
+                  </span>
+                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
+                    Bedrooms
+                    <span className='flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faBed} />
+                      {home.bedrooms}
                     </span>
-                    <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                      Area Space
-                      <div className='span flex items-center gap-2 font-normal'>
-                        <FontAwesomeIcon icon={faVectorSquare} />
-                        {home.areaSpace}
-                      </div>
-                    </span>
-                  </div>
-                  <Image
-                    src={home?.images?.[0]}
-                    alt='homes'
-                    width={500}
-                    height={500}
-                    className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
-                  />
-                  <div className='flex justify-between items-center'>
-                    <h1>
-                      {home.price.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'NGN',
-                      })}
-                    </h1>
-                    <button
-                      type='button'
-                      className='border p-2 px-5 rounded-lg'
-                    >
-                      View Details
-                    </button>
-                  </div>
+                  </span>
+                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
+                    Area Space
+                    <div className='span flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faVectorSquare} />
+                      {home.areaSpace}
+                    </div>
+                  </span>
                 </div>
-              )
-            })}
-          </div>
+                <Image
+                  src={home?.images?.[0]}
+                  alt='homes'
+                  width={500}
+                  height={500}
+                  className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
+                />
+                <div className='flex justify-between items-center'>
+                  <h1>
+                    {home.price.toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'NGN',
+                    })}
+                  </h1>
+                  <button type='button' className='border p-2 px-5 rounded-lg'>
+                    View Details
+                  </button>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
     </main>
