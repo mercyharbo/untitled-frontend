@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faArrowRight,
   faBed,
+  faShield,
+  faShieldAlt,
   faSink,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
@@ -147,14 +149,14 @@ export default function Home() {
       </div>
 
       <section
-        className='grid bg-[#090030] text-white 2xl:grid-cols-2 2xl:place-items-center 2xl:h-[600px] xl:grid-cols-2 xl:h-[500px] xl:place-items-center 
-      xl:py-5 md:py-5 md:place-items-center md:gap-8 sm:px-5 sm:py-5  '
+        className='bg-[#090030] text-white flex xl:flex-row xl:justify-between xl:items-center xl:py-5 md:flex-col md:justify-center md:items-center md:py-16
+      sm:justify-center sm:items-center sm:flex-col sm:py-16  '
       >
-        <div className='flex flex-col gap-10 2xl:pl-16 xl:pl-10 md:px-10'>
-          <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[50%] xl:leading-[60px] lg:text-4xl md:text-5xl md:w-[70%] sm:text-5xl sm:w-full '>
+        <div className='flex flex-col gap-10 2xl:w-[50%] xl:pl-10 xl:w-[50%] lg:w-[50%] md:w-full md:px-10 sm:px-5 sm:w-full '>
+          <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[70%] xl:leading-[60px] lg:text-4xl md:text-6xl md:leading-[70px] md:w-[70%] sm:text-5xl sm:w-full '>
             Our featured properties
           </h1>
-          <p className='2xl:w-[80%] md:w-[80%] text-lg '>
+          <p className='2xl:w-[80%] xl:w-full md:w-[80%] text-lg '>
             Looking for the perfect home? Look no further than our featured
             properties! These homes have been hand-picked by our team of
             experienced realtors and offer the best of everything. Whether
@@ -163,7 +165,14 @@ export default function Home() {
           </p>
         </div>
 
-        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 sm:py-10 '>
+        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[90%] sm:w-[95%] sm:py-10 '>
+          <style>
+            {`
+              .flex::-webkit-scrollbar {
+                display: none; /* Hide the scrollbar */
+              }
+            `}
+          </style>
           {listings.map((home) => {
             return (
               <Link
@@ -218,6 +227,102 @@ export default function Home() {
               </Link>
             )
           })}
+        </div>
+      </section>
+
+      <section
+        className='flex flex-col gap-10 justify-start items-start mx-auto 2xl:p-14 2xl:w-[80%] xl:w-[80%] xl:p-10 lg:p-10 lg:w-[80%] md:w-full md:p-10 sm:w-full
+      sm:p-5 '
+      >
+        <div className='flex flex-col justify-start items-start gap-5 '>
+          <h1 className='2xl:text-6xl 2xl:w-[70%] 2xl:leading-[80px] xl:w-[80%] xl:text-4xl md:text-4xl md:w-[70%] sm:text-4xl w-full '>
+            Reach quality renters and fill vacancies faster.
+          </h1>
+          <p className='text-lg xl:w-[70%] md:w-[70%] '>
+            We have marketing solutions for landlords, agents, and multifamily
+            professionals.
+          </p>
+        </div>
+
+        <div className='flex flex-col rounded-lg shadow-2xl w-full 2xl:pb-0 xl:pb-0 lg:pb-0 md:pb-0 sm:pb-20  '>
+          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
+            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
+              <span
+                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
+                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[70px] md:h-[60px] sm:text-xl sm:w-[80px] sm:h-[40px] '
+              >
+                1{' '}
+              </span>
+              Reach over 3 million high-quality renters actively searching on
+              our network.
+            </div>
+            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
+              <FontAwesomeIcon
+                icon={faShield}
+                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl fill-transparent stroke-none bg-transparent '
+              />
+            </div>
+          </span>
+
+          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
+            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
+              <span
+                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
+                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[70px] md:h-[60px] sm:text-xl sm:w-[80px] sm:h-[40px] '
+              >
+                2{' '}
+              </span>
+              Get exposure across our broad network of leading apartment search
+              sites.
+            </div>
+            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
+              {' '}
+              <FontAwesomeIcon
+                icon={faShield}
+                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl '
+              />
+            </div>
+          </span>
+
+          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
+            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
+              <span
+                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
+                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[60px] md:h-[60px] sm:text-xl sm:w-[70px] sm:h-[40px] '
+              >
+                3{' '}
+              </span>{' '}
+              Receive ongoing support from a dedicated Account Manager.
+            </div>
+            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
+              <FontAwesomeIcon
+                icon={faShield}
+                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl '
+              />
+            </div>
+          </span>
+
+          <span
+            className='flex justify-between items-center  bg-white border-b-2 2xl:flex-row 2xl:h-[150px] xl:h-[150px] xl:flex-row lg:flex-row 
+          lg:h-[140px] md:h-[100px] md:flex-row sm:flex-col sm:h-[150px] sm:gap-5 '
+          >
+            <div className='flex flex-col gap-2 flex-wrap px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base '>
+              <h1 className='capitalize  2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-3xl '>
+                Unlock our premium features
+              </h1>
+              <p className=''>
+                Advertise with us to optimise your leasing success.
+              </p>
+            </div>
+            <div className='2xl:w-[20%] xl:flex xl:w-[20%] md:flex md:w-[20%] sm:flex sm:w-full h-full  bg-green-200 flex justify-center items-center  '>
+              <button
+                type='button'
+                className='2xl:py-3 2xl:px-6 xl:py-3 xl:px-4 xl:my-0 md:px-2 md:py-2 md:my-0 sm:py-3 sm:px-5 sm:my-4 rounded-lg bg-[#090030] text-white capitalize font-semibold '
+              >
+                Check our pricing
+              </button>
+            </div>
+          </span>
         </div>
       </section>
     </main>
