@@ -53,7 +53,7 @@ export default function Home() {
         <section className='flex flex-col justify-start items-start gap-5 2xl:px-16 xl:px-14 xl:pt-20 md:pt-5 sm:p-5'>
           <h1
             className='2xl:text-6xl 2xl:leading-[70px] xl:w-full xl:leading-[60px] xl:text-5xl lg:text-5xl md:text-4xl 
-          md:w-full md:leading-[50px] sm:text-[30px] sm:w-full '
+          md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
           >
             The ease of buying and renting a dream house & apartment
           </h1>
@@ -72,7 +72,7 @@ export default function Home() {
       </section>
 
       <div className='flex flex-col justify-center items-center gap-5 py-14 md:mx-10 sm:mx-5'>
-        <h1 className='xl:text-5xl md:text-4xl sm:text-3xl '>Our Services</h1>
+        <h1 className='xl:text-5xl md:text-4xl sm:text-4xl '>Our Services</h1>
         <section
           className='grid mx-auto 2xl:w-[80%] xl:grid-cols-3 xl:gap-5 xl:py-8 xl:w-[90%] md:grid-cols-1 md:gap-5 md:w-full
            sm:gap-5 '
@@ -150,8 +150,8 @@ export default function Home() {
         className='grid bg-[#090030] text-white 2xl:grid-cols-2 2xl:place-items-center 2xl:h-[600px] xl:grid-cols-2 xl:h-[500px] xl:place-items-center 
       xl:py-5 md:py-5 md:place-items-center md:gap-8 sm:px-5 sm:py-5  '
       >
-        <div className='flex flex-col gap-4 2xl:pl-16 xl:pl-10 md:px-10'>
-          <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[50%] xl:leading-[60px] lg:text-4xl md:text-5xl md:w-[70%] sm:text-4xl sm:w-full '>
+        <div className='flex flex-col gap-10 2xl:pl-16 xl:pl-10 md:px-10'>
+          <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[50%] xl:leading-[60px] lg:text-4xl md:text-5xl md:w-[70%] sm:text-5xl sm:w-full '>
             Our featured properties
           </h1>
           <p className='2xl:w-[80%] md:w-[80%] text-lg '>
@@ -163,12 +163,13 @@ export default function Home() {
           </p>
         </div>
 
-        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 '>
+        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 sm:py-10 '>
           {listings.map((home) => {
             return (
-              <div
+              <Link
+                href={`/listings/${home.id}`}
                 key={home.id}
-                className='flex-shrink-0 2xl:w-[380px] xl:w-[400px] md:w-[400px] sm:w-[400px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
+                className='flex-shrink-0 2xl:w-[380px] xl:w-[400px] md:w-[380px] sm:w-[350px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
               >
                 <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>
                   {home.title}
@@ -203,18 +204,18 @@ export default function Home() {
                   height={500}
                   className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
                 />
-                <div className='flex justify-between items-center'>
-                  <h1>
+                <div className='flex justify-between items-center flex-wrap'>
+                  <h1 className='lg:text-xl md:text-lg sm:text-base'>
                     {home.price.toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'NGN',
                     })}
                   </h1>
-                  <button type='button' className='border p-2 px-5 rounded-lg'>
+                  <button type='button' className='border p-2 px-4 rounded-lg'>
                     View Details
                   </button>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
