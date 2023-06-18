@@ -21,25 +21,32 @@ export default function Carousel({
     return () => clearInterval(slideInterval)
   }, [])
 
-   const goToSlide = (index) => {
-     setCurr(index)
-   }
+  const goToSlide = (index) => {
+    setCurr(index)
+  }
 
   return (
-    <main className='overflow-hidden '>
+    <main
+      className='overflow-x-scroll '
+      style={{ scrollbarWidth: 'none', '-ms-overflow-style': 'none' }}
+    >
+      <style>
+        {`
+          .overflow-x-scroll::-webkit-scrollbar {
+            width: 0.5em;
+            height: 0.5em;
+          }
+
+          .overflow-x-scroll::-webkit-scrollbar-thumb {
+            background-color: transparent;
+          }
+        `}
+      </style>
       <div
         className='flex justify-start items-start gap-5 transition-transform ease-in duration-500'
         style={{
           transform: `translateX(-${curr * 450}px)`,
           width: `${slides.length * 500}px`,
-          '@media (max-width: 420px)': {
-            width: `${slides.length * 300}px`,
-            transform: `translateX(-${curr * 300}px)`, // Width for sm screen size (640px) or smaller
-          },
-          '@media (max-width: 320px)': {
-            width: `${slides.length * 350}px`,
-            transform: `translateX(-${curr * 300}px)`, // Width for smaller screen size (480px) or smaller
-          },
         }}
       >
         {slides}

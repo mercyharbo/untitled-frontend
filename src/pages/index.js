@@ -8,12 +8,17 @@ import {
   faArrowRight,
   faBed,
   faShield,
-  faShieldAlt,
   faSink,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import Carousel from '@/components/Carousel'
 import { setListings, setLoading, setTotal } from '@/slice/listingSlice'
+import {
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faTwitter,
+} from '@fortawesome/fontawesome-free-brands'
 
 const TestimonialJSON = [
   {
@@ -70,7 +75,7 @@ export default function Home() {
   }, [dispatch])
 
   return (
-    <main className='2xl:pb-14 overflow-hidden'>
+    <main className='overflow-hidden'>
       <section
         className='relative flex bg-[#090030] text-white shadow-2xl 2xl:grid-cols-2 xl:place-items-center xl:grid-cols-2 
        xl:p-0 lg:grid-cols-2 md:flex-row sm:flex-col-reverse'
@@ -354,7 +359,7 @@ export default function Home() {
       md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'
       >
         <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
-          <h1 className='2xl:w-[60%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
+          <h1 className='2xl:w-[80%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
             Some of our happy Client&quot;s
           </h1>
           <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
@@ -369,7 +374,7 @@ export default function Home() {
             {TestimonialJSON.map((testy, index) => (
               <div
                 key={index}
-                className='flex flex-col flex-grow gap-5 bg-white text-black shadow-2xl rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[500px] '
+                className='flex flex-col flex-grow gap-5 bg-white text-black shadow-2xl rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[480px] '
                 // style={{ width: '750px' }}
               >
                 <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>
@@ -388,6 +393,72 @@ export default function Home() {
           </Carousel>
         </div>
       </section>
+
+      <section className='flex flex-col justify-center items-center gap-10 mx-auto xl:w-[60%] md:py-16 sm:py-10   '>
+        <h1 className='xl:text-5xl xl:w-[40%] md:text-5xl md:w-[50%] sm:w-[80%] sm:text-3xl text-center '>
+          Subscribe to our newsletter
+        </h1>
+        <div className='relative'>
+          <input
+            type='email'
+            name='email'
+            id='email'
+            placeholder='Enter your email'
+            className='border bg-white rounded-md indent-3 outline-none xl:w-[45rem] xl:h-[60px] md:w-[40rem] md:h-[60px] sm:w-[25rem] sm:h-[50px] '
+          />
+          <button
+            type='button'
+            className='bg-[#090030] rounded-md text-white absolute right-0 xl:h-[60px] xl:w-[140px] md:w-[100px] md:h-[60px] sm:h-[50px] sm:w-[100px] '
+          >
+            Subscribe
+          </button>
+        </div>
+      </section>
+      <footer className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
+      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 text-white bg-[#090030] flex   '>
+        <article className='xl:w-[30%] md:w-full sm:w-full flex flex-col gap-8 '>
+          <h1 className='xl:text-5xl md:text-4xl sm:text-4xl'>Untitled</h1>
+          <p className='text-lg md:text-xl sm:text-xl'>
+            No matter how quickly you need to make an offer, our data and
+            experts are always available. Let"s start here
+          </p>
+          <div className='flex items-center gap-5'>
+            <Link href={'/'}>
+              <FontAwesomeIcon icon={faLinkedin} className='text-[30px]' />
+            </Link>
+            <Link href={'/'}>
+              <FontAwesomeIcon icon={faInstagram} className='text-[30px]' />
+            </Link>
+            <Link href={'/'}>
+              <FontAwesomeIcon icon={faTwitter} className='text-[30px]' />
+            </Link>
+            <Link href={'/'}>
+              <FontAwesomeIcon icon={faFacebook} className='text-[30px]' />
+            </Link>
+          </div>
+        </article>
+        <article className='xl:w-[20%] md:w-full sm:w-full flex flex-col gap-5 '>
+          <h3 className='md:text-2xl sm:text-2xl'>Company</h3>
+          <nav className='flex flex-col gap-5 text-lg'>
+            <Link href='/about'>About us</Link>
+            <Link href='/pricing'>Pricing</Link>
+            <Link href='/contact'>Contact us</Link>
+            <Link href='/blog'>Blog</Link>
+          </nav>
+        </article>
+        <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
+          <h3 className='md:text-2xl sm:text-2xl'>Support</h3>
+          <nav className='flex flex-col gap-5 text-lg'>
+            <Link href='/helpcenter'>Help center</Link>
+            <Link href='/termsofservice'>Terms of services</Link>
+            <Link href='/legal'>Legal</Link>
+            <Link href='/privacypolicy'>Privacy policy</Link>
+          </nav>
+        </article>
+        <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
+          <h3 className='text-xl uppercase'>Our app is coming soon</h3>
+        </article>
+      </footer>
     </main>
   )
 }
