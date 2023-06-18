@@ -414,13 +414,15 @@ export default function Home() {
           </button>
         </div>
       </section>
-      <footer className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
-      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 text-white bg-[#090030] flex   '>
+      <footer
+        className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
+      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 text-white bg-[#090030] flex   '
+      >
         <article className='xl:w-[30%] md:w-full sm:w-full flex flex-col gap-8 '>
           <h1 className='xl:text-5xl md:text-4xl sm:text-4xl'>Untitled</h1>
           <p className='text-lg md:text-xl sm:text-xl'>
             No matter how quickly you need to make an offer, our data and
-            experts are always available. Let"s start here
+            experts are always available. Let&quot;s start here
           </p>
           <div className='flex items-center gap-5'>
             <Link href={'/'}>
