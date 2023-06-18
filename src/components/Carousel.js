@@ -21,22 +21,39 @@ export default function Carousel({
     return () => clearInterval(slideInterval)
   }, [])
 
+   const goToSlide = (index) => {
+     setCurr(index)
+   }
+
   return (
-    <main className='overflow-hidden relative 2xl:left-[10rem] xl:left-[10rem] '>
+    <main className='overflow-hidden '>
       <div
-        className='flex gap-5 transition-transform ease-in-out duration-500'
-        style={{ transform: `translateX(-${curr * 50}%)` }}
+        className='flex justify-start items-start gap-5 transition-transform ease-in duration-500'
+        style={{
+          transform: `translateX(-${curr * 450}px)`,
+          width: `${slides.length * 500}px`,
+          '@media (max-width: 420px)': {
+            width: `${slides.length * 300}px`,
+            transform: `translateX(-${curr * 300}px)`, // Width for sm screen size (640px) or smaller
+          },
+          '@media (max-width: 320px)': {
+            width: `${slides.length * 350}px`,
+            transform: `translateX(-${curr * 300}px)`, // Width for smaller screen size (480px) or smaller
+          },
+        }}
       >
         {slides}
       </div>
 
-      {/* <div className='absolute bottom-0 right-0 left-0'>
+      {/* <div className='absolute bottom-0 right-0 left-0 '>
         <div className='flex items-center justify-center gap-3'>
           {slides?.map((_, i) => (
             <div
+              key={i}
               className={`transition-all w-3 h-3 bg-white rounded-full ${
                 curr === i ? 'p-2' : 'bg-opacity-50'
               }`}
+              onClick={() => goToSlide(i)}
             ></div>
           ))}
         </div>

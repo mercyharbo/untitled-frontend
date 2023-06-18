@@ -15,6 +15,29 @@ import {
 import Carousel from '@/components/Carousel'
 import { setListings, setLoading, setTotal } from '@/slice/listingSlice'
 
+const TestimonialJSON = [
+  {
+    title: 'A dream come true',
+    comment:
+      "I had been looking for a house in the countryside for a long time, but I couldn't find anything that matched my budget and preferences. Then I came across this website and I was amazed by the variety and quality of the properties they offered. They helped me find the perfect home for me and my family, with a spacious garden, a cozy fireplace and a stunning view. They were professional, friendly and attentive throughout the whole process. I couldn't be happier with my purchase and I highly recommend this website to anyone looking for their dream home.",
+  },
+  {
+    title: 'The best service ever',
+    comment:
+      'I was skeptical about buying a house online, but this website changed my mind. They made everything so easy and convenient for me. They showed me a lot of options that suited my needs and preferences, and they guided me through every step of the transaction. They were always available to answer my questions and concerns, and they gave me honest and helpful advice. They also arranged everything for the inspection, appraisal and closing. I got a great deal on a beautiful house that I love. This website is the best service ever for anyone who wants to buy a house.',
+  },
+  {
+    title: 'A hassle-free experience',
+    comment:
+      "I had a tight deadline to sell my old house and buy a new one, and I was stressed out by the whole process. But this website made it a hassle-free experience for me. They helped me list my old house and find a buyer quickly, and they also helped me find a new house that met all my expectations. They handled all the paperwork and negotiations for me, and they made sure everything went smoothly and on time. They were very responsive, reliable and courteous throughout the whole process. I'm very satisfied with their service and I would definitely use them again.",
+  },
+  {
+    title: 'A hassle-free experience',
+    comment:
+      "I had a tight deadline to sell my old house and buy a new one, and I was stressed out by the whole process. But this website made it a hassle-free experience for me. They helped me list my old house and find a buyer quickly, and they also helped me find a new house that met all my expectations. They handled all the paperwork and negotiations for me, and they made sure everything went smoothly and on time. They were very responsive, reliable and courteous throughout the whole process. I'm very satisfied with their service and I would definitely use them again.",
+  },
+]
+
 export default function Home() {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.listings.loading)
@@ -323,6 +346,40 @@ export default function Home() {
               </button>
             </div>
           </span>
+        </div>
+      </section>
+
+      <section className='bg-[#090030] w-full py-5 text-white flex 2xl:mb-[15rem] xl:mb-[12rem] xl:flex-row xl:h-[500px] xl:justify-center xl:items-center
+      md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'>
+        <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
+          <h1 className='2xl:w-[60%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
+            Some of our happy Clients
+          </h1>
+          <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
+            In promotion and advertising, a testimonial or show consists of a
+            person's written or spoken statement extolling the virtues of a
+            product.
+          </p>
+        </article>
+
+        <div className='xl:w-[50%] xl:mt-[20rem] 2xl: xl:pl-10  '>
+          <Carousel autoplay={true} autoplayInterval={5000}>
+            {TestimonialJSON.map((testy, index) => (
+              <div
+                key={index}
+                className='flex flex-col flex-grow gap-5 bg-white text-black shadow-2xl rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[500px] '
+                // style={{ width: '750px' }}
+              >
+                <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>{testy.title}</h3>
+                <p className='xl:text-base md:text-lg'>{testy.comment}</p>
+
+                <div className="flex flex-col gap-2">
+                  <h3 className="xl:text-xl md:text-xl sm:text-lg ">Benjamin Appling</h3>
+                  <span className="text-sm text-gray-500">Happy Client</span>
+                </div>
+              </div>
+            ))}
+          </Carousel>
         </div>
       </section>
     </main>
