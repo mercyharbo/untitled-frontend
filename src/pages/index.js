@@ -349,16 +349,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className='bg-[#090030] w-full py-5 text-white flex 2xl:mb-[15rem] xl:mb-[12rem] xl:flex-row xl:h-[500px] xl:justify-center xl:items-center
-      md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'>
+      <section
+        className='bg-[#090030] w-full py-5 text-white flex 2xl:mb-[15rem] xl:mb-[12rem] xl:flex-row xl:h-[500px] xl:justify-center xl:items-center
+      md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'
+      >
         <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
           <h1 className='2xl:w-[60%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
-            Some of our happy Clients
+            Some of our happy Client&quot;s
           </h1>
           <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
-            In promotion and advertising, a testimonial or show consists of a
-            person's written or spoken statement extolling the virtues of a
-            product.
+            In promotion and advertising, a testimonial or show consist&quot;s
+            of a person&quot;s written or spoken statement extolling the
+            virtue&quot;s of a product.
           </p>
         </article>
 
@@ -370,12 +372,16 @@ export default function Home() {
                 className='flex flex-col flex-grow gap-5 bg-white text-black shadow-2xl rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[500px] '
                 // style={{ width: '750px' }}
               >
-                <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>{testy.title}</h3>
+                <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>
+                  {testy.title}
+                </h3>
                 <p className='xl:text-base md:text-lg'>{testy.comment}</p>
 
-                <div className="flex flex-col gap-2">
-                  <h3 className="xl:text-xl md:text-xl sm:text-lg ">Benjamin Appling</h3>
-                  <span className="text-sm text-gray-500">Happy Client</span>
+                <div className='flex flex-col gap-2'>
+                  <h3 className='xl:text-xl md:text-xl sm:text-lg '>
+                    Benjamin Appling
+                  </h3>
+                  <span className='text-sm text-gray-500'>Happy Client</span>
                 </div>
               </div>
             ))}
