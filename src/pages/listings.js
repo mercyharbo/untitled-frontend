@@ -52,7 +52,6 @@ export default function Home() {
   const [selectedAmenities, setSelectedAmenities] = useState([])
 
   const loading = useSelector((state) => state.listings.loading)
-  const addListingModal = useSelector((state) => state.listings.addListingModal)
   const listings = useSelector((state) => state.listings.listings)
 
   // Filter state
@@ -297,7 +296,7 @@ export default function Home() {
           </article>
         )}
 
-        {addListingModal && <AddListingModal />}
+        
         <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
           <HeaderFilter
             setActiveTab={setActiveTab}

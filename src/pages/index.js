@@ -11,14 +11,16 @@ import {
   faSink,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
-import Carousel from '@/components/Carousel'
-import { setListings, setLoading, setTotal } from '@/slice/listingSlice'
 import {
   faFacebook,
   faInstagram,
   faLinkedin,
   faTwitter,
 } from '@fortawesome/fontawesome-free-brands'
+import { motion } from 'framer-motion'
+
+import Carousel from '@/components/Carousel'
+import { setListings, setLoading } from '@/slice/listingSlice'
 
 const TestimonialJSON = [
   {
@@ -80,7 +82,12 @@ export default function Home() {
         className='relative flex bg-[#090030] text-white shadow-2xl 2xl:grid-cols-2 xl:place-items-center xl:grid-cols-2 
        xl:p-0 lg:grid-cols-2 md:flex-row sm:flex-col-reverse'
       >
-        <section className='flex flex-col justify-start items-start gap-5 2xl:px-16 xl:px-14 xl:pt-20 md:pt-5 sm:p-5'>
+        <motion.section
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className='flex flex-col justify-start items-start gap-5 2xl:px-16 xl:px-14 xl:pt-20 md:pt-5 sm:p-5'
+        >
           <h1
             className='2xl:text-6xl 2xl:leading-[70px] xl:w-full xl:leading-[60px] xl:text-5xl lg:text-5xl md:text-4xl 
           md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
@@ -91,23 +98,30 @@ export default function Home() {
             No matter how quickly you need to make an offer, our data and
             experts are always available. Let&quot;s start here
           </p>
-        </section>
+        </motion.section>
         <Image
           src={'/yellowChair.avif'}
           alt='home'
           width={1000}
           height={1000}
-          className='xl:flex lg:flex md:flex md:w-[50%] sm:flex sm:w-full object-cover'
+          className='animate__backInRight xl:flex lg:flex md:flex md:w-[50%] sm:flex sm:w-full object-cover '
         />
       </section>
 
-      <div className='flex flex-col justify-center items-center gap-5 py-14 md:mx-10 sm:mx-5'>
+      <section className='flex flex-col justify-center items-center gap-5 py-14 md:mx-10 sm:mx-5'>
         <h1 className='xl:text-5xl md:text-4xl sm:text-4xl '>Our Services</h1>
         <section
           className='grid mx-auto 2xl:w-[80%] xl:grid-cols-3 xl:gap-5 xl:py-8 xl:w-[90%] md:grid-cols-1 md:gap-5 md:w-full
            sm:gap-5 '
         >
-          <article className='grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '>
+          <motion.article
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+            }}
+            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
+          >
             <Image
               src='/house.png'
               alt='Home icon'
@@ -128,8 +142,13 @@ export default function Home() {
             >
               Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
             </Link>
-          </article>
-          <article className='grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '>
+          </motion.article>
+          <motion.article
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
+          >
             <Image
               src='/rent.png'
               alt='Home icon'
@@ -150,8 +169,13 @@ export default function Home() {
             >
               Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
             </Link>
-          </article>
-          <article className='grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '>
+          </motion.article>
+          <motion.article
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
+          >
             <Image
               src='/sale.png'
               alt='Home icon'
@@ -172,15 +196,20 @@ export default function Home() {
             >
               Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
             </Link>
-          </article>
+          </motion.article>
         </section>
-      </div>
+      </section>
 
       <section
         className='bg-[#090030] text-white flex xl:flex-row xl:justify-between xl:items-center xl:py-5 md:flex-col md:justify-center md:items-center md:py-16
       sm:justify-center sm:items-center sm:flex-col sm:py-16  '
       >
-        <div className='flex flex-col gap-10 2xl:w-[50%] xl:pl-10 xl:w-[50%] lg:w-[50%] md:w-full md:px-10 sm:px-5 sm:w-full '>
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className='flex flex-col gap-10 2xl:w-[50%] xl:pl-10 xl:w-[50%] lg:w-[50%] md:w-full md:px-10 sm:px-5 sm:w-full '
+        >
           <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[70%] xl:leading-[60px] lg:text-4xl md:text-6xl md:leading-[70px] md:w-[70%] sm:text-5xl sm:w-full '>
             Our featured properties
           </h1>
@@ -191,7 +220,7 @@ export default function Home() {
             you&apos;re looking for a spacious family home, a cozy starter home,
             or a luxurious condo, we have the perfect property for you.
           </p>
-        </div>
+        </motion.div>
 
         <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[90%] sm:w-[95%] sm:py-10 '>
           <style>
@@ -414,6 +443,7 @@ export default function Home() {
           </button>
         </div>
       </section>
+
       <footer
         className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
       md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 text-white bg-[#090030] flex   '

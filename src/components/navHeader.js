@@ -12,7 +12,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUserProfile } from '@/slice/userSlice'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
+
 import { setAddListingModal, setLoading } from '@/slice/listingSlice'
+
+const variants = {
+  open: { opacity: 1, x: 0 },
+  closed: { opacity: 0, x: '-100%' },
+}
 
 const NavHeader = () => {
   const router = useRouter()
@@ -179,7 +186,13 @@ const NavHeader = () => {
       </nav>
 
       {showModal && (
-        <nav className='flex flex-col justify-start items-start gap-5 absolute top-0 left-0 bg-[#000000e4] rounded-lg h-screen w-full mx-auto z-10 text-white'>
+        <motion.nav
+          initial='closed'
+          animate={showModal ? 'open' : 'closed'}
+          variants={variants}
+          transition={{ duration: 0.5 }}
+          className='flex flex-col justify-start items-start gap-5 absolute top-0 left-0 bg-white h-screen w-[70%] mx-auto z-10 text-black'
+        >
           <header className='flex justify-between w-full p-5'>
             <Link href={'/'} className='logo font-bold text-2xl'>
               Untitlted
@@ -268,7 +281,7 @@ const NavHeader = () => {
               </div>
             )}
           </article>
-        </nav>
+        </motion.nav>
       )}
     </main>
   )
