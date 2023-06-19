@@ -27,7 +27,7 @@ const ListView = ({ searchQuery, data }) => {
           homes?.title?.toLowerCase()?.includes(searchQuery?.toLowerCase())
         )
         .map((homes) => {
-          const formattedPrice = homes.price.toLocaleString('en-US', {
+          const formattedPrice = homes?.price?.toLocaleString('en-US', {
             style: 'currency',
             currency: 'NGN',
           })

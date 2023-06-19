@@ -72,7 +72,7 @@ const GridView = ({ searchQuery }) => {
                   </div>
 
                   <h1 className='sm:ml-auto text-[#ef476f]'>
-                    {homes.price.toLocaleString('en-US', {
+                    {homes?.price?.toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'NGN',
                     })}

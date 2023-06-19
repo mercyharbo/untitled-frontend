@@ -272,7 +272,7 @@ export default function Home() {
                 />
                 <div className='flex justify-between items-center flex-wrap'>
                   <h1 className='lg:text-xl md:text-lg sm:text-base'>
-                    {home.price.toLocaleString('en-US', {
+                    {home?.price?.toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'NGN',
                     })}
