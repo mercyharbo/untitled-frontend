@@ -5,6 +5,7 @@ const nextConfig = {
   },
   env: {
     API_ENDPOINT: 'https://plum-worried-anemone.cyclic.app',
+    API_ENDPOINT_DEV: 'http://localhost:3000',
   },
 }
 

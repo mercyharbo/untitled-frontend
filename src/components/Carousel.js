@@ -26,10 +26,7 @@ export default function Carousel({
   }
 
   return (
-    <main
-      className='overflow-x-scroll '
-      style={{ scrollbarWidth: 'none', '-ms-overflow-style': 'none' }}
-    >
+    <main className='overflow-x-scroll '>
       <style>
         {`
           .overflow-x-scroll::-webkit-scrollbar {

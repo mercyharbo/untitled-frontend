@@ -18,7 +18,8 @@ import ListView from '@/components/ListView'
 import GridView from '@/components/GridView'
 import HeaderFilter from '@/components/topHeader'
 import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
-import AddListingModal from '@/components/addListing'
+
+
 
 export default function Home() {
   const router = useRouter()

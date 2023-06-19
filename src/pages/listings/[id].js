@@ -10,10 +10,13 @@ import {
   faEnvelope,
   faPhone,
   faSink,
+  faTrash,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Head from 'next/head'
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
+import { toast } from 'react-toastify'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -50,6 +53,50 @@ const ListingDetail = () => {
     } catch (error) {}
   }
 
+  const getEditListings = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/listings/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        dispatch(setListingDetail(data.listing))
+        dispatch(setLoading(false))
+      } else {
+        console.log('there is an error')
+      }
+    } catch (error) {}
+  }
+
+  const deleteListing = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/listings/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        toast.success(data.message)
+        router.push('/listings')
+      } else {
+        console.log('there is an error')
+      }
+    } catch (error) {}
+  }
+
   useEffect(() => {
     if (id) {
       getListingDetails()
@@ -74,13 +121,32 @@ const ListingDetail = () => {
         <meta name='description' content={listingDetails.description} />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <button
-        onClick={() => router.back()}
-        className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md xl:mx-10 md:mx-10 sm:mx-5 '
-      >
-        <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
-        Go back
-      </button>
+      <div className='flex gap-7 2xl:w-[30%] xl:w-[40%] xl:px-10 md:px-10 sm:px-5 '>
+        <button
+          type='button'
+          onClick={() => router.back()}
+          className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
+        >
+          <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
+          Go back
+        </button>
+        <button
+          type='button'
+          onClick={() => deleteListing()}
+          className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
+        >
+          <FontAwesomeIcon icon={faTrash} className='text-white ' />
+          Delete
+        </button>
+        <button
+          type='button'
+          onClick={() => getEditListings()}
+          className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
+        >
+          <FontAwesomeIcon icon={faPenToSquare} className='text-white ' />
+          Edit
+        </button>
+      </div>
       <main className='flex 2xl:p-10 lg:flex-row lg:justify-start lg:gap-5 lg:p-10 md:flex-col md:gap-5 md:p-10 sm:flex-col sm:gap-5 sm:p-5 '>
         <section className='xl:w-[70%] lg:w-[80%] lg:p-10 md:w-full sm:w-full sm:p-5 bg-white rounded-xl shadow-2xl '>
           <section className='flex flex-col gap-5 lg:p-5'>
