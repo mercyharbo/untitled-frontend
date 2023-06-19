@@ -11,7 +11,7 @@ const HeaderFilter = ({
   handleListViewClick,
   activeTab,
 }) => {
-  const total = useSelector((state) => state.listings.total)
+  const listing = useSelector((state) => state.listings.listings)
 
   return (
     <main className=''>
@@ -74,7 +74,7 @@ const HeaderFilter = ({
         </button>
 
         <h1 className='flex justify-start items-center gap-2 2xl:text-2xl'>
-          Total: {total}
+          Total: {listing?.length}
         </h1>
 
         <div className='flex justify-end items-center gap-4'>

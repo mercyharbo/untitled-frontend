@@ -4,13 +4,17 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
+import {
+  faChevronCircleLeft,
+  faChevronCircleRight,
+  faClose,
+} from '@fortawesome/free-solid-svg-icons'
 
 import {
-  setAddListingModal,
   setListings,
   setLoading,
   setTotal,
+  setTotalPages,
 } from '@/slice/listingSlice'
 
 import FilterListings from '@/components/filter'
@@ -18,12 +22,13 @@ import ListView from '@/components/ListView'
 import GridView from '@/components/GridView'
 import HeaderFilter from '@/components/topHeader'
 import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
-
-
+import usePagination from '@/hooks/usePagination'
 
 export default function Home() {
   const router = useRouter()
   const dispatch = useDispatch()
+  const { currentPage, totalPages, goToPreviousPage, goToNextPage } =
+    usePagination()
 
   const numbers = [1, 2, 3, 4, 5]
 
@@ -54,60 +59,33 @@ export default function Home() {
 
   const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.listings.listings)
+  const perPage = useSelector((state) => state.listings.perPage)
+  const total = useSelector((state) => state.listings.total)
 
-  // Filter state
-  const [propertyType, setPropertyType] = useState('')
-  const [bedrooms, setBedrooms] = useState('')
-  const [bathrooms, setBathrooms] = useState('')
-
-  // Filter handler
-  const handleFilter = () => {
-    // Filter your data based on the selected filters
-    const filteredData = listings.filter((home) => {
-      let matchesFilter = true
-
-      // Filter by property type
-      if (propertyType && home.propertyType !== propertyType) {
-        matchesFilter = false
-      }
-
-      // Filter by bedrooms
-      if (bedrooms && home.bedrooms !== bedrooms) {
-        matchesFilter = false
-      }
-
-      // Filter by bathrooms
-      if (bathrooms && home.bathrooms !== bathrooms) {
-        matchesFilter = false
-      }
-
-      return matchesFilter
-    })
-
-    return filteredData // Return the filtered data
-  }
-
-  // Render the filtered data
-  const filteredData = handleFilter()
-
-  const getListings = async () => {
+  const getListings = async (page) => {
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/listings`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_DEV}/api/listings?page=${page}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
       const data = await response.json()
 
       if (data.status === true) {
         dispatch(setListings(data.listings))
         dispatch(setTotal(data.total))
         dispatch(setLoading(false))
+        dispatch(setTotalPages(data.totalPages))
       } else {
         console.log('there is an error')
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const getProtectedRoute = async () => {
@@ -137,8 +115,8 @@ export default function Home() {
 
   useEffect(() => {
     getProtectedRoute()
-    getListings()
-  }, [])
+    getListings(currentPage)
+  }, [currentPage])
 
   const handleListViewClick = () => {
     setViewMode('list')
@@ -185,7 +163,7 @@ export default function Home() {
 
             <article className='flex flex-col justify-start items-start gap-8 pt-8'>
               {/* <h1 className=''>Property Type</h1> */}
-              <div className='flex gap-4'>
+              <div className='grid grid-cols-2 gap-4'>
                 <button
                   type='button'
                   className='bg-transparent border py-2 px-4 rounded-md'
@@ -297,7 +275,6 @@ export default function Home() {
           </article>
         )}
 
-        
         <section className='flex lg:flex-col lg:gap-5 xl:w-[80%] lg:w-[70%] sm:flex-col sm:gap-4 sm:w-full '>
           <HeaderFilter
             setActiveTab={setActiveTab}
@@ -310,9 +287,9 @@ export default function Home() {
           />
 
           {activeTab === 'All Listings' && viewMode === 'list' ? (
-            <ListView searchQuery={searchQuery} data={filteredData} />
+            <ListView searchQuery={searchQuery} />
           ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
-            <GridView searchQuery={searchQuery} data={filteredData} />
+            <GridView searchQuery={searchQuery} />
           ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
             <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
               <h1>Recently added</h1>
@@ -330,6 +307,25 @@ export default function Home() {
               <h1>Featured post grid </h1>
             </article>
           ) : null}
+
+          <div className='flex justify-between items-center mx-auto xl:w-[30%] md:w-full sm:w-full  '>
+            <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+              <FontAwesomeIcon
+                icon={faChevronCircleLeft}
+                className='text-[30px]'
+              />
+            </button>
+            <span className='font-semibold'>{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+            >
+              <FontAwesomeIcon
+                icon={faChevronCircleRight}
+                className='text-[30px]'
+              />
+            </button>
+          </div>
         </section>
 
         <section
@@ -337,7 +333,7 @@ export default function Home() {
             mobileFilter ? 'mt-72' : ''
           }`}
         >
-          <FilterListings handleFilter={handleFilter} />
+          <FilterListings />
         </section>
       </main>
     </>

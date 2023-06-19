@@ -6,6 +6,7 @@ const initialState = {
   loading: true,
   total: null,
   addListingModal: false,
+  totalPages: null,
 }
 
 const listingsSlice = createSlice({
@@ -27,6 +28,9 @@ const listingsSlice = createSlice({
     setAddListingModal: (state, action) => {
       state.addListingModal = action.payload
     },
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload
+    },
   },
 })
 
@@ -36,5 +40,6 @@ export const {
   setLoading,
   setTotal,
   setAddListingModal,
+  setTotalPages,
 } = listingsSlice.actions
 export default listingsSlice.reducer
