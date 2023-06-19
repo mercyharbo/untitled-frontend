@@ -17,7 +17,7 @@ const GridView = ({ searchQuery }) => {
     <article className='bg-white shadow-2xl rounded-2xl grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
       {listings
         .filter((homes) =>
-          homes.title.toLowerCase().includes(searchQuery.toLowerCase())
+          homes.title?.toLowerCase().includes(searchQuery?.toLowerCase())
         )
         .map((homes) => {
           return (

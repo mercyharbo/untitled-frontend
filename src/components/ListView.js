@@ -24,7 +24,7 @@ const ListView = ({ searchQuery, data }) => {
     >
       {filteredListings
         .filter((homes) =>
-          homes.title.toLowerCase().includes(searchQuery.toLowerCase())
+          homes?.title?.toLowerCase()?.includes(searchQuery?.toLowerCase())
         )
         .map((homes) => {
           const formattedPrice = homes.price.toLocaleString('en-US', {
