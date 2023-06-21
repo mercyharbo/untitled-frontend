@@ -62,7 +62,7 @@ export default function Home() {
   const getListings = async (page) => {
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/listings?page=${page}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
         {
           method: 'GET',
           headers: {
@@ -89,7 +89,7 @@ export default function Home() {
   //   const token = localStorage.getItem('token')
   //   try {
   //     const response = await fetch(
-  //       `${process.env.API_ENDPOINT}/api/protected`,
+  //       `${process.env.API_ENDPOINT_RENDER}/api/protected`,
   //       {
   //         method: 'GET',
   //         headers: {

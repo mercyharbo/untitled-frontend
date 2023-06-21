@@ -26,22 +26,25 @@ const SignupStep2 = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          username: values.username,
-          password: values.password,
-          firstname: values.first_name,
-          lastname: values.last_name,
-          state: values.state,
-          city: values.city,
-          address: values.address,
-        }),
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/signup`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            username: values.username,
+            password: values.password,
+            firstname: values.first_name,
+            lastname: values.last_name,
+            state: values.state,
+            city: values.city,
+            address: values.address,
+          }),
+        }
+      )
 
       const data = await response.json()
 

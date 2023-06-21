@@ -12,7 +12,7 @@ const Signup = () => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/protected`,
+        `${process.env.API_ENDPOINT_RENDER}/api/protected`,
         {
           method: 'GET',
           headers: {

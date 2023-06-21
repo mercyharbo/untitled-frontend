@@ -50,7 +50,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/profile?userId=${userId}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
         {
           method: 'PUT',
           headers: {
@@ -115,8 +115,8 @@ const Profile = () => {
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
               src={
-                selectedImage ||
-                `https://untitled-frontend-peach.vercel.app/${userProfile?.avatarUrl}` ||
+                // selectedImage ||
+                `http://localhost:3000/${userProfile?.avatarUrl}` ||
                 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'

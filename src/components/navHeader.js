@@ -25,44 +25,22 @@ const NavHeader = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
+  const [imgUrl, setImgUrl] = useState('')
+  // Usage example
+  const [avatarBlob, setAvatarBlob] = useState(null)
+  // console.log(avatarBlob, 'as avatar blob')
 
   const token = useSelector((state) => state.user.token)
   const userProfile = useSelector((state) => state.user.userProfile)
 
-  const getUserProfile = async () => {
-    const token = localStorage.getItem('token')
-    const userId = localStorage.getItem('userId')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/profile?userId=${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-
-      if (data?.status === true) {
-        dispatch(setUserProfile(data.profile))
-        dispatch(setLoading(false))
-      } else {
-        dispatch(setLoading(false))
-        // setErrorMsg(data.error)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/logout`, {
-        method: 'POST',
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/logout`,
+        {
+          method: 'POST',
+        }
+      )
 
       const data = await response.json()
       console.log(data.status, 'data status...')
@@ -77,9 +55,60 @@ const NavHeader = () => {
     }
   }
 
+  // Function to convert image URL to Blob object
+  const urlToBlob = async (url) => {
+    try {
+      const response = await fetch(url)
+      const blob = await response.blob()
+      return blob
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
+
   useEffect(() => {
+    const fetchAvatarBlob = async () => {
+      const blob = await urlToBlob(imgUrl)
+      setAvatarBlob(blob)
+    }
+
+    fetchAvatarBlob()
+  }, [imgUrl])
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      const token = localStorage.getItem('token')
+      const userId = localStorage.getItem('userId')
+      try {
+        const response = await fetch(
+          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        const data = await response.json()
+
+        if (data?.status === true) {
+          dispatch(setUserProfile(data.profile))
+          dispatch(setLoading(false))
+          setImgUrl(data?.profile?.avatarUrl)
+        } else {
+          dispatch(setLoading(false))
+          // setErrorMsg(data.error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     getUserProfile()
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -130,16 +159,16 @@ const NavHeader = () => {
           {token && (
             <Link href={'/profile'}>
               {token ? (
-                <Image
+                <img
                   src={
-                    userProfile?.avatarUrl
-                      ? `https://untitled-frontend-peach.vercel.app/${userProfile?.avatarUrl}`
+                    avatarBlob
+                      ? URL.createObjectURL(avatarBlob)
                       : 'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
-                  width={500}
-                  height={500}
-                  className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover '
+                  // width={500}
+                  // height={500}
+                  className='rounded-full 2xl:h-[50px] 2xl:w-[50px] xl:w-[50px] xl:h-[50px] md:w-[100px] md:h-[100px] sm:w-[80px] sm:h-[80px] border-2 object-cover'
                 />
               ) : (
                 <FontAwesomeIcon icon={faUser} className='text-[25px]' />

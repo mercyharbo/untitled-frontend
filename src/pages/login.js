@@ -31,7 +31,7 @@ const Login = () => {
   const handleSubmit = async (values) => {
     try {
       const response = await fetch(
-        `https://plum-worried-anemone.cyclic.app/api/login`,
+        `${process.env.API_ENDPOINT_RENDER}/api/login`,
         {
           method: 'POST',
           headers: {
@@ -48,7 +48,6 @@ const Login = () => {
 
       if (data?.status === true) {
         setIsloading(false)
-        // console.log(data, 'as data')
         localStorage.setItem('userId', data.userId)
         localStorage.setItem('token', data.token)
         router.push('/listings')
@@ -67,7 +66,7 @@ const Login = () => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/protected`,
+        `${process.env.API_ENDPOINT_RENDER}/api/protected`,
         {
           method: 'GET',
           headers: {
