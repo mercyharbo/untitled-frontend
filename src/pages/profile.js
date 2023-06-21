@@ -50,7 +50,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
+        `${process.env.API_ENDPOINT}/api/profile?userId=${userId}`,
         {
           method: 'PUT',
           headers: {
