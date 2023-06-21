@@ -116,7 +116,7 @@ const Profile = () => {
             <Image
               src={
                 selectedImage ||
-                `${process.env.API_ENDPOINT}/${userProfile?.avatarUrl}` ||
+                `https://untitled-frontend-peach.vercel.app/${userProfile?.avatarUrl}` ||
                 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'

@@ -4,7 +4,8 @@ const nextConfig = {
     domains: [
       'images.unsplash.com',
       'via.placeholder.com',
-      'plum-worried-anemone.cyclic.app',
+      'untitled-frontend-peach.vercel.app',
+      'localhost',
     ], // Specify the domain(s) from which Next.js can fetch images
   },
   env: {
