@@ -11,7 +11,6 @@ import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@/slice/userSlice'
 
-
 const Login = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -49,9 +48,9 @@ const Login = () => {
 
       if (data?.status === true) {
         setIsloading(false)
-        // Store the token in localStorage
+        // console.log(data, 'as data')
+        localStorage.setItem('userId', data.userId)
         localStorage.setItem('token', data.token)
-        // dispatch(setToken(data.token))
         router.push('/listings')
       } else {
         setIsloading(false)

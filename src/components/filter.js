@@ -1,11 +1,16 @@
-import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const FilterListings = ({ handleFilter }) => {
+import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
+import { setFilteredListing, setListings } from '@/slice/listingSlice'
+
+const FilterListings = () => {
+  const dispatch = useDispatch()
+
   const numbers = [1, 2, 3, 4, 5]
 
-  const amenities = [
+  const amenitiesJSON = [
     'Swimming pool',
     'Garden',
     'Garage',
@@ -22,146 +27,112 @@ const FilterListings = ({ handleFilter }) => {
     'Spa or hot tub',
     'Game room',
   ]
-  const [propertyType, setPropertyType] = useState('')
-  const [budget, setBudget] = useState({})
-  const [selectedRooms, setSelectedRooms] = useState([])
-  const [selectedBathrooms, setSelectedBathrooms] = useState([])
-  const [selectedAmenities, setSelectedAmenities] = useState([])
+  const [isNewProperty, setIsNewProperty] = useState(true)
+  const [price, setPrice] = useState({})
+  const [bedrooms, setBedrooms] = useState([])
+  const [bathroom, setBathroom] = useState([])
+  const [amenities, setAmenities] = useState([])
   const [showAllAmenities, setShowAllAmenities] = useState(false)
 
+  const listings = useSelector((state) => state.listings.listings)
+  // console.log(listings)
+
   const handlePropertyTypeChange = (type) => {
-    setPropertyType(type)
+    setIsNewProperty(type)
   }
 
-  const handleBudgetChange = (value) => {
-    setBudget(value)
+  const handlepriceChange = (value) => {
+    setPrice(value)
   }
 
   const handleRoomChange = (room) => {
-    if (selectedRooms.includes(room)) {
-      setSelectedRooms(selectedRooms.filter((item) => item !== room))
+    if (bedrooms.includes(room)) {
+      setBedrooms(bedrooms.filter((item) => item !== room))
     } else {
-      setSelectedRooms([...selectedRooms, room])
+      setBedrooms([...bedrooms, room])
     }
   }
 
-  const handleBathroomChange = (bathroom) => {
-    if (selectedBathrooms.includes(bathroom)) {
-      setSelectedBathrooms(
-        selectedBathrooms.filter((item) => item !== bathroom)
-      )
+  const handleBathroomChange = (room) => {
+    if (bathroom.includes(room)) {
+      setBathroom(bathroom.filter((item) => item !== room))
     } else {
-      setSelectedBathrooms([...selectedBathrooms, bathroom])
+      setBathroom([...bathroom, room])
     }
   }
 
   const handleAmenityChange = (amenity) => {
-    if (selectedAmenities.includes(amenity)) {
-      setSelectedAmenities(selectedAmenities.filter((item) => item !== amenity))
+    if (amenities.includes(amenity)) {
+      setAmenities(amenities.filter((item) => item !== amenity))
     } else {
-      setSelectedAmenities([...selectedAmenities, amenity])
+      setAmenities([...amenities, amenity])
     }
   }
 
-  const visibleAmenities = showAllAmenities ? amenities : amenities.slice(0, 6)
+  const visibleAmenities = showAllAmenities
+    ? amenitiesJSON
+    : amenitiesJSON.slice(0, 6)
 
   const handleReset = () => {
-    setPropertyType('')
-    setBudget({})
-    setSelectedRooms([])
-    setSelectedBathrooms([])
-    setSelectedAmenities([])
+    setIsNewProperty(false)
+    setPrice({})
+    setBedrooms([])
+    setBathroom([])
+    setAmenities([])
   }
 
+  const handleFilter = () => {
+    // Construct the query based on the selected options
+    const query = {
+      isNewProperty,
+      // price,
+      bedrooms,
+      bathroom,
+      amenities,
+    }
+
+    // Convert the query object to a query string
+    const queryString = Object.keys(query)
+      .map(
+        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`
+      )
+      .join('&')
+
+    fetch(`${process.env.API_ENDPOINT_DEV}/api/listings?${queryString}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Dispatch the fetched data to the Redux store
+        dispatch(setListings(data.listings))
+      })
+      .catch((error) => {
+        console.error('Error fetching filtered listings:', error)
+      })
+  }
 
   return (
     <main className='w-full flex flex-col gap-5 lg:p-5'>
       <div className='flex flex-col gap-5'>
-        <h1 className='lg:text-xl '>Property Type</h1>
-        <header className='grid  lg:grid-cols-2 lg:gap-4 md:grid-cols-4 md:gap-5 sm:gap-2 cursor-pointer '>
-          <div
-            className={`bg-[#e7ecef] shadow-2xl rounded-lg p-2 flex flex-col justify-center items-center gap-2 ${
-              propertyType === 'housing' ? 'bg-[#F30A49]' : 'bg-white'
-            }`}
-            onClick={() => handlePropertyTypeChange('housing')}
-          >
-            <Image
-              src={'/filterImage1.png'}
-              alt='Homes png'
-              width={500}
-              height={500}
-              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
-            />
-            <span className=''>Housing</span>
-          </div>
-          <div
-            className={`bg-[#e7ecef] shadow-2xl rounded-lg p-2 flex flex-col justify-center items-center gap-2 ${
-              propertyType === 'commercial' ? 'bg-[#F30A49]' : 'bg-white'
-            }`}
-            onClick={() => handlePropertyTypeChange('commercial')}
-          >
-            <Image
-              src={'/filterImage4.png'}
-              alt='Homes png'
-              width={500}
-              height={500}
-              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
-            />
-            <span className=''>Commercial</span>
-          </div>
-          <div
-            className={`bg-[#e7ecef] shadow-2xl rounded-lg p-2 flex flex-col justify-center items-center gap-2 ${
-              propertyType === 'lands' ? 'bg-[#F30A49]' : 'bg-white'
-            }`}
-            onClick={() => handlePropertyTypeChange('lands')}
-          >
-            <Image
-              src={'/filterImage3.png'}
-              alt='Homes png'
-              width={500}
-              height={500}
-              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
-            />
-            <span className=''>Lands</span>
-          </div>
-          <div
-            className={`bg-[#e7ecef] shadow-2xl rounded-lg p-2 flex flex-col justify-center items-center gap-2 ${
-              propertyType === 'apartment' ? 'bg-[#F30A49]' : 'bg-white'
-            }`}
-            onClick={() => handlePropertyTypeChange('apartment')}
-          >
-            <Image
-              src={'/filterImage5.png'}
-              alt='Homes png'
-              width={500}
-              height={500}
-              className='lg:w-[30px] lg:h-[30px] md:w-[30px] md:h-[30px] sm:w-[30px] sm:h-[30px] '
-            />
-            <span className=''>Apartment</span>
-          </div>
-        </header>
-
-        <div className='budget'>
-          <h1 className=''> Budget </h1>
-          <PriceRangeFilter onChange={handleBudgetChange} />
+        <div className='price'>
+          <h1 className=''> price </h1>
+          <PriceRangeFilter onChange={handlepriceChange} />
         </div>
 
         <div className='flex flex-col gap-5'>
           <h1>Property Type</h1>
           <div className='flex gap-4'>
             <button
-              className={`bg-transparent border py-2 px-4 rounded-md ${
-                propertyType === 'newlyBuilt' ? 'bg-[#F30A49]' : ''
+              className={`border py-2 px-4 rounded-md text-sm ${
+                isNewProperty === true ? 'bg-[#F30A49] text-white' : ''
               }`}
-              onClick={() => handlePropertyTypeChange('newlyBuilt')}
+              onClick={() => handlePropertyTypeChange(true)}
             >
               Newly Built
             </button>
             <button
-              className={`bg-transparent border py-2 px-4 rounded-md ${
-                propertyType === 'usedProperty' ? 'bg-[#F30A49]' : ''
+              className={`border py-2 px-4 rounded-md text-sm ${
+                isNewProperty === false ? 'bg-[#F30A49] text-white' : ''
               }`}
-              onClick={() => handlePropertyTypeChange('usedProperty')}
+              onClick={() => handlePropertyTypeChange(false)}
             >
               Used Property
             </button>
@@ -171,15 +142,15 @@ const FilterListings = ({ handleFilter }) => {
 
       <div className='flex flex-col gap-2'>
         <h1 className=''>Bedrooms</h1>
-        <div className='flex gap-5'>
+        <div className='flex flex-wrap gap-5'>
           {numbers.map((num, index) => {
-            const isSelected = selectedRooms.includes(num)
+            const isSelected = bedrooms.includes(num)
             return (
               <button
                 key={index}
                 type='button'
-                className={`bg-transparent border p-1 px-3 rounded-md ${
-                  isSelected ? 'bg-[#F30A49]' : ''
+                className={`border p-1 px-3 rounded-md ${
+                  isSelected ? 'bg-[#F30A49] text-white' : ''
                 }`}
                 onClick={() => handleRoomChange(num)}
               >
@@ -192,15 +163,15 @@ const FilterListings = ({ handleFilter }) => {
 
       <div className='flex flex-col gap-2'>
         <h1 className=''>Bathrooms</h1>
-        <div className='flex gap-5'>
+        <div className='flex flex-wrap gap-5'>
           {numbers.map((num, index) => {
-            const isSelected = selectedBathrooms.includes(num)
+            const isSelected = bathroom.includes(num)
             return (
               <button
                 key={index}
                 type='button'
-                className={`bg-transparent border p-1 px-3 rounded-md ${
-                  isSelected ? 'bg-[#F30A49]' : ''
+                className={`border p-1 px-3 rounded-md ${
+                  isSelected ? 'bg-[#F30A49] text-white' : ''
                 }`}
                 onClick={() => handleBathroomChange(num)}
               >
@@ -219,7 +190,7 @@ const FilterListings = ({ handleFilter }) => {
               {amenity}
               <input
                 type='checkbox'
-                checked={selectedAmenities.includes(amenity)}
+                checked={amenities.includes(amenity)}
                 onChange={() => handleAmenityChange(amenity)}
                 className='w-[15px] '
               />
@@ -239,21 +210,14 @@ const FilterListings = ({ handleFilter }) => {
       <div className='flex justify-end items-end gap-4 w-full '>
         <button
           type='button'
+          onClick={() => handleReset()}
           className='bg-[#F30A49] text-white font-semibold border py-2 px-4 rounded-md'
         >
           Reset
         </button>
         <button
           type='button'
-          onClick={() =>
-            handleFilter({
-              propertyType,
-              budget,
-              selectedRooms,
-              selectedBathrooms,
-              selectedAmenities,
-            })
-          }
+          onClick={() => handleFilter()}
           className='bg-[#F30A49] text-white font-semibold border py-2 px-4 rounded-md'
         >
           Save

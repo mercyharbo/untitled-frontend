@@ -31,19 +31,23 @@ const NavHeader = () => {
 
   const getUserProfile = async () => {
     const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/profile`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}/api/profile?userId=${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
 
       const data = await response.json()
 
       if (data?.status === true) {
-        dispatch(setUserProfile(data.user))
+        dispatch(setUserProfile(data.profile))
         dispatch(setLoading(false))
       } else {
         dispatch(setLoading(false))
@@ -128,9 +132,9 @@ const NavHeader = () => {
               {token ? (
                 <Image
                   src={
-                    userProfile.avatarUrl
-                      ? userProfile.avatarUrl
-                      : 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                    userProfile?.avatarUrl
+                      ? `${process.env.API_ENDPOINT}/${userProfile?.avatarUrl}`
+                      : 'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
                   width={500}

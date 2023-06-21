@@ -39,22 +39,32 @@ const Profile = () => {
     }
   }
 
-  const updateUserProfile = async () => {
+  const updateUserProfile = async (values) => {
     const token = localStorage.getItem('token')
-    const updatedProfile = { ...userProfile, avatarUrl: selectedImage }
+    const userId = localStorage.getItem('userId')
+    const updatedProfile = {
+      ...userProfile,
+      ...values,
+      avatarUrl: selectedImage,
+    }
+
     try {
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedProfile),
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedProfile),
+        }
+      )
 
       const data = await response.json()
 
       if (data?.status === true) {
+        dispatch(setUserProfile({ updatedProfile }))
         dispatch(setLoading(false))
         toast.success(data.message, {
           position: 'top-right',
@@ -83,35 +93,6 @@ const Profile = () => {
     }
   }
 
-  const getProtectedRoute = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/protected`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-      if (data.status === true) {
-        console.log('You are authenticated')
-      } else {
-        router.push('/login')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    getProtectedRoute()
-  }, [])
-
   if (loading) {
     return <p className=''>Loading...</p>
   }
@@ -119,7 +100,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title> Untitled Realty | {userProfile.username}</title>
+        <title> Untitled Realty | {userProfile?.profile?.username}</title>
         <meta
           name='description'
           content='Access the exclusive realtor login at Untitled Realty and unlock your dream home. Discover personalized listings, powerful tools, and expert guidance to make your real estate journey a success. Join our network of top realtors and gain an edge in the competitive housing market.'
@@ -135,7 +116,7 @@ const Profile = () => {
             <Image
               src={
                 selectedImage ||
-                userProfile.avatarUrl ||
+                `${process.env.API_ENDPOINT}/${userProfile?.avatarUrl}` ||
                 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'
@@ -144,32 +125,17 @@ const Profile = () => {
               className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
               sm:w-[100px] sm:h-[100px] '
             />
-            {/* <div className='flex flex-row justify-start items-start gap-5'>
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleImageUpload}
-                className='hidden'
-                id='upload-input'
-              />
-              <label
-                htmlFor='upload-input'
-                className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer flex justify-center items-center hover:bg-[#F30A49] hover:text-white'
-              >
-                Upload
-              </label>
-            </div> */}
           </div>
 
           <div className='flex flex-col justify-center items-center gap-2'>
             <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-2xl '>
-              {userProfile.firstname} {userProfile.lastname}
+              {userProfile?.firstname} {userProfile?.lastname}
             </h1>
             <span className='text-base text-gray-400'>
-              {userProfile.username}
+              {userProfile?.username}
             </span>
             <p className='2xl:w-[60%] text-center text-base '>
-              {userProfile.bio}
+              {userProfile?.bio}
             </p>
           </div>
           <div className='flex justify-center items-center gap-3'>
@@ -221,7 +187,7 @@ const Profile = () => {
 
         {profileTab === 'listings' && (
           <section className='grid 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-            {userProfile.listings.map((userListing) => {
+            {userProfile?.listings?.map((userListing) => {
               return (
                 <article
                   key={userListing.id}
@@ -266,7 +232,7 @@ const Profile = () => {
                 <Image
                   src={
                     selectedImage ||
-                    userProfile.avatarUrl ||
+                    `${process.env.API_ENDPOINT}/${userProfile?.avatarUrl}` ||
                     'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
@@ -309,14 +275,6 @@ const Profile = () => {
                       name='bio'
                       rows={4}
                       cols={50}
-                      value={userProfile.bio}
-                      onChange={(e) => {
-                        const updatedProfile = {
-                          ...userProfile,
-                          bio: e.target.value,
-                        }
-                        dispatch(setUserProfile(updatedProfile))
-                      }}
                       className='border border-gray-400 outline-none p-2 rounded-lg'
                     />
                   </div>
@@ -325,17 +283,9 @@ const Profile = () => {
                       <label htmlFor='username' className='font-medium'>
                         Username
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='username'
-                        value={userProfile.username}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            username: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -347,7 +297,6 @@ const Profile = () => {
                       <Field
                         type='email'
                         name='email'
-                        value={userProfile.email}
                         disabled
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
@@ -359,17 +308,9 @@ const Profile = () => {
                       <label htmlFor='firstname' className='font-medium'>
                         First name
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='firstname'
-                        value={userProfile.firstname}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            firstname: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -377,17 +318,9 @@ const Profile = () => {
                       <label htmlFor='lastname' className='font-medium'>
                         Last Name
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='lastname'
-                        value={userProfile.lastname}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            lastname: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -398,17 +331,9 @@ const Profile = () => {
                       <label htmlFor='address' className='font-medium'>
                         Address
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='address'
-                        value={userProfile.address}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            address: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -416,17 +341,9 @@ const Profile = () => {
                       <label htmlFor='state' className='font-medium'>
                         State
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='state'
-                        value={userProfile.state}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            state: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -437,17 +354,9 @@ const Profile = () => {
                       <label htmlFor='phoneNumber' className='font-medium'>
                         Phone Number
                       </label>
-                      <input
+                      <Field
                         type='text'
                         name='phoneNumber'
-                        value={userProfile.phoneNumber}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            phoneNumber: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>
@@ -455,18 +364,10 @@ const Profile = () => {
                       <label htmlFor='dob' className='font-medium'>
                         Date of birth
                       </label>
-                      <input
+                      <Field
                         type='date'
                         id='dob'
                         name='dob'
-                        value={userProfile.dob}
-                        onChange={(e) => {
-                          const updatedProfile = {
-                            ...userProfile,
-                            dob: e.target.value,
-                          }
-                          dispatch(setUserProfile(updatedProfile))
-                        }}
                         className='border border-gray-400 h-[45px] w-full indent-3 outline-none rounded-lg'
                       />
                     </div>

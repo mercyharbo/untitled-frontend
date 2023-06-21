@@ -20,10 +20,10 @@ const ListView = ({ searchQuery }) => {
       md:justify-center md:items-center md:gap-8 md:px-5 sm:flex-col sm:gap-7 sm:px-5 '
     >
       {listings
-        .filter((homes) =>
+        ?.filter((homes) =>
           homes?.title?.toLowerCase()?.includes(searchQuery?.toLowerCase())
         )
-        .map((homes) => {
+        ?.map((homes) => {
           const formattedPrice = homes?.price?.toLocaleString('en-US', {
             style: 'currency',
             currency: 'NGN',
@@ -31,8 +31,8 @@ const ListView = ({ searchQuery }) => {
 
           return (
             <Link
-              key={homes.id}
-              href={`/listings/${homes.id}`}
+              key={homes._id}
+              href={`/listings/${homes._id}`}
               className='flex bg-white shadow-2xl rounded-xl relative lg:w-full md:flex-row md:justify-start md:items-center md:gap-5 md:p-5 sm:p-5 sm:flex-col 
                 sm:gap-3'
             >

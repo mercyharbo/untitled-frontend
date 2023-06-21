@@ -58,14 +58,11 @@ export default function Home() {
   const [selectedAmenities, setSelectedAmenities] = useState([])
 
   const loading = useSelector((state) => state.listings.loading)
-  const listings = useSelector((state) => state.listings.listings)
-  const perPage = useSelector((state) => state.listings.perPage)
-  const total = useSelector((state) => state.listings.total)
 
   const getListings = async (page) => {
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings?page=${page}`,
+        `${process.env.API_ENDPOINT}/api/listings?page=${page}`,
         {
           method: 'GET',
           headers: {
@@ -88,33 +85,33 @@ export default function Home() {
     }
   }
 
-  const getProtectedRoute = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/protected`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+  // const getProtectedRoute = async () => {
+  //   const token = localStorage.getItem('token')
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.API_ENDPOINT}/api/protected`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     )
 
-      const data = await response.json()
-      if (data.status === true) {
-        console.log('You are authenticated')
-      } else {
-        router.push('/login')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  //     const data = await response.json()
+  //     if (data.status === true) {
+  //       console.log('You are authenticated')
+  //     } else {
+  //       router.push('/login')
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   useEffect(() => {
-    getProtectedRoute()
+    // getProtectedRoute()
     getListings(currentPage)
   }, [currentPage])
 
@@ -151,7 +148,7 @@ export default function Home() {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='flex relative  2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 lg:flex-row md:flex-col-reverse md:px-5 sm:px-5 sm:py-5 '>
+      <main className='flex relative 2xl:px-14 xl:px-5 lg:px-5 lg:py-10 lg:gap-5 lg:flex-row md:flex-col-reverse md:px-5 sm:px-5 sm:py-5 '>
         {mobileFilter && (
           <article className='bg-white p-5 absolute top-0 left-0 w-full h-auto z-10 '>
             <header className='flex justify-between items-center'>
@@ -329,7 +326,7 @@ export default function Home() {
         </section>
 
         <section
-          className={`flex bg-white shadow-2xl rounded-xl xl:w-[20%] lg:w-[30%] lg:flex lg:flex-col lg:justify-start lg:items-start lg:gap-4 md:hidden sm:hidden ${
+          className={`flex bg-white shadow-2xl rounded-xl xl:w-[20%] lg:w-[30%] lg:flex lg:flex-col lg:gap-4 md:hidden sm:hidden ${
             mobileFilter ? 'mt-72' : ''
           }`}
         >

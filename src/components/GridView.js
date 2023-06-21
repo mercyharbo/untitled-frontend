@@ -16,14 +16,14 @@ const GridView = ({ searchQuery }) => {
   return (
     <article className='bg-white shadow-2xl rounded-2xl grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
       {listings
-        .filter((homes) =>
+        ?.filter((homes) =>
           homes.title?.toLowerCase().includes(searchQuery?.toLowerCase())
         )
-        .map((homes) => {
+        ?.map((homes) => {
           return (
             <Link
-              key={homes.id}
-              href={`/listing/${homes.id}`}
+              key={homes._id}
+              href={`/listing/${homes._id}`}
               className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
             >
               <Image
