@@ -93,8 +93,42 @@ const Profile = () => {
     }
   }
 
+  useEffect(() => {
+    const getUserProfile = async () => {
+      const token = localStorage.getItem('token')
+      const userId = localStorage.getItem('userId')
+      try {
+        const response = await fetch(
+          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        const data = await response.json()
+
+        if (data?.status === true) {
+          dispatch(setUserProfile(data.profile))
+          dispatch(setLoading(false))
+          setImgUrl(data?.profile?.avatarUrl)
+        } else {
+          dispatch(setLoading(false))
+          // setErrorMsg(data.error)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getUserProfile()
+  }, [dispatch])
+
   if (loading) {
-    return <p className=''>Loading...</p>
+    return <p className='p-10 text-4xl'>Loading...</p>
   }
 
   return (
