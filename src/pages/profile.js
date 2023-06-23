@@ -157,7 +157,7 @@ const Profile = () => {
               width={500}
               height={500}
               className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
-              sm:w-[100px] sm:h-[100px] '
+              sm:w-[120px] sm:h-[120px] '
             />
           </div>
 
