@@ -64,7 +64,7 @@ const Profile = () => {
       const data = await response.json()
 
       if (data?.status === true) {
-        dispatch(setUserProfile({ updatedProfile }))
+        dispatch(setUserProfile(updatedProfile))
         dispatch(setLoading(false))
         toast.success(data.message, {
           position: 'top-right',
@@ -149,8 +149,8 @@ const Profile = () => {
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
               src={
-                // selectedImage ||
-                `http://localhost:3000/${userProfile?.avatarUrl}` ||
+                selectedImage ||
+                `/${userProfile?.avatarUrl}` ||
                 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'
@@ -166,7 +166,7 @@ const Profile = () => {
               {userProfile?.firstname} {userProfile?.lastname}
             </h1>
             <span className='text-base text-gray-400'>
-              {userProfile?.username}
+              @{userProfile?.username}
             </span>
             <p className='2xl:w-[60%] text-center text-base '>
               {userProfile?.bio}
@@ -266,7 +266,7 @@ const Profile = () => {
                 <Image
                   src={
                     selectedImage ||
-                    `${process.env.API_ENDPOINT}/${userProfile?.avatarUrl}` ||
+                    `/${userProfile?.avatarUrl}` ||
                     'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
