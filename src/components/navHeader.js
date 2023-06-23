@@ -117,7 +117,7 @@ const NavHeader = () => {
 
   return (
     <main>
-      <nav className='relative w-full bg-[#090030] text-white shadow-xl flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
+      <nav className=' w-full bg-[#090030] text-white shadow-xl flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
@@ -161,8 +161,8 @@ const NavHeader = () => {
               {token ? (
                 <img
                   src={
-                    avatarBlob
-                      ? URL.createObjectURL(avatarBlob)
+                    userProfile.avatarUrl
+                      ? userProfile?.avatarUrl
                       : 'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'

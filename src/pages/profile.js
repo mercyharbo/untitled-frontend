@@ -114,7 +114,7 @@ const Profile = () => {
         if (data?.status === true) {
           dispatch(setUserProfile(data.profile))
           dispatch(setLoading(false))
-          setImgUrl(data?.profile?.avatarUrl)
+          // setImgUrl(data?.profile?.avatarUrl)
         } else {
           dispatch(setLoading(false))
           // setErrorMsg(data.error)
@@ -150,7 +150,7 @@ const Profile = () => {
             <Image
               src={
                 selectedImage ||
-                `/${userProfile?.avatarUrl}` ||
+                userProfile?.avatarUrl ||
                 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'
