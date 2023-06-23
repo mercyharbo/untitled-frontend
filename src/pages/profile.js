@@ -268,7 +268,7 @@ const Profile = () => {
                 <Image
                   src={
                     selectedImage ||
-                    `/${userProfile?.avatarUrl}` ||
+                    userProfile?.avatarUrl ||
                     'https://via.placeholder.com/500'
                   }
                   alt='Profile Picture'
