@@ -59,32 +59,6 @@ export default function Home() {
 
   const loading = useSelector((state) => state.listings.loading)
 
-  const getListings = async (page) => {
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        dispatch(setListings(data.listings))
-        dispatch(setTotal(data.total))
-        dispatch(setLoading(false))
-        dispatch(setTotalPages(data.totalPages))
-      } else {
-        console.log('there is an error')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   // const getProtectedRoute = async () => {
   //   const token = localStorage.getItem('token')
   //   try {
@@ -111,7 +85,32 @@ export default function Home() {
   // }
 
   useEffect(() => {
-    // getProtectedRoute()
+    const getListings = async (page) => {
+      try {
+        const response = await fetch(
+          `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        const data = await response.json()
+
+        if (data.status === true) {
+          dispatch(setListings(data.listings))
+          dispatch(setTotal(data.total))
+          dispatch(setLoading(false))
+          dispatch(setTotalPages(data.totalPages))
+        } else {
+          console.log('there is an error')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     getListings(currentPage)
   }, [currentPage])
 

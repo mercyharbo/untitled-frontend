@@ -145,7 +145,7 @@ const Profile = () => {
         className='2xl:w-[70%] 2xl:my-10 xl:w-[70%] lg:p-10 md:w-[90%] md:p-10 md:my-10 sm:p-5 sm:w-[100%] sm:py-10 flex flex-col justify-start items-start gap-4 
       bg-white shadow-2xl rounded-lg mx-auto relative  '
       >
-        <header className='flex flex-col justify-center items-center gap-5'>
+        <header className='flex flex-col justify-center items-center gap-5 mx-auto'>
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
               src={

@@ -74,7 +74,7 @@ export default function Home() {
     }
 
     getListings()
-  }, [dispatch])
+  }, [])
 
   return (
     <main className='overflow-hidden'>
