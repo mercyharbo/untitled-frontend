@@ -134,7 +134,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title> Untitled Realty | {userProfile?.profile?.username}</title>
+        <title> Untitled Realty | {userProfile?.username}</title>
         <meta
           name='description'
           content='Access the exclusive realtor login at Untitled Realty and unlock your dream home. Discover personalized listings, powerful tools, and expert guidance to make your real estate journey a success. Join our network of top realtors and gain an edge in the competitive housing market.'
@@ -162,12 +162,14 @@ const Profile = () => {
           </div>
 
           <div className='flex flex-col justify-center items-center gap-2'>
-            <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-2xl '>
-              {userProfile?.firstname} {userProfile?.lastname}
-            </h1>
-            <span className='text-base text-gray-400'>
-              @{userProfile?.username}
-            </span>
+            <div className='flex flex-col gap-1 justify-center items-center'>
+              <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-4xl '>
+                {userProfile?.firstname} {userProfile?.lastname}
+              </h1>
+              <span className='text-base text-gray-400 font-medium'>
+                @{userProfile?.username}
+              </span>
+            </div>
             <p className='2xl:w-[60%] text-center text-base '>
               {userProfile?.bio}
             </p>
