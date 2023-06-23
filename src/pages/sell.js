@@ -2,8 +2,7 @@ import { faStar } from '@fortawesome/free-regular-svg-icons'
 import {
   faBed,
   faBuilding,
-  faChevronCircleLeft,
-  faChevronCircleRight,
+
   faLocationDot,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
@@ -21,13 +20,13 @@ import {
 } from '@/slice/listingSlice'
 import usePagination from '@/hooks/usePagination'
 
-const Rent = () => {
+const ListingsForSell = () => {
   const dispatch = useDispatch()
 
   const listings = useSelector((state) => state.listings.listings)
 
   //   useEffect(() => {
-  //     const getRentingListings = async (page) => {
+  //     const getSellingListings = async (page) => {
   //       try {
   //         const response = await fetch(
   //           `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
@@ -52,20 +51,20 @@ const Rent = () => {
   //       }
   //     }
 
-  //     getRentingListings()
+  //     getSellingListings()
   //   }, [dispatch])
 
   return (
     <main className='lg:p-10 md:p-10 sm:p-5'>
       <p className='font-semibold py-4 text-xl'>
-        {listings?.filter((homes) => homes.isPropertyForSale !== true).length}{' '}
+        {listings?.filter((homes) => homes.isPropertyForSale === true).length}{' '}
         <span className='text-base font-normal'>
-          listings available for rent
+          listings available for ListingsForSell
         </span>
       </p>
       <article className='bg-white shadow-2xl rounded-2xl grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
         {listings
-          ?.filter((homes) => homes.isPropertyForSale !== true)
+          ?.filter((homes) => homes.isPropertyForSale === true)
           ?.map((homes) => {
             return (
               <Link
@@ -106,7 +105,9 @@ const Rent = () => {
                       </span>
                       <span className='flex items-center gap-1 font-medium text-sm'>
                         <FontAwesomeIcon icon={faStar} color='grey' />
-                        {homes.isPropertyForSale === true ? 'Sale' : 'Rent'}
+                        {homes.isPropertyForSale === true
+                          ? 'Sale'
+                          : 'ListingsForSell'}
                       </span>
                       <p className='font-medium flex items-center gap-2 text-sm'>
                         <FontAwesomeIcon icon={faBed} color='grey' />
@@ -135,4 +136,4 @@ const Rent = () => {
   )
 }
 
-export default Rent
+export default ListingsForSell

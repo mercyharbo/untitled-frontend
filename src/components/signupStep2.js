@@ -100,7 +100,7 @@ const SignupStep2 = () => {
               <ErrorMessage
                 name='username'
                 component='div'
-                className='font-medium text-red-500'
+                className='font-medium text-[#F30A49]'
               />
             </div>
 
@@ -119,7 +119,7 @@ const SignupStep2 = () => {
               <ErrorMessage
                 name='password'
                 component='div'
-                className='font-medium text-red-500'
+                className='font-medium text-[#F30A49]'
               />
             </div>
 
@@ -139,7 +139,7 @@ const SignupStep2 = () => {
                 <ErrorMessage
                   name='first_name'
                   component='div'
-                  className='font-medium text-red-500'
+                  className='font-medium text-[#F30A49]'
                 />
               </div>
               <div className='flex flex-col justify-start items-start gap-2'>
@@ -157,7 +157,7 @@ const SignupStep2 = () => {
                 <ErrorMessage
                   name='last_name'
                   component='div'
-                  className='font-medium text-red-500'
+                  className='font-medium text-[#F30A49]'
                 />
               </div>
             </div>
@@ -177,7 +177,7 @@ const SignupStep2 = () => {
                 <ErrorMessage
                   name='state'
                   component='div'
-                  className='font-medium text-red-500'
+                  className='font-medium text-[#F30A49]'
                 />
               </div>
               <div className='flex flex-col justify-start items-start gap-2'>
@@ -195,7 +195,7 @@ const SignupStep2 = () => {
                 <ErrorMessage
                   name='city'
                   component='div'
-                  className='font-medium text-red-500'
+                  className='font-medium text-[#F30A49]'
                 />
               </div>
             </div>
@@ -215,24 +215,27 @@ const SignupStep2 = () => {
               <ErrorMessage
                 name='address'
                 component='div'
-                className='font-medium text-red-500'
+                className='font-medium text-[#F30A49]'
               />
             </div>
 
             <button
               type='submit'
-              className='h-[40px] w-full rounded-lg bg-blue-500 text-white font-medium cursor-pointer'
+              className='h-[40px] w-full rounded-lg bg-[#F30A49] text-white font-medium cursor-pointer'
               // disabled={isLoading || isSubmitting}
             >
               Create account
             </button>
 
             {errorMsg && (
-              <div className='font-medium text-red-500'>{errorMsg}</div>
+              <div className='font-medium text-[#F30A49]'>{errorMsg}</div>
             )}
             <p className='text-sm'>
-              By submitting, I accept Me
-              <Link href={'/terms&condition'}>terms of use</Link>.
+              By submitting, I accept to the
+              <Link href={'/terms&condition'} className='text-[#F30A49] '>
+                terms of use
+              </Link>
+              .
             </p>
           </Form>
         )}
