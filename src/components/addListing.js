@@ -69,21 +69,24 @@ const AddListingModal = () => {
   const handleSubmit = async (values) => {
     try {
       // Perform the post request to the backend with the collected form values
-      const response = await fetch(`${process.env.API_ENDPOINT}/api/listings`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...values,
-          bedrooms: bedrooms,
-          bathroom: bathrooms,
-          isNewProperty: isNewProperty,
-          isPropertyForSale: isPropertyForSale,
-          amenities: selectedAmenities,
-          images: previewPictures,
-        }),
-      })
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_DEV}/api/listings`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...values,
+            bedrooms: bedrooms,
+            bathroom: bathrooms,
+            isNewProperty: isNewProperty,
+            isPropertyForSale: isPropertyForSale,
+            amenities: selectedAmenities,
+            images: previewPictures,
+          }),
+        }
+      )
 
       const data = await response.json()
 
@@ -132,7 +135,7 @@ const AddListingModal = () => {
       className={`fixed inset-0 z-50 flex justify-center items-center bg-[#000000dd] overflow-auto bg-opacity-50 ${
         addListingModal ? '' : 'hidden'
       }`}
-    //   onClick={() => dispatch(setAddListingModal(false))}
+      //   onClick={() => dispatch(setAddListingModal(false))}
     >
       <main
         className=' flex flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:relative 2xl:top-[0] 2xl:left-[0] 2xl:w-[60%] 
@@ -457,6 +460,7 @@ const AddListingModal = () => {
                       </li>
                     )
                   })}
+                  {/* <li className='text-[#F30A49]'>{errorMsg}</li> */}
                 </div>
 
                 <div className='flex justify-center items-center gap-4 ml-auto '>

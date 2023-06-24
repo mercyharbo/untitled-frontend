@@ -5,8 +5,6 @@ import { useSelector } from 'react-redux'
 const HeaderFilter = ({
   setActiveTab,
   setMobileFilter,
-  setSearchQuery,
-  searchQuery,
   handleGridViewClick,
   handleListViewClick,
   activeTab,
@@ -15,66 +13,22 @@ const HeaderFilter = ({
 
   return (
     <main className=''>
-      <article className='tabs flex lg:flex-row lg:justify-between lg:items-center sm:flex-col sm:gap-5 '>
-        <div className='flex lg:flex-row lg:justify-start lg:items-center md:justify-start md:items-center md:gap-8 sm:flex-row sm:justify-between sm:gap-5'>
-          <button
-            type='button'
-            onClick={() => setActiveTab('All Listings')}
-            className={`lg:text-lg font-semibold relative ${
-              activeTab === 'All Listings'
-                ? 'text-[#023047] absolute lg:after:w-1/2 lg:after:h-[10px] md:after:top-10 sm:after:top-7 border-b-4 border-[#023047] lg:after:top-4 left-0 '
-                : ''
-            }`}
-          >
-            All Listings
-          </button>
-          <button
-            type='button'
-            onClick={() => setActiveTab('Recently Added')}
-            className={`lg:text-lg font-semibold ${
-              activeTab === 'Recently Added'
-                ? 'text-[#023047] relative after:absolute after:w-1/2 after:h-[10px] border-b-4 border-[#023047] after:top-4 left-0 '
-                : ''
-            }`}
-          >
-            Recently Added
-          </button>
-          <button
-            type='button'
-            onClick={() => setActiveTab('Featured')}
-            className={`lg:text-lg font-semibold ${
-              activeTab === 'Featured'
-                ? 'text-[#023047] relative after:absolute after:w-1/2 after:h-[10px] border-b-4 border-[#023047] after:top-4 left-0 '
-                : ''
-            }`}
-          >
-            Featured
-          </button>
-        </div>
-
-        <div className='relative'>
-          <input
-            type='text'
-            name='search'
-            placeholder='Search property'
-            className='lg:h-[45px] lg:w-[350px] sm:w-full sm:h-[50px] border rounded-full indent-3 '
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </article>
+    
 
       <article className='flex sm:justify-between sm:items-center md:justify-between md:items-center lg:justify-between lg:items-center relative py-4'>
-        <button
+        {/* <button
           type='button'
           onClick={() => setMobileFilter(true)}
           className='outline-none lg:hidden md:flex sm:flex'
         >
           <FontAwesomeIcon icon={faFilter} className='text-[25px]' />
-        </button>
+        </button> */}
 
-        <h1 className='flex justify-start items-center gap-2 2xl:text-2xl'>
-          Total: {listing?.length}
+        <h1 className='flex justify-start items-center gap-2 2xl:text-2xl xl:text-2xl lg:text-2xl'>
+          Properties{' '}
+          <span className='text-lg text-gray-500 font-semibold'>
+            {listing?.length} Results
+          </span>
         </h1>
 
         <div className='flex justify-end items-center gap-4'>

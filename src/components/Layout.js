@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import NavHeader from './navHeader'
 import { useSelector } from 'react-redux'
 import AddListingModal from './addListing'
+import SideBar from './sidebar'
 
 const Layout = ({ children }) => {
   const router = useRouter()
@@ -38,9 +39,11 @@ const Layout = ({ children }) => {
       exit='exit'
       variants={variants}
     >
-      <NavHeader />
+      {/* <NavHeader /> */}
+
       {addListingModal && <AddListingModal />}
 
+      {/* <SideBar /> */}
       <section>{children}</section>
     </motion.main>
   )

@@ -21,6 +21,7 @@ import { motion } from 'framer-motion'
 
 import Carousel from '@/components/Carousel'
 import { setListings, setLoading } from '@/slice/listingSlice'
+import NavHeader from '@/components/navHeader'
 
 const TestimonialJSON = [
   {
@@ -78,6 +79,7 @@ export default function Home() {
 
   return (
     <main className='overflow-hidden'>
+      <NavHeader />
       <section
         className='relative flex bg-[#090030] text-white shadow-2xl 2xl:grid-cols-2 xl:place-items-center xl:grid-cols-2 
        xl:p-0 lg:grid-cols-2 md:flex-row sm:flex-col-reverse'

@@ -11,14 +11,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
-const ListView = ({ searchQuery }) => {
+const ListView = () => {
   const listings = useSelector((state) => state.listings.listings)
+  const searchQuery = useSelector((state) => state.user.searchQuery)
 
   return (
-    <article
-      className='bg-white shadow-2xl rounded-2xl flex w-full lg:flex-col lg:justify-start lg:items-start lg:gap-5 lg:py-5 lg:px-5 md:flex-col 
-      md:justify-center md:items-center md:gap-8 md:px-5 sm:flex-col sm:gap-7 sm:px-5 '
-    >
+    <article className='flex flex-col gap-8 '>
       {listings
         ?.filter((homes) =>
           homes?.title?.toLowerCase()?.includes(searchQuery?.toLowerCase())

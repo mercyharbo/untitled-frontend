@@ -10,11 +10,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
-const GridView = ({ searchQuery }) => {
+const GridView = () => {
   const listings = useSelector((state) => state.listings.listings)
+  const searchQuery = useSelector((state) => state.user.searchQuery)
 
   return (
-    <article className='bg-white shadow-2xl rounded-2xl grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 lg:p-5 md:grid-cols-2 md:p-5 sm:grid-cols-1 sm:p-5 sm:gap-5'>
+    <article className='grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
       {listings
         ?.filter((homes) =>
           homes.title?.toLowerCase().includes(searchQuery?.toLowerCase())
@@ -23,7 +24,7 @@ const GridView = ({ searchQuery }) => {
           return (
             <Link
               key={homes._id}
-              href={`/listing/${homes._id}`}
+              href={`/listings/${homes._id}`}
               className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
             >
               <Image
