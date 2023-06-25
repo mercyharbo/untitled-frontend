@@ -1,5 +1,3 @@
-import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -7,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faChevronCircleLeft,
   faChevronCircleRight,
-  faClose,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -17,46 +14,19 @@ import {
   setTotalPages,
 } from '@/slice/listingSlice'
 
-import FilterListings from '@/components/filter'
 import ListView from '@/components/ListView'
 import GridView from '@/components/GridView'
 import HeaderFilter from '@/components/topHeader'
-import PriceRangeFilter from '@/hooks/BudgetRangeSlider'
 import usePagination from '@/hooks/usePagination'
 import DashboardLayout from '@/components/DashboardLayout'
 
 export default function Home() {
-  const router = useRouter()
   const dispatch = useDispatch()
   const { currentPage, totalPages, goToPreviousPage, goToNextPage } =
     usePagination()
 
-  const numbers = [1, 2, 3, 4, 5]
-
-  const amenities = [
-    'Swimming pool',
-    'Garden',
-    'Garage',
-    'Fireplace',
-    'Balcony',
-    'Fitness center',
-    'Home theater',
-    'Study room',
-    'Laundry room',
-    'Walk-in closet',
-    'Smart home technology',
-    'Security system',
-    'Outdoor BBQ area',
-    'Spa or hot tub',
-    'Game room',
-  ]
-
-  const [searchQuery, setSearchQuery] = useState('')
   const [activeTab, setActiveTab] = useState('All Listings')
   const [viewMode, setViewMode] = useState('list')
-  const [mobileFilter, setMobileFilter] = useState(false)
-
-  const [selectedAmenities, setSelectedAmenities] = useState([])
 
   const loading = useSelector((state) => state.listings.loading)
 
@@ -123,35 +93,24 @@ export default function Home() {
     setViewMode('grid')
   }
 
-  const handleAmenityChange = (amenity) => {
-    if (selectedAmenities.includes(amenity)) {
-      setSelectedAmenities(selectedAmenities.filter((item) => item !== amenity))
-    } else {
-      setSelectedAmenities([...selectedAmenities, amenity])
-    }
-  }
-
   if (loading) {
     return <p className='text.3xl font-bold'>Loading...</p>
   }
 
   return (
     <DashboardLayout>
-      <main className='flex flex-col p-5'>
+      <main className='flex flex-col p-5 w-full'>
         <HeaderFilter
           setActiveTab={setActiveTab}
-          setMobileFilter={setMobileFilter}
           activeTab={activeTab}
-          searchQuery={searchQuery}
           handleGridViewClick={handleGridViewClick}
           handleListViewClick={handleListViewClick}
-          setSearchQuery={setSearchQuery}
         />
 
         {activeTab === 'All Listings' && viewMode === 'list' ? (
-          <ListView searchQuery={searchQuery} />
+          <ListView />
         ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
-          <GridView searchQuery={searchQuery} />
+          <GridView />
         ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
           <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
             <h1>Recently added</h1>

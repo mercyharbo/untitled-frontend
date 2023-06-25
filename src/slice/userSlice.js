@@ -5,6 +5,7 @@ const initialState = {
   token: null,
   searchQuery: '',
   editProfileModal: false,
+  searched: [],
 }
 
 const userSlice = createSlice({
@@ -23,9 +24,17 @@ const userSlice = createSlice({
     setEditProfileModal: (state, action) => {
       state.editProfileModal = action.payload
     },
+    setSearched: (state, action) => {
+      state.searched = action.payload
+    },
   },
 })
 
-export const { setUserProfile, setToken, setSearchQuery, setEditProfileModal } =
-  userSlice.actions
+export const {
+  setUserProfile,
+  setToken,
+  setSearchQuery,
+  setEditProfileModal,
+  setSearched,
+} = userSlice.actions
 export default userSlice.reducer

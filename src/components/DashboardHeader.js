@@ -9,11 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 import { setAddListingModal } from '@/slice/listingSlice'
-import { setSearchQuery, setToken } from '@/slice/userSlice'
+import { setSearchQuery, setSearched, setToken } from '@/slice/userSlice'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -26,6 +26,7 @@ const DashboardHeader = () => {
 
   const searchQuery = useSelector((state) => state.user.searchQuery)
   const userProfile = useSelector((state) => state.user.userProfile)
+  const searchedKeywords = useSelector((state) => state.user.searched)
 
   const handleLogout = async () => {
     try {
@@ -49,6 +50,36 @@ const DashboardHeader = () => {
     }
   }
 
+  const getSearchDatas = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/search?q=${searchQuery}`,
+        {
+          method: 'GET',
+        }
+      )
+
+      const data = await response.json()
+      if (data.status === true) {
+        dispatch(setSearched(data))
+      } else {
+        console.log('Cannot find the searched keywords')
+      }
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    const delayTimer = setTimeout(() => {
+      if (searchQuery.trim() !== '') {
+        getSearchDatas()
+      }
+    }, 500) // Adjust the delay duration (in milliseconds) to your desired value
+
+    return () => {
+      clearTimeout(delayTimer) // Clear the timeout when component unmounts or searchQuery changes
+    }
+  }, [searchQuery])
+
   return (
     <>
       <main className='flex justify-between items-center p-5 w-full xl:flex-row md:flex-row sm:flex-col-reverse sm:gap-5'>
@@ -61,6 +92,35 @@ const DashboardHeader = () => {
             value={searchQuery}
             onChange={(e) => dispatch(setSearchQuery(e.target.value))}
           />
+          {searchQuery && (
+            <div className='w-full h-auto absolute top-20 left-0 p-10 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
+              {searchedKeywords?.users?.map((usersFound) => {
+                return (
+                  <Link
+                    key={usersFound._id}
+                    href={`/profile/${usersFound._id}`}
+                    className='flex gap-5 bg-white shadow-2xl p-2 rounded-lg w-full'
+                  >
+                    <Image
+                      src={usersFound.avatarUrl}
+                      alt={usersFound.username}
+                      width={500}
+                      height={500}
+                      className='h-[50px] w-[50px] rounded-full '
+                    />
+                    <div className='flex flex-col gap-1'>
+                      <h1 className='text-xl font-semibold'>
+                        {usersFound.firstname} {usersFound.lastname}
+                      </h1>
+                      <span className='text-sm text-gray-500 font-medium'>
+                        {usersFound.address}
+                      </span>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          )}
         </div>
 
         <div className='flex justify-between items-center 2xl:gap-7 2xl:w-[35%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>

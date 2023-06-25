@@ -121,7 +121,7 @@ const NavHeader = () => {
             <button
               type='button'
               onClick={handleLogout}
-              className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg '
+              className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-full '
             >
               Logout
             </button>
@@ -146,6 +146,58 @@ const NavHeader = () => {
           )}
         </div>
       </nav>
+
+      {showModal && (
+        <>
+          <div
+            onClick={() => setShowModal(false)}
+            className='fixed top-0 left-0 z-10 w-full h-screen bg-[#000000bb]'
+          ></div>
+          <div className='w-[95%] mx-auto rounded-lg h-full py-5 px-5 bg-white absolute top-0 left-3 z-20'>
+            <div className='flex justify-between items-center'>
+              <h1 className='text-2xl font-bold'>Untitled Realty</h1>
+              <button type='button' onClick={() => setShowModal(false)}>
+                <FontAwesomeIcon icon={faClose} className='text-2xl' />
+              </button>
+            </div>
+
+            <div className='flex flex-col justify-start items-start gap-5 py-5 font-medium'>
+              <Link href='/listings'>Listings</Link>
+              <Link href='/rent'>Rent</Link>
+              <Link href='/sell'>Sell</Link>
+              <Link href='/profile'>Profile</Link>
+              <Link href='/notification'>Notification</Link>
+            </div>
+
+            {token && (
+              <button
+                type='button'
+                onClick={handleLogout}
+                className='bg-[#F30A49] py-2 w-full text-white rounded-lg '
+              >
+                Logout
+              </button>
+            )}
+
+            {!token && (
+              <div className='flex flex-col gap-2'>
+                <Link
+                  href='/login'
+                  className='bg-transparent border py-2 w-full text-black rounded-lg '
+                >
+                  Login
+                </Link>
+                <Link
+                  href='/signup'
+                  className='bg-[#F30A49] py-2 w-full text-white rounded-lg '
+                >
+                  Signup
+                </Link>
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </main>
   )
 }
