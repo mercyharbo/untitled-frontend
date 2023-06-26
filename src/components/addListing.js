@@ -22,7 +22,6 @@ const AddListingModal = () => {
   const [selectedPictures, setSelectedPictures] = useState([])
   const [previewPictures, setPreviewPictures] = useState([])
   const [errorMsg, setErrorMsg] = useState([])
-  console.log(errorMsg, 'as err')
 
   const addListingModal = useSelector((state) => state.listings.addListingModal)
 
@@ -67,10 +66,11 @@ const AddListingModal = () => {
   }
 
   const handleSubmit = async (values) => {
+    const userId = localStorage.getItem('userId')
     try {
       // Perform the post request to the backend with the collected form values
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings`,
         {
           method: 'POST',
           headers: {
@@ -84,6 +84,7 @@ const AddListingModal = () => {
             isPropertyForSale: isPropertyForSale,
             amenities: selectedAmenities,
             images: previewPictures,
+            userId: userId,
           }),
         }
       )
@@ -453,14 +454,15 @@ const AddListingModal = () => {
                 </div>
 
                 <div className=''>
-                  {errorMsg.map((err, index) => {
-                    return (
+                  {Array.isArray(errorMsg) ? (
+                    errorMsg.map((err, index) => (
                       <li key={index} className='text-[#F30A49]'>
                         {err}
                       </li>
-                    )
-                  })}
-                  {/* <li className='text-[#F30A49]'>{errorMsg}</li> */}
+                    ))
+                  ) : (
+                    <li className='text-[#F30A49]'>{errorMsg}</li>
+                  )}
                 </div>
 
                 <div className='flex justify-center items-center gap-4 ml-auto '>

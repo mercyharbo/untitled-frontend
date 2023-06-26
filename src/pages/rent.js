@@ -57,9 +57,9 @@ const Rent = () => {
                   />
                   <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
                     <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>
-                      Posted
+                      Posted by
                       <p className='lowercase'>
-                        {homes.user || 'by Code With Mercy'}
+                        {homes?.user?.username || 'Not found'}
                       </p>
                     </span>
                     <h1 className='w-full'>{homes.title}</h1>
