@@ -1,10 +1,5 @@
 import { faBell } from '@fortawesome/free-regular-svg-icons'
-import {
-  faBars,
-  faBarsStaggered,
-  faClose,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
@@ -38,7 +33,6 @@ const DashboardHeader = () => {
       )
 
       const data = await response.json()
-      console.log(data.status, 'data status...')
 
       if (data.status === true) {
         localStorage.removeItem('token')
@@ -90,28 +84,34 @@ const DashboardHeader = () => {
             placeholder='Search property'
             className='lg:h-[55px] lg:w-[400px] md:w-[350px] sm:w-full sm:h-[55px] border rounded-full indent-3 '
             value={searchQuery}
-            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+            onChange={(e) => {
+              dispatch(setSearchQuery(e.target.value))
+            }}
           />
           {searchQuery && (
-            <div className='w-full h-auto absolute top-20 left-0 p-10 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
+            <div className='w-auto h-auto absolute top-20 left-0 p-5 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
               {searchedKeywords?.users?.map((usersFound) => {
                 return (
                   <Link
                     key={usersFound._id}
-                    href={`/profile/${usersFound._id}`}
-                    className='flex gap-5 bg-white shadow-2xl p-2 rounded-lg w-full'
+                    href={`/users/${usersFound._id}`}
+                    onClick={() => dispatch(setSearchQuery(''))}
+                    className='flex justify-start items-center gap-5 bg-white shadow-2xl p-2 rounded-lg w-full'
                   >
                     <Image
                       src={usersFound.avatarUrl}
                       alt={usersFound.username}
                       width={500}
                       height={500}
-                      className='h-[50px] w-[50px] rounded-full '
+                      className='h-[70px] w-[70px] rounded-full object-cover '
                     />
                     <div className='flex flex-col gap-1'>
-                      <h1 className='text-xl font-semibold'>
+                      <h1 className='text-xl font-bold'>
                         {usersFound.firstname} {usersFound.lastname}
                       </h1>
+                      <span className='text-sm text-gray-500 font-semibold'>
+                        @{usersFound.username}
+                      </span>
                       <span className='text-sm text-gray-500 font-medium'>
                         {usersFound.address}
                       </span>
@@ -128,7 +128,6 @@ const DashboardHeader = () => {
             type='button'
             onClick={() => {
               dispatch(setAddListingModal(true))
-              //   setShowModal(false)
             }}
             className='bg-[#F30A49] text-white h-[50px] 2xl:px-5 xl:px-5 md:px-5 sm:px-5 rounded-full shadow-2xl font-medium '
           >

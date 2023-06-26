@@ -2,24 +2,12 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import {
-  faBarsStaggered,
-  faClose,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons'
-import { faBell, faMessage } from '@fortawesome/free-regular-svg-icons'
+import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUserProfile } from '@/slice/userSlice'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
 
-import { setAddListingModal, setLoading } from '@/slice/listingSlice'
-
-const variants = {
-  open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, x: '-100%' },
-}
+import { setLoading } from '@/slice/listingSlice'
 
 const NavHeader = () => {
   const router = useRouter()
@@ -27,7 +15,6 @@ const NavHeader = () => {
   const [showModal, setShowModal] = useState(false)
 
   const token = useSelector((state) => state.user.token)
-  const userProfile = useSelector((state) => state.user.userProfile)
 
   const handleLogout = async () => {
     try {

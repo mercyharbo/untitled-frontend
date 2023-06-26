@@ -46,9 +46,9 @@ const ListView = () => {
               />
               <div className='flex flex-col gap-5 w-full 2xl:gap-3 xl:gap-4 lg:gap-4 lg:justify-between sm:gap-2 '>
                 <div className='flex items-center gap-2 text-gray-500 sm:text-sm '>
-                  Posted
+                  Posted by
                   <p className='lowercase'>
-                    {homes.user || 'by Code With Mercy'}
+                    {homes?.user?.username || 'Not found'}
                   </p>
                 </div>
                 <div className='flex md:justify-between md:items-start sm:justify-between sm:items-start'>

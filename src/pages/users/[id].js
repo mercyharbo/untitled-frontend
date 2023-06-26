@@ -1,40 +1,47 @@
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import DashboardLayout from '@/components/DashboardLayout'
-import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
-import { setLoading } from '@/slice/listingSlice'
+import { setLoading, setUser } from '@/slice/userAccountSlice'
+import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faLocationDot,
+  faMessage,
+  faPhone,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons'
 
-import 'react-toastify/dist/ReactToastify.css'
+const User = () => {
+  const router = useRouter()
+  const { id } = router.query // Get the id parameter from the router query
 
-const Profile = () => {
+  console.log(id, 'as id')
+  console.log(router, 'as id')
+
   const dispatch = useDispatch()
   const [profileTab, setProfileTab] = useState('listings')
 
-  const userProfile = useSelector((state) => state.user.userProfile)
-  const loading = useSelector((state) => state.listings.loading)
+  const user = useSelector((state) => state.usersAccount.user)
+  console.log(user, 'as userssss')
 
   useEffect(() => {
-    const getUserProfile = async () => {
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
+    const getUser = async () => {
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+          `${process.env.API_ENDPOINT_RENDER}/api/users/${id}`,
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
             },
           }
         )
-
         const data = await response.json()
-
         if (data?.status === true) {
-          dispatch(setUserProfile(data.profile))
+          dispatch(setUser(data.user))
           dispatch(setLoading(false))
         } else {
           dispatch(setLoading(false))
@@ -45,22 +52,18 @@ const Profile = () => {
       }
     }
 
-    getUserProfile()
-  }, [dispatch])
-
-  if (loading) {
-    return <p className='p-10 text-4xl'>Loading...</p>
-  }
+    getUser()
+  }, [dispatch, id])
 
   return (
     <DashboardLayout>
-      <main className='flex flex-col justify-start items-start gap-4 mx-auto relative md:px-8 md:py-8 sm:px-5 sm:py-8 '>
+      <main className='flex flex-col gap-5 justify-center w-full'>
         <header className='flex flex-col justify-center items-center gap-5 mx-auto'>
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
               src={
                 // selectedImage ||
-                userProfile?.avatarUrl || 'https://via.placeholder.com/500'
+                user?.avatarUrl || 'https://via.placeholder.com/500'
               }
               alt='Profile Picture'
               width={500}
@@ -70,32 +73,45 @@ const Profile = () => {
             />
           </div>
 
-          <div className='flex flex-col justify-center items-center gap-2 w-full'>
-            <div className='flex flex-col gap-1 justify-center items-center'>
+          <div className='flex flex-col justify-center items-center gap-4 w-full'>
+            <div className='flex flex-col gap-2 justify-center items-center'>
               <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-4xl text-center '>
-                {userProfile?.firstname} {userProfile?.lastname}
+                {user?.firstname} {user?.lastname}
               </h1>
-              <span className='text-base text-gray-400 font-medium'>
-                @{userProfile?.username}
-              </span>
+              <div className='flex gap-3 divide-x-2'>
+                <span className='text-sm text-gray-500 font-medium'>
+                  @{user.username}
+                </span>
+                <span className='text-sm text-gray-500 font-medium flex items-center gap-1 px-3'>
+                  <FontAwesomeIcon icon={faLocationDot} />
+                  {user.address}
+                </span>
+              </div>
             </div>
-            <p className='2xl:w-[60%] text-center text-base '>
-              {userProfile?.bio}
-            </p>
+            <p className='2xl:w-[60%] text-center text-base '>{user?.bio}</p>
           </div>
+
           <div className='flex justify-center items-center gap-3'>
+            <Link
+              href={`tel:${user.phoneNumber}`}
+              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+            >
+              <FontAwesomeIcon icon={faPhone} />
+              Contact
+            </Link>
             <button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full '
+              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
-              Share
+              <FontAwesomeIcon icon={faMessage} />
+              Message
             </button>
             <button
               type='button'
-              onClick={() => dispatch(setEditProfileModal(true))}
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full '
+              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
-              Edit profiile
+              <FontAwesomeIcon icon={faStar} />
+              Rate
             </button>
           </div>
         </header>
@@ -132,7 +148,7 @@ const Profile = () => {
 
         {profileTab === 'listings' && (
           <section className='grid 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-            {userProfile?.listings?.map((userListing) => {
+            {user?.listings?.map((userListing) => {
               return (
                 <article
                   key={userListing.id}
@@ -167,4 +183,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default User
