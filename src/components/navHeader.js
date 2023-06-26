@@ -105,6 +105,15 @@ const NavHeader = () => {
 
         <div className='lg:flex 2xl:justify-between 2xl:items-center 2xl:gap-6 xl:justify-between xl:gap-5 lg:gap-5 lg:justify-between md:hidden sm:hidden  '>
           {token && (
+            <Link
+              href='/profile'
+              className='bg-transparent border text-white font-medium h-[45px] px-6 rounded-full flex justify-center items-center hover:bg-[#F30A49] hover:border-none '
+            >
+              Profile
+            </Link>
+          )}
+
+          {token && (
             <button
               type='button'
               onClick={handleLogout}

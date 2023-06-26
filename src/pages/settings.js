@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import DashboardLayout from '@/components/DashboardLayout'
 import { useState } from 'react'
 
 const Settings = () => {
@@ -9,16 +9,7 @@ const Settings = () => {
   }
 
   return (
-    <>
-      {' '}
-      <Head>
-        <title> Untitled Realty | Settings </title>
-        <meta
-          name='description'
-          content='Access the exclusive realtor login at Untitled Realty and unlock your dream home. Discover personalized listings, powerful tools, and expert guidance to make your real estate journey a success. Join our network of top realtors and gain an edge in the competitive housing market.'
-        />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+    <DashboardLayout>
       <main className='flex'>
         <section
           className='2xl:w-[20%] xl:w-[20%] xl:flex-col xl:justify-start xl:items-start md:flex-col md:justify-start md:items-start md:w-[20%] 
@@ -80,7 +71,7 @@ const Settings = () => {
           </section>
         )}
       </main>
-    </>
+    </DashboardLayout>
   )
 }
 

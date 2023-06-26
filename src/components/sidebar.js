@@ -56,7 +56,7 @@ const SideBarNavigation = () => {
         Untitlted
       </Link>
 
-      <div className='flex-col gap-2 justify-between text-lg font-semibold text-gray-500 w-full xl:h-[40%] flex'>
+      <div className='flex-col gap-2 justify-between text-lg font-semibold text-gray-500 w-full 2xl:h-[50%] xl:h-[50%] lg:h-[55%] flex'>
         <Link
           href={'/listings'}
           className={

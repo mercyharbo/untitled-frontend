@@ -6,9 +6,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
 
 import { setAddListingModal } from '@/slice/listingSlice'
-import { setSearchQuery, setSearched, setToken } from '@/slice/userSlice'
+import {
+  setSearchQuery,
+  setSearched,
+  setToken,
+  setUserProfile,
+} from '@/slice/userSlice'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -16,6 +22,7 @@ const variants = {
 }
 
 const DashboardHeader = () => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
@@ -73,6 +80,36 @@ const DashboardHeader = () => {
       clearTimeout(delayTimer) // Clear the timeout when component unmounts or searchQuery changes
     }
   }, [searchQuery])
+
+  useEffect(() => {
+    const getUserProfile = async () => {
+      const token = localStorage.getItem('token')
+      const userId = localStorage.getItem('userId')
+      try {
+        const response = await fetch(
+          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+
+        const data = await response.json()
+        if (data?.status === true) {
+          dispatch(setUserProfile(data.profile))
+        } else {
+          console.log('error occured')
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getUserProfile()
+  }, [dispatch])
 
   return (
     <>
@@ -211,14 +248,6 @@ const DashboardHeader = () => {
                   1
                 </span>
               </Link>
-
-              <button
-                type='button'
-                onClick={() => dispatch(setAddListingModal(true))}
-                className='bg-red-500 h-[45px] w-full rounded-lg shadow-2xl font-medium text-white hover:bg-black  '
-              >
-                Add Listing
-              </button>
 
               <button
                 type='button'

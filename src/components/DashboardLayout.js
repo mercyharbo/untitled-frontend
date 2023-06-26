@@ -132,7 +132,7 @@ const DashboardLayout = ({ children }) => {
       </Head>
       <div className='flex gap-2 w-full relative'>
         <SideBarNavigation />
-        <main className='2xl:w-[80%] 2xl:m-5 xl:w-[80%] lg:w-[80%] bg-white absolute top-0 right-0 rounded-lg '>
+        <main className='2xl:w-[80%] 2xl:m-5 xl:w-[80%] lg:w-[80%] md:w-full sm:w-full bg-white absolute top-0 right-0 rounded-lg '>
           <DashboardHeader />
           {children}
         </main>
