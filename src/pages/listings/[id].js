@@ -17,6 +17,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
+import DashboardLayout from '@/components/DashboardLayout'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -34,7 +35,7 @@ const ListingDetail = () => {
   const getListingDetails = async () => {
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/listings/${id}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
         {
           method: 'GET',
           headers: {
@@ -114,14 +115,8 @@ const ListingDetail = () => {
   }
 
   return (
-    <>
-      {' '}
-      <Head>
-        <title> {listingDetails.title} | XYZ Realty</title>
-        <meta name='description' content={listingDetails.description} />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-      <div className='flex gap-7 2xl:w-[30%] xl:w-[40%] xl:px-10 md:px-10 sm:px-5 '>
+    <DashboardLayout>
+      <div className='flex justify-start items-center gap-2 flex-wrap 2xl:w-[50%] xl:w-[60%] xl:px-5 sm:p-5 '>
         <button
           type='button'
           onClick={() => router.back()}
@@ -147,8 +142,8 @@ const ListingDetail = () => {
           Edit
         </button>
       </div>
-      <main className='flex 2xl:p-10 lg:flex-row lg:justify-start lg:gap-5 lg:p-10 md:flex-col md:gap-5 md:p-10 sm:flex-col sm:gap-5 sm:p-5 '>
-        <section className='xl:w-[70%] lg:w-[80%] lg:p-10 md:w-full sm:w-full sm:p-5 bg-white rounded-xl shadow-2xl '>
+      <main className='flex lg:flex-row lg:gap-5 md:flex-col md:gap-5 sm:flex-col sm:gap-5 sm:p-5'>
+        <section className='xl:w-[70%] lg:w-[80%] md:w-full sm:w-full '>
           <section className='flex flex-col gap-5 lg:p-5'>
             <div className='selected-image'>
               {selectedImage && (
@@ -170,9 +165,9 @@ const ListingDetail = () => {
                     alt='thumbnail'
                     width={200}
                     height={200}
-                    className={`rounded-lg cursor-pointer object-cover lg:w-[100px] lg:h-[80px] md:w-[120px] md:h-[80px] sm:w-[110px] sm:h-[80px]  ${
+                    className={`rounded-lg cursor-pointer object-cover lg:w-[80px] lg:h-[80px] md:w-[80px] md:h-[80px] sm:w-[80px] sm:h-[80px]  ${
                       selectedImage === thumbnail
-                        ? 'border-[3px] border-black p-1'
+                        ? 'border-[3px] border-[#F30A49] p-1'
                         : ''
                     }`}
                     onClick={() => handleImageClick(thumbnail)}
@@ -182,11 +177,11 @@ const ListingDetail = () => {
             </div>
             <article className='flex 2xl:gap-8 xl:gap-6 lg:flex-col lg:gap-4 md:flex-col md:gap-5 sm:flex-col sm:gap-5'>
               <div className='flex flex-col gap-3'>
-                <div className='flex lg:justify-between lg:items-start md:justify-between md:flex-row sm:flex-col sm:gap-5'>
+                <div className='flex lg:justify-between lg:items-center md:justify-between md:flex-row sm:flex-col sm:gap-5'>
                   <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full '>
                     {listingDetails.title}
                   </h1>
-                  <span className='flex text-[#ef476f] font-bold lg:text-xl md:text-lg sm:text-lg '>
+                  <span className='flex text-[#F30A49] font-bold 2xl:text-xl xl:text-xl lg:text-xl md:text-lg sm:text-lg '>
                     Price:{' '}
                     {listingDetails?.price?.toLocaleString('en-US', {
                       style: 'currency',
@@ -237,18 +232,20 @@ const ListingDetail = () => {
           </section>
         </section>
 
-        <section className='bg-white shadow-2xl rounded-xl flex flex-col gap-5 2xl:p-10 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:p-5 md:w-full sm:w-full sm:p-5   '>
+        <section className='flex flex-col gap-5 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:w-full sm:w-full p-5  '>
           <header className='flex justify-start items-center gap-4'>
             <Image
-              src={listingDetails.profilePic || '/img3.jpg'}
+              src={listingDetails?.user?.avatarUrl || '/img3.jpg'}
               alt='Selected Image'
               width={500}
               height={500}
-              className='object-cover rounded-full border-black p-1 2xl:w-[70px] 2xl:h-[70px] lg:h-[100px] md:w-[100px] sm:h-[100px] sm:w-[100px] '
+              className='object-cover rounded-full border-2 border-[#F30A49] p-1 2xl:w-[70px] 2xl:h-[70px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
+              md:h-[80px] sm:h-[70px] sm:w-[70px] '
             />
             <div className='flex flex-col gap-1'>
               <h1 className='2xl:text-2xl lg:text-2xl md:text-xl sm:text-lg font-semibold '>
-                {listingDetails?.firstname || 'Ridwan Damilare'}
+                {listingDetails?.user?.firstname}{' '}
+                {listingDetails?.user?.lastname}
               </h1>
               <span className='text-sm text-gray-400'>
                 Joined in June 01, 2023
@@ -256,40 +253,22 @@ const ListingDetail = () => {
             </div>
           </header>
           <p className='leading-[30px] text-base'>
-            I&rsquo;m Ridwan Damilare, a real estate agent in San Diego.
-            I&rsquo;ve been helping people buy and sell homes in the area for
-            over 10 years, and I&rsquo;m passionate about helping people find
-            the perfect home for their needs. I know that buying or selling a
-            home is a big decision, and I&rsquo;m committed to providing my
+            {listingDetails?.user?.bio}
           </p>
-          <div className='flex flex-col gap-3'>
-            <p className='flex items-center gap-2 font-medium'>
-              Language:
-              <span>English</span>
-            </p>
-            <p className='flex items-center gap-2 font-medium'>
-              Response rate:
-              <span>100%</span>
-            </p>
-            <p className='flex items-center gap-2 font-medium'>
-              Response time
-              <span>Within 1 hour</span>
-            </p>
-          </div>
 
-          <div className='flex justify-between items-center'>
+          <div className='flex flex-col justify-start items-start gap-3'>
             <h3 className='font-semibold'>Contact with host:</h3>
             <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
               <Link
-                href={'mailto:testing123@gmail.com'}
-                className='border-2 border-[#ef476f] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                href={`mailto:${listingDetails.user.email}`}
+                className='border-2 border-[#F30A49] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faEnvelope} />
                 Email
               </Link>
               <Link
-                href={'tel:090988888888'}
-                className='border-2 border-[#ef476f] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                href={`tel:${listingDetails?.user?.phoneNumber}`}
+                className='border-2 border-[#F30A49] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faPhone} />
                 Call
@@ -298,7 +277,7 @@ const ListingDetail = () => {
           </div>
         </section>
       </main>
-    </>
+    </DashboardLayout>
   )
 }
 
