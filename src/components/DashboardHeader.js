@@ -160,7 +160,7 @@ const DashboardHeader = () => {
           )}
         </div>
 
-        <div className='flex justify-between items-center 2xl:gap-7 2xl:w-[35%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>
+        <div className='flex justify-between items-center 2xl:gap-5 2xl:w-[25%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>
           <button
             type='button'
             onClick={() => {
@@ -185,7 +185,7 @@ const DashboardHeader = () => {
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full border-[3px] border-black 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[80px] sm:h-[80px] object-cover'
+              className='rounded-full border-[3px] border-[#F30A49] 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[80px] sm:h-[80px] object-cover'
             />
           </Link>
 
