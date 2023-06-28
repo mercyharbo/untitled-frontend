@@ -1,25 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 import { Field, Form, Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 import SideBarNavigation from './sidebar'
 import DashboardHeader from './DashboardHeader'
-import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
+import {
+  setEditProfileModal,
+  setSelectedImage,
+  setUserProfile,
+} from '@/slice/userSlice'
 import { setListings, setLoading, setTotalPages } from '@/slice/listingSlice'
 import Image from 'next/image'
 
 const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch()
 
-  const [selectedImage, setSelectedImage] = useState(null)
-
   const loading = useSelector((state) => state.listings.loading)
   const userProfile = useSelector((state) => state.user.userProfile)
   const editProfileModal = useSelector((state) => state.user.editProfileModal)
+  const selectedImage = useSelector((state) => state.user.selectedImage)
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
@@ -28,7 +31,7 @@ const DashboardLayout = ({ children }) => {
     reader.onload = () => {
       if (reader.readyState === 2) {
         const base64Image = reader.result
-        setSelectedImage(base64Image)
+        dispatch(setSelectedImage(base64Image))
       }
     }
 
@@ -43,7 +46,7 @@ const DashboardLayout = ({ children }) => {
     const updatedProfile = {
       ...userProfile,
       ...values,
-      avatarUrl: selectedImage,
+      avatarUrl: selectedImage || userProfile?.avatarUrl,
     }
 
     try {
@@ -74,7 +77,6 @@ const DashboardLayout = ({ children }) => {
           progress: undefined,
         })
         dispatch(setEditProfileModal(false))
-        // router.reload(window.location.pathname)
       } else {
         toast.failure('Failed to update your profile', {
           position: 'top-right',
@@ -144,7 +146,7 @@ const DashboardLayout = ({ children }) => {
               onClick={() => dispatch(setEditProfileModal(false))}
             ></div>
             <section
-              className='absolute top-0 bg-white rounded-lg flex flex-col gap-7 2xl:m-auto 2xl:w-[70%] 2xl:p-10 2xl:left-[15rem] xl:w-[70%] md:w-full md:left-0 
+              className='absolute top-0 bg-white rounded-lg flex flex-col gap-7 2xl:m-auto 2xl:w-[70%] 2xl:p-10 2xl:left-[15rem] xl:w-[70%] xl:left-[11rem] md:w-full md:left-0 
               md:p-10 sm:p-5 sm:w-full sm:top-0 sm:left-0 sm:m-0'
             >
               <div className='flex justify-start items-center gap-4 lg:flex-row md:flex-row sm:flex-row'>

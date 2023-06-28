@@ -38,7 +38,6 @@ const Profile = () => {
           dispatch(setLoading(false))
         } else {
           dispatch(setLoading(false))
-          // setErrorMsg(data.error)
         }
       } catch (error) {
         console.error(error)
@@ -58,10 +57,7 @@ const Profile = () => {
         <header className='flex flex-col justify-center items-center gap-5 mx-auto'>
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
-              src={
-                // selectedImage ||
-                userProfile?.avatarUrl || 'https://via.placeholder.com/500'
-              }
+              src={userProfile?.avatarUrl || 'https://via.placeholder.com/500'}
               alt='Profile Picture'
               width={500}
               height={500}
