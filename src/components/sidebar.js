@@ -63,7 +63,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/listings'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faHouse} />
@@ -74,7 +74,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/rent'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faStar} />
@@ -85,7 +85,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/sell'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faBuildingShield} />
@@ -96,7 +96,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/message'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faMessage} />
@@ -107,7 +107,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/notification'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faBell} />
@@ -119,7 +119,7 @@ const SideBarNavigation = () => {
           className={
             router.pathname === '/settings'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
-              : 'h-[50px] flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full hover:px-2 hover:rounded-md '
+              : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
         >
           <FontAwesomeIcon icon={faGear} />

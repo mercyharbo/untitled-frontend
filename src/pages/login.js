@@ -11,6 +11,13 @@ import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@/slice/userSlice'
 
+const ImagesJSON = [
+  'building.jpg',
+  'img2.jpg',
+  'sittingroom.jpg',
+  'yellowChair.avif',
+]
+
 const Login = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -104,29 +111,16 @@ const Login = () => {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='grid xl:grid-cols-2 lg:grid-cols-2 lg:gap-8 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-3'>
-        <section className='relative '>
-          <Image
-            src={'/home.jpg'}
-            alt='Login aside'
-            width={1000}
-            height={1000}
-            className='lg:h-screen w-full object-cover'
-          />
-          <div className='absolute top-0 left-0 xl:h-screen w-full bg-[#00000060] flex flex-col justify-center items-start gap-5 m-auto 2xl:pl-24 xl:px-10 md:px-10 md:h-full sm:px-5 sm:h-full'>
-            <h1 className='capitalize font-bold text-white 2xl:text-7xl 2xl:w-[60%] xl:text-5xl lg:text-5xl md:text-5xl sm:text-4xl  '>
-              Welcome back!
-            </h1>
-            <p className='text-white font-medium 2xl:w-[80%] xl:w-full md:w-[70%] md:text-lg sm:text-base sm:w-full '>
-              We understand that buying or selling a home is a big decision, and
-              we are here to make the process as smooth and stress-free as
-              possible. We will work with you every step of the way to ensure
-              that you get the best possible outcome.
-            </p>
-          </div>
-        </section>
+      <main className='grid xl:grid-cols-2 lg:grid-cols-2 lg:gap-5 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-3'>
+        <Image
+          src='/aside.png'
+          alt='images'
+          width={500}
+          height={500}
+          className='xl:h-screen md:h-[450px] sm:h-[350px] w-full object-cover'
+        />
 
-        <section className='flex flex-col justify-between items-start gap-5 2xl:mt-[5rem] 2xl:h-[50%] 2xl:w-[80%] xl:w-[90%] xl:h-[60%] xl:mt-[4rem] md:px-10 md:py-14 sm:px-5 sm:py-10 '>
+        <section className='flex flex-col justify-between items-start gap-5 m-auto w-full 2xl:h-[50%] xl:h-[60%] md:h-full sm:h-full sm:px-5 sm:py-10  '>
           <header className='flex flex-col gap-4'>
             <h1 className='2xl:text-5xl lg:text-4xl md:text-4xl sm:text-2xl font-bold'>
               Login
