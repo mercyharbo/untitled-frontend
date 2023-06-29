@@ -113,13 +113,15 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <main className='flex justify-between items-center p-5 w-full xl:flex-row md:flex-row sm:flex-col-reverse sm:gap-5'>
+      <main
+        className='flex justify-between items-center p-4 w-full border-b-[1px] border-gray-400 xl:flex-row md:flex-row sm:flex-col-reverse sm:gap-5'
+      >
         <div className='relative w-full'>
           <input
             type='text'
             name='search'
             placeholder='Search property'
-            className='lg:h-[55px] lg:w-[400px] md:w-[350px] sm:w-full sm:h-[55px] border rounded-full indent-3 '
+            className='lg:h-[55px] lg:w-[400px] md:w-[350px] sm:w-full sm:h-[55px] border border-gray-500 rounded-full indent-3 '
             value={searchQuery}
             onChange={(e) => {
               dispatch(setSearchQuery(e.target.value))
@@ -160,7 +162,7 @@ const DashboardHeader = () => {
           )}
         </div>
 
-        <div className='flex justify-between items-center 2xl:gap-5 2xl:w-[25%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>
+        <div className='flex justify-between items-center 2xl:gap-5 2xl:w-[30%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>
           <button
             type='button'
             onClick={() => {
