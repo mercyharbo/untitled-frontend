@@ -2,28 +2,12 @@ import { faFilter, faList } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
-const HeaderFilter = ({
-  setActiveTab,
-  setMobileFilter,
-  handleGridViewClick,
-  handleListViewClick,
-  activeTab,
-}) => {
+const HeaderFilter = ({ handleGridViewClick, handleListViewClick }) => {
   const listing = useSelector((state) => state.listings.listings)
 
   return (
     <main className=''>
-    
-
       <article className='flex sm:justify-between sm:items-center md:justify-between md:items-center lg:justify-between lg:items-center relative py-4'>
-        {/* <button
-          type='button'
-          onClick={() => setMobileFilter(true)}
-          className='outline-none lg:hidden md:flex sm:flex'
-        >
-          <FontAwesomeIcon icon={faFilter} className='text-[25px]' />
-        </button> */}
-
         <h1 className='flex justify-start items-center gap-2 2xl:text-2xl xl:text-2xl lg:text-2xl'>
           Properties{' '}
           <span className='text-lg text-gray-500 font-semibold'>

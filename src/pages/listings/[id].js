@@ -116,14 +116,14 @@ const ListingDetail = () => {
 
   return (
     <DashboardLayout>
-      <div className='flex justify-start items-center gap-2 flex-wrap 2xl:w-[50%] xl:w-[60%] xl:px-5 sm:p-5 '>
+      <div className='flex justify-start items-center gap-2 flex-wrap 2xl:w-[50%] xl:w-[60%] xl:pl-10 '>
         <button
           type='button'
           onClick={() => router.back()}
           className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
         >
           <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
-          Go back
+          back
         </button>
         <button
           type='button'
@@ -191,7 +191,7 @@ const ListingDetail = () => {
                 </div>
                 <p className='text-gray-400'>{listingDetails.address}</p>
               </div>
-              <div className='flex lg:justify-between lg:items-center 2xl:w-[30%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
+              <div className='flex lg:justify-between lg:items-center 2xl:w-[40%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
                 <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
                   Bathroom
                   <span className='flex items-center gap-2 font-normal'>
@@ -239,7 +239,7 @@ const ListingDetail = () => {
               alt='Selected Image'
               width={500}
               height={500}
-              className='object-cover rounded-full border-2 border-[#F30A49] p-1 2xl:w-[70px] 2xl:h-[70px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
+              className='object-cover rounded-full border-2 border-[#F30A49] p-1 2xl:w-[60px] 2xl:h-[60px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
               md:h-[80px] sm:h-[70px] sm:w-[70px] '
             />
             <div className='flex flex-col gap-1'>
@@ -260,7 +260,7 @@ const ListingDetail = () => {
             <h3 className='font-semibold'>Contact with host:</h3>
             <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
               <Link
-                href={`mailto:${listingDetails.user.email}`}
+                href={`mailto:${listingDetails?.user?.email}`}
                 className='border-2 border-[#F30A49] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faEnvelope} />

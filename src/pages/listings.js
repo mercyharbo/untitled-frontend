@@ -128,22 +128,6 @@ export default function Home() {
             <h1>Featured post grid </h1>
           </article>
         ) : null}
-
-        <div className='flex justify-between items-center mx-auto xl:w-[30%] md:w-full sm:w-full  '>
-          <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-            <FontAwesomeIcon
-              icon={faChevronCircleLeft}
-              className='text-[30px]'
-            />
-          </button>
-          <span className='font-semibold'>{`Page ${currentPage} of ${totalPages}`}</span>
-          <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-            <FontAwesomeIcon
-              icon={faChevronCircleRight}
-              className='text-[30px]'
-            />
-          </button>
-        </div>
       </main>
     </DashboardLayout>
   )
