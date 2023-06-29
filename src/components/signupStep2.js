@@ -63,12 +63,10 @@ const SignupStep2 = () => {
   }
 
   return (
-    <main className='flex flex-col justify-between items-start gap-5 2xl:m-auto 2xl:h-[50%] 2xl:w-[80%] xl:px-10 xl:h-full xl:w-full xl:justify-center lg:ml-auto md:px-5 sm:px-5'>
-      <header className='flex flex-col gap-4'>
-        <p className='text-base lg:w-[80%] '>
-          Fill out the following details to complete your registration.
-        </p>
-      </header>
+    <main className='flex flex-col justify-between items-start gap-5  '>
+      <p className='text-base xl:pl-[6rem] md:pl-5 sm:pl-5 '>
+        Fill out the following details to complete your registration.
+      </p>
 
       <Formik
         initialValues={{
@@ -83,8 +81,8 @@ const SignupStep2 = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
-          <Form className='flex flex-col gap-5 w-full'>
+        {() => (
+          <Form className='flex flex-col gap-5 xl:w-[80%] md:w-full sm:w-full sm:px-5 mx-auto  '>
             <div className='flex flex-col justify-start items-start gap-2'>
               <label htmlFor='username' className='font-medium'>
                 Username
@@ -221,7 +219,7 @@ const SignupStep2 = () => {
 
             <button
               type='submit'
-              className='h-[40px] w-full rounded-lg bg-[#F30A49] text-white font-medium cursor-pointer'
+              className='h-[50px] w-full rounded-lg bg-[#F30A49] text-white font-medium cursor-pointer'
               // disabled={isLoading || isSubmitting}
             >
               Create account
@@ -231,7 +229,7 @@ const SignupStep2 = () => {
               <div className='font-medium text-[#F30A49]'>{errorMsg}</div>
             )}
             <p className='text-sm'>
-              By submitting, I accept to the
+              By submitting, I accept to the {' '}
               <Link href={'/terms&condition'} className='text-[#F30A49] '>
                 terms of use
               </Link>

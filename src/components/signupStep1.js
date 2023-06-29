@@ -27,8 +27,7 @@ const SignupStep1 = ({ onNext }) => {
 
   return (
     <main
-      className='flex flex-col justify-between items-start gap-5 2xl:mt-[8rem] 2xl:h-[40%] 2xl:w-[80%] xl:px-10 xl:w-[100%] xl:h-[40%] 
-    xl:mt-[5rem] lg:mt-[8rem] lg:w-[100%] md:p-10 sm:p-5 '
+      className='flex flex-col justify-between items-start gap-5 2xl:h-[40%] xl:px-10 xl:h-[40%] md:p-10 sm:p-5 '
     >
       <header className='flex flex-col gap-4'>
         <h1 className='2xl:text-4xl lg:text-2xl md:text-xl sm:text-lg font-bold'>

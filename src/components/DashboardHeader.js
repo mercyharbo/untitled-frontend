@@ -113,10 +113,8 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <main
-        className='flex justify-between items-center p-4 w-full border-b-[1px] border-gray-400 xl:flex-row md:flex-row sm:flex-col-reverse sm:gap-5'
-      >
-        <div className='relative w-full'>
+      <main className='flex xl:flex-row md:p-5 md:flex-col-reverse sm:p-5 sm:gap-5 sm:flex-col-reverse '>
+        <div className='relative xl:w-[50%] w-full'>
           <input
             type='text'
             name='search'
@@ -162,7 +160,7 @@ const DashboardHeader = () => {
           )}
         </div>
 
-        <div className='flex justify-between items-center 2xl:gap-5 2xl:w-[30%] xl:gap-5 xl:w-[45%] lg:w-[35%] md:w-full sm:w-full'>
+        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center sm:justify-between sm:items-center '>
           <button
             type='button'
             onClick={() => {
