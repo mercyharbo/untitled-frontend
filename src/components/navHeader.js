@@ -78,7 +78,7 @@ const NavHeader = () => {
 
   return (
     <main>
-      <nav className=' w-full bg-[#090030] text-white shadow-xl flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
+      <nav className=' w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
@@ -107,7 +107,7 @@ const NavHeader = () => {
           {token && (
             <Link
               href='/profile'
-              className='bg-transparent border text-white font-medium h-[45px] px-6 rounded-full flex justify-center items-center hover:bg-[#F30A49] hover:border-none '
+              className='bg-transparent border text-black font-medium h-[45px] px-6 rounded-full flex justify-center items-center hover:bg-[#F30A49] hover:border-none '
             >
               Profile
             </Link>
@@ -147,29 +147,50 @@ const NavHeader = () => {
         <>
           <div
             onClick={() => setShowModal(false)}
-            className='fixed top-0 left-0 z-10 w-full h-screen bg-[#000000bb]'
+            className='fixed top-0 left-0 z-20 w-full h-screen bg-[#000000bb]'
           ></div>
-          <div className='w-[95%] mx-auto rounded-lg h-full py-5 px-5 bg-white absolute top-0 left-3 z-20'>
+          <div className='w-[95%] mx-auto rounded-lg h-auto py-5 px-5 bg-white absolute top-0 left-3 z-20'>
             <div className='flex justify-between items-center'>
-              <h1 className='text-2xl font-bold'>Untitled Realty</h1>
+              <Link href='/' className='text-2xl font-bold'>
+                Untitled Realty
+              </Link>
               <button type='button' onClick={() => setShowModal(false)}>
                 <FontAwesomeIcon icon={faClose} className='text-2xl' />
               </button>
             </div>
 
-            <div className='flex flex-col justify-start items-start gap-5 py-5 font-medium'>
-              <Link href='/listings'>Listings</Link>
-              <Link href='/rent'>Rent</Link>
-              <Link href='/sell'>Sell</Link>
-              <Link href='/profile'>Profile</Link>
-              <Link href='/notification'>Notification</Link>
+            <div className='flex flex-col justify-start items-start gap-2 py-10 font-medium'>
+              <Link
+                href='/listings'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Listings
+              </Link>
+              <Link
+                href='/rent'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Rent
+              </Link>
+              <Link
+                href='/sell'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Sell
+              </Link>
+              <Link
+                href='/profile'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Profile
+              </Link>
             </div>
 
             {token && (
               <button
                 type='button'
                 onClick={handleLogout}
-                className='bg-[#F30A49] py-2 w-full text-white rounded-lg '
+                className='bg-color3 h-[50px] w-full text-white rounded-lg '
               >
                 Logout
               </button>
@@ -179,13 +200,13 @@ const NavHeader = () => {
               <div className='flex flex-col gap-2'>
                 <Link
                   href='/login'
-                  className='bg-transparent border py-2 w-full text-black rounded-lg '
+                  className='bg-transparent border h-[50px] w-full text-black rounded-lg '
                 >
                   Login
                 </Link>
                 <Link
                   href='/signup'
-                  className='bg-[#F30A49] py-2 w-full text-white rounded-lg '
+                  className='bg-color3 h-[50px] w-full text-white rounded-lg '
                 >
                   Signup
                 </Link>

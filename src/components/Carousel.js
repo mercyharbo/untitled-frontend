@@ -40,7 +40,7 @@ export default function Carousel({
         `}
       </style>
       <div
-        className='flex justify-start items-start gap-5 transition-transform ease-in duration-500'
+        className='flex justify-start items-start gap-5 transition-transform ease-in duration-500 py-5'
         style={{
           transform: `translateX(-${curr * 450}px)`,
           width: `${slides.length * 550}px`,
