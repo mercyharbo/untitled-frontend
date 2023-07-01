@@ -2,8 +2,8 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUserProfile } from '@/slice/userSlice'
 
@@ -78,7 +78,7 @@ const NavHeader = () => {
 
   return (
     <main>
-      <nav className=' w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
+      <nav className=' shadow-md w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
@@ -127,14 +127,14 @@ const NavHeader = () => {
             <div className='xl:flex md:flex sm:hidden flex-row gap-5 '>
               <Link
                 href={'/login'}
-                className='bg-transparent text-white font-medium h-[45px] px-4 rounded-full flex justify-center items-center '
+                className='text-black font-medium h-[45px] px-5 rounded-full flex justify-center items-center border border-color3 '
               >
                 Login
               </Link>
 
               <Link
                 href={'/signup'}
-                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-full flex justify-center items-center '
+                className='bg-color3 text-white font-medium h-[45px] px-5 rounded-full flex justify-center items-center hover:bg-hover '
               >
                 Signup
               </Link>

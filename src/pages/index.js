@@ -130,7 +130,7 @@ export default function Home() {
                     name='propertyType'
                     id='propertyType'
                     options={options}
-                    className='2xl:w-[200px] md:w-[140px] border-2 border-color2 focus:border-hover'
+                    className='2xl:w-[200px] md:w-[140px] sm:h-[55px] border-2 border-color2 focus:border-hover'
                   />
                   <InputField
                     type='text'
@@ -164,7 +164,9 @@ export default function Home() {
         <section className='flex flex-col gap-5 bg-color2 2xl:p-14 xl:p-14 md:p-10 sm:p-5'>
           <div className='flex justify-between xl:items-end xl:flex-row md:flex-row md:items-end sm:items-start sm:gap-5 sm:flex-col '>
             <div className='flex flex-col justify-start items-start gap-4'>
-              <h1 className='2xl:text-5xl md:text-2xl '>Top offers</h1>
+              <h1 className='2xl:text-5xl md:text-2xl sm:text-2xl '>
+                Top offers
+              </h1>
               <p className='2xl:w-[70%] md:w-[70%] '>
                 Fulfill your career dreams, enjoy all the achievements of the
                 city center and luxury housing to the fullest.
@@ -190,8 +192,8 @@ export default function Home() {
             {listings.map((home) => {
               return (
                 <Link
+                  key={home._id}
                   href={`/listings/${home.id}`}
-                  key={home.id}
                   className='flex-shrink-0 2xl:w-[350px] xl:w-[400px] md:w-[350px] sm:w-[350px] bg-white text-black rounded-lg p-3 flex flex-col gap-4'
                 >
                   <Image
@@ -286,8 +288,8 @@ export default function Home() {
         </section>
 
         <section className='flex flex-col justify-center items-center gap-10 mx-auto xl:w-[60%] md:py-16 sm:py-10   '>
-          <div className='flex flex-col gap-2 justify-center items-center w-full'>
-            <h1 className='xl:text-5xl xl:w-[40%] md:w-full md:text-5xl sm:w-full sm:text-3xl text-center '>
+          <div className='flex flex-col gap-2 justify-center items-center w-full px-5'>
+            <h1 className='xl:text-5xl xl:w-[40%] md:w-full md:text-5xl sm:w-[80%] sm:text-3xl text-center '>
               Subscribe to our newsletter
             </h1>
             <p className='text-center'>
@@ -299,13 +301,13 @@ export default function Home() {
             initialValues={{ propertyType: '', state: '' }}
             // onSubmit={handleSubmit}
           >
-            <Form className='flex xl:flex-row xl:items-center xl:gap-5'>
+            <Form className='flex justify-center xl:flex-row xl:items-center xl:gap-5 sm:flex-col sm:w-[95%] sm:gap-5 '>
               <InputField
                 type='email'
                 name='email'
                 id='email'
                 placeholder='Enter your email'
-                className='2xl:w-[40rem] xl:w-[40rem] '
+                className='2xl:w-[40rem] xl:w-[40rem] sm:w-full '
               />
 
               <Button
