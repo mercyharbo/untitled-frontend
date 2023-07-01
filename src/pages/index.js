@@ -1,16 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
+import Head from 'next/head'
+import { Form, Formik } from 'formik'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faArrowRight,
-  faBed,
-  faShield,
-  faSink,
-  faVectorSquare,
-} from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebook,
   faInstagram,
@@ -22,6 +18,21 @@ import { motion } from 'framer-motion'
 import Carousel from '@/components/Carousel'
 import { setListings, setLoading } from '@/slice/listingSlice'
 import NavHeader from '@/components/navHeader'
+import SelectField from '@/hooks/SelectField'
+
+import InputField from '@/hooks/InputField'
+import Button from '@/hooks/button'
+
+const options = [
+  { value: 'Property Type', label: 'Property Type' },
+  { value: 'apartment', label: 'Apartment' },
+  { value: 'commercial-property', label: 'Commercial Property' },
+  { value: 'villa', label: 'Villa' },
+  { value: 'condo', label: 'Condo' },
+  { value: 'holiday-cottage', label: 'Holiday Cottage' },
+  { value: 'single-family-home', label: 'Single Family Home' },
+  { value: 'hostel', label: 'Hostel' },
+]
 
 const TestimonialJSON = [
   {
@@ -78,421 +89,282 @@ export default function Home() {
   }, [])
 
   return (
-    <main className='overflow-hidden'>
-      <NavHeader />
-      <section
-        className='relative flex bg-[#090030] text-white shadow-2xl 2xl:grid-cols-2 xl:place-items-center xl:grid-cols-2 
-       xl:p-0 lg:grid-cols-2 md:flex-row sm:flex-col-reverse'
-      >
-        <motion.section
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className='flex flex-col justify-start items-start gap-5 2xl:px-16 xl:px-14 xl:pt-20 md:pt-5 sm:p-5'
-        >
-          <h1
-            className='2xl:text-6xl 2xl:leading-[70px] xl:w-full xl:leading-[60px] xl:text-5xl lg:text-5xl md:text-4xl 
-          md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
-          >
-            The ease of buying and renting a dream house & apartment
-          </h1>
-          <p className='2xl:w-[80%] xl:text-xl md:w-full md:text-lg sm:text-lg sm:w-full '>
-            No matter how quickly you need to make an offer, our data and
-            experts are always available. Let&quot;s start here
-          </p>
-        </motion.section>
-        <Image
-          src={'/yellowChair.avif'}
-          alt='home'
-          width={1000}
-          height={1000}
-          className='animate__backInRight xl:flex lg:flex md:flex md:w-[50%] sm:flex sm:w-full object-cover '
+    <>
+      <Head>
+        <title>Discover Your Dream Home: Untitlted Realty</title>
+        <meta
+          name='description'
+          content='Embark on a remarkable real estate journey with XYZ Realty. Explore a vast collection of extraordinary properties, from luxurious estates to charming starter homes. Our expert agents are ready to guide you every step of the way. Start your search today and find the perfect place to call home.'
         />
-      </section>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      <main className='overflow-hidden'>
+        <NavHeader />
+        <section className='relative flex 2xl:h-[50rem] 2xl:pt-[7rem] xl:h-[45rem] xl:pt-[5rem] md:h-[40rem] md:pt-[4rem] sm:pt-[5rem] sm:h-[40rem] '>
+          <motion.section
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className='flex flex-col justify-start items-start gap-5 2xl:w-[50%] 2xl:pl-[13rem] xl:pl-[5rem] xl:w-[50%] md:w-[50%] md:pl-5 sm:pl-5 '
+          >
+            <h1
+              className='2xl:text-6xl 2xl:leading-[70px] xl:w-full xl:leading-[60px] xl:text-5xl lg:text-5xl md:text-4xl 
+          md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
+            >
+              The ease of buying and renting a dream house & apartment
+            </h1>
+            <p className='2xl:w-[80%] xl:text-xl md:w-full md:text-lg sm:text-lg sm:w-full '>
+              No matter how quickly you need to make an offer, our data and
+              experts are always available. Let&quot;s start here
+            </p>
+            <div
+              className='bg-[#F3F3FA] p-4 rounded-lg absolute z-10 2xl:w-[50%] 2xl:bottom-[15rem] 2xl:left-[13rem] xl:bottom-[15rem] xl:w-[70%] xl:left-[5rem] 
+            md:bottom-[12rem] md:w-[80%] sm:w-[95%] sm:left-3 sm:bottom-[5rem]  '
+            >
+              <Formik
+                initialValues={{ propertyType: '', state: '' }}
+                // onSubmit={handleSubmit}
+              >
+                <Form className='flex gap-2 2xl:flex-row xl:flex-row md:flex-row sm:flex-col '>
+                  <SelectField
+                    name='propertyType'
+                    id='propertyType'
+                    options={options}
+                    className='2xl:w-[200px] md:w-[140px] border-2 border-color2 focus:border-hover'
+                  />
+                  <InputField
+                    type='text'
+                    name='state'
+                    id='state'
+                    placeholder='Enter your prefer destination...'
+                    className='2xl:w-[37rem] xl:w-[33rem] md:w-[23rem] sm:w-full  '
+                  />
+                  <Button
+                    type='button'
+                    name='button'
+                    label='Search'
+                    className='bg-color3 w-full text-white flex justify-center items-center gap-3 hover:bg-hover xl:h-[55px] sm:h-[50px] '
+                    icons={<FontAwesomeIcon icon={faMagnifyingGlass} />}
+                  />
+                </Form>
+              </Formik>
+            </div>
+          </motion.section>
 
-      <section className='flex flex-col justify-center items-center gap-5 py-14 md:mx-10 sm:mx-5'>
-        <h1 className='xl:text-5xl md:text-4xl sm:text-4xl '>Our Services</h1>
-        <section
-          className='grid mx-auto 2xl:w-[80%] xl:grid-cols-3 xl:gap-5 xl:py-8 xl:w-[90%] md:grid-cols-1 md:gap-5 md:w-full
-           sm:gap-5 '
-        >
-          <motion.article
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-            }}
-            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
-          >
-            <Image
-              src='/house.png'
-              alt='Home icon'
-              width={500}
-              height={500}
-              className='bg-[#4d27f79c] p-5 rounded-md flex justify-center items-center w-[100px] h-[100px] object-cover '
-            />
-            <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl '>
-              Buy a home
-            </h1>
-            <p className=' xl:w-full md:w-[70%] '>
-              Find your place with an immersive photo experience and the most
-              listings, including the things you won&apos;t find anywhere else.
-            </p>
-            <Link
-              href='/learnmore'
-              className='text-[#F30A49] font-medium underline flex justify-start items-center gap-2 '
-            >
-              Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
-            </Link>
-          </motion.article>
-          <motion.article
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
-          >
-            <Image
-              src='/rent.png'
-              alt='Home icon'
-              width={500}
-              height={500}
-              className='bg-[#4d27f79c] p-5 rounded-md flex justify-center items-center w-[100px] h-[100px] object-cover '
-            />
-            <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl '>
-              Rent a home
-            </h1>
-            <p className=' xl:w-full md:w-[70%] '>
-              We&apos;re creating a seamless online experience - from shopping
-              on the largest rental network, to applying to paying rents.
-            </p>
-            <Link
-              href='/learnmore'
-              className='text-[#F30A49] font-medium underline flex justify-start items-center gap-2 '
-            >
-              Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
-            </Link>
-          </motion.article>
-          <motion.article
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className=' grid grid-cols-1 place-items-start gap-4 bg-[#090030] text-white p-5 rounded-md shadow-2xl '
-          >
-            <Image
-              src='/sale.png'
-              alt='Home icon'
-              width={500}
-              height={500}
-              className='bg-[#4d27f79c] p-5 rounded-md flex justify-center items-center w-[100px] h-[100px] object-cover '
-            />
-            <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-2xl sm:text-xl '>
-              Sell a home
-            </h1>
-            <p className=' xl:w-full md:w-[70%] '>
-              Whether you get a cash offer through offers or choose to sell
-              traditionally, we can help you navigate a successful sale.{' '}
-            </p>
-            <Link
-              href='/learnmore'
-              className='text-[#F30A49] font-medium underline flex justify-start items-center gap-2 '
-            >
-              Learn More <FontAwesomeIcon icon={faArrowRight} />{' '}
-            </Link>
-          </motion.article>
+          <Image
+            src={'/yellowChair.avif'}
+            alt='home'
+            width={1000}
+            height={1000}
+            className='absolute rounded-md 2xl:right-[15rem] 2xl:top-10 2xl:w-[40rem] 2xl:h-[45rem] 2xl:flex xl:top-5 xl:right-[2rem] xl:w-[35rem] xl:h-[35rem] xl:flex
+          md:w-[20rem] md:h-[30rem] md:right-5 md:flex sm:hidden object-cover '
+          />
         </section>
-      </section>
 
-      <section
-        className='bg-[#090030] text-white flex xl:flex-row xl:justify-between xl:items-center xl:py-5 md:flex-col md:justify-center md:items-center md:py-16
-      sm:justify-center sm:items-center sm:flex-col sm:py-16  '
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className='flex flex-col gap-10 2xl:w-[50%] xl:pl-10 xl:w-[50%] lg:w-[50%] md:w-full md:px-10 sm:px-5 sm:w-full '
-        >
-          <h1 className='2xl:text-5xl 2xl:leading-[60px] xl:text-5xl xl:w-[70%] xl:leading-[60px] lg:text-4xl md:text-6xl md:leading-[70px] md:w-[70%] sm:text-5xl sm:w-full '>
-            Our featured properties
-          </h1>
-          <p className='2xl:w-[80%] xl:w-full md:w-[80%] text-lg '>
-            Looking for the perfect home? Look no further than our featured
-            properties! These homes have been hand-picked by our team of
-            experienced realtors and offer the best of everything. Whether
-            you&apos;re looking for a spacious family home, a cozy starter home,
-            or a luxurious condo, we have the perfect property for you.
-          </p>
-        </motion.div>
+        <section className='flex flex-col gap-5 bg-color2 2xl:p-14 xl:p-14 md:p-10 sm:p-5'>
+          <div className='flex justify-between xl:items-end xl:flex-row md:flex-row md:items-end sm:items-start sm:gap-5 sm:flex-col '>
+            <div className='flex flex-col justify-start items-start gap-4'>
+              <h1 className='2xl:text-5xl md:text-2xl '>Top offers</h1>
+              <p className='2xl:w-[70%] md:w-[70%] '>
+                Fulfill your career dreams, enjoy all the achievements of the
+                city center and luxury housing to the fullest.
+              </p>
+            </div>
 
-        <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[90%] sm:w-[95%] sm:py-10 '>
-          <style>
-            {`
+            <Link
+              href='/listings'
+              className='border-2 border-color3 h-[50px] text-color3 flex justify-center items-center w-[170px] font-semibold hover:border-hover hover:border-none '
+            >
+              Show all offers{' '}
+            </Link>
+          </div>
+
+          <div className='flex overflow-x-auto overflow-y-hidden flex-nowrap gap-7 w-full sm:py-5 '>
+            <style>
+              {`
               .flex::-webkit-scrollbar {
                 display: none; /* Hide the scrollbar */
               }
             `}
-          </style>
-          {listings.map((home) => {
-            return (
-              <Link
-                href={`/listings/${home.id}`}
-                key={home.id}
-                className='flex-shrink-0 2xl:w-[380px] xl:w-[400px] md:w-[380px] sm:w-[350px] bg-white text-black shadow-2xl rounded-lg p-3 flex flex-col gap-4'
-              >
-                <h1 className='2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>
-                  {home.title}
-                </h1>
-                <div className='flex justify-between items-center text-gray-500'>
-                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                    Bathroom
-                    <span className='flex items-center gap-2 font-normal'>
-                      <FontAwesomeIcon icon={faSink} />
-                      {home.bathroom}
-                    </span>
-                  </span>
-                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                    Bedrooms
-                    <span className='flex items-center gap-2 font-normal'>
-                      <FontAwesomeIcon icon={faBed} />
-                      {home.bedrooms}
-                    </span>
-                  </span>
-                  <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                    Area Space
-                    <div className='span flex items-center gap-2 font-normal'>
-                      <FontAwesomeIcon icon={faVectorSquare} />
-                      {home.areaSpace}
-                    </div>
-                  </span>
-                </div>
-                <Image
-                  src={home?.images?.[0]}
-                  alt='homes'
-                  width={500}
-                  height={500}
-                  className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
-                />
-                <div className='flex justify-between items-center flex-wrap'>
-                  <h1 className='lg:text-xl md:text-lg sm:text-base'>
-                    {home?.price?.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'NGN',
-                    })}
-                  </h1>
-                  <button type='button' className='border p-2 px-4 rounded-lg'>
-                    View Details
-                  </button>
-                </div>
-              </Link>
-            )
-          })}
-        </div>
-      </section>
+            </style>
+            {listings.map((home) => {
+              return (
+                <Link
+                  href={`/listings/${home.id}`}
+                  key={home.id}
+                  className='flex-shrink-0 2xl:w-[350px] xl:w-[400px] md:w-[350px] sm:w-[350px] bg-white text-black rounded-lg p-3 flex flex-col gap-4'
+                >
+                  <Image
+                    src={home?.images?.[0]}
+                    alt='homes'
+                    width={500}
+                    height={500}
+                    className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
+                  />
 
-      <section
-        className='flex flex-col gap-10 justify-start items-start mx-auto 2xl:p-14 2xl:w-[80%] xl:w-[80%] xl:p-10 lg:p-10 lg:w-[80%] md:w-full md:p-10 sm:w-full
-      sm:p-5 '
-      >
-        <div className='flex flex-col justify-start items-start gap-5 '>
-          <h1 className='2xl:text-6xl 2xl:w-[70%] 2xl:leading-[80px] xl:w-[80%] xl:text-4xl md:text-4xl md:w-[70%] sm:text-4xl w-full '>
-            Reach quality renters and fill vacancies faster.
-          </h1>
-          <p className='text-lg xl:w-[70%] md:w-[70%] '>
-            We have marketing solutions for landlords, agents, and multifamily
-            professionals.
-          </p>
-        </div>
-
-        <div className='flex flex-col rounded-lg shadow-2xl w-full 2xl:pb-0 xl:pb-0 lg:pb-0 md:pb-0 sm:pb-20  '>
-          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
-            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
-              <span
-                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
-                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[70px] md:h-[60px] sm:text-xl sm:w-[80px] sm:h-[40px] '
-              >
-                1{' '}
-              </span>
-              Reach over 3 million high-quality renters actively searching on
-              our network.
-            </div>
-            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
-              <FontAwesomeIcon
-                icon={faShield}
-                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl fill-transparent stroke-none bg-transparent '
-              />
-            </div>
-          </span>
-
-          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
-            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
-              <span
-                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
-                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[70px] md:h-[60px] sm:text-xl sm:w-[80px] sm:h-[40px] '
-              >
-                2{' '}
-              </span>
-              Get exposure across our broad network of leading apartment search
-              sites.
-            </div>
-            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
-              {' '}
-              <FontAwesomeIcon
-                icon={faShield}
-                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl '
-              />
-            </div>
-          </span>
-
-          <span className='flex justify-between items-center flex-wrap bg-white border-b-2 2xl:h-[150px] xl:h-[150px] lg:h-[140px] md:h-[100px] sm:h-[150px] '>
-            <div className='flex items-center gap-5 text-lg font-semibold px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base  '>
-              <span
-                className='bg-[#090030] text-white flex justify-center items-center w-[60px] h-[60px] rounded-full 2xl:w-[60px] 2xl:h-[60px] 
-                2xl:text-2xl xl:w-[60px] xl:h-[60px] lg:text-2xl md:text-xl md:w-[60px] md:h-[60px] sm:text-xl sm:w-[70px] sm:h-[40px] '
-              >
-                3{' '}
-              </span>{' '}
-              Receive ongoing support from a dedicated Account Manager.
-            </div>
-            <div className='2xl:w-[20%] xl:flex md:flex md:w-[20%] sm:hidden h-full bg-green-200 flex justify-center items-center '>
-              <FontAwesomeIcon
-                icon={faShield}
-                className='2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl '
-              />
-            </div>
-          </span>
-
-          <span
-            className='flex justify-between items-center  bg-white border-b-2 2xl:flex-row 2xl:h-[150px] xl:h-[150px] xl:flex-row lg:flex-row 
-          lg:h-[140px] md:h-[100px] md:flex-row sm:flex-col sm:h-[150px] sm:gap-5 '
-          >
-            <div className='flex flex-col gap-2 flex-wrap px-5 2xl:w-[80%] xl:w-[80%] md:w-[80%] sm:w-full sm:text-base '>
-              <h1 className='capitalize  2xl:text-5xl xl:text-4xl lg:text-4xl md:text-4xl sm:text-3xl '>
-                Unlock our premium features
-              </h1>
-              <p className=''>
-                Advertise with us to optimise your leasing success.
-              </p>
-            </div>
-            <div className='2xl:w-[20%] xl:flex xl:w-[20%] md:flex md:w-[20%] sm:flex sm:w-full h-full  bg-green-200 flex justify-center items-center  '>
-              <button
-                type='button'
-                className='2xl:py-3 2xl:px-6 xl:py-3 xl:px-4 xl:my-0 md:px-2 md:py-2 md:my-0 sm:py-3 sm:px-5 sm:my-4 rounded-lg bg-[#090030] text-white capitalize font-semibold '
-              >
-                Check our pricing
-              </button>
-            </div>
-          </span>
-        </div>
-      </section>
-
-      <section
-        className='bg-[#090030] w-full py-5 text-white flex 2xl:mb-[15rem] xl:mb-[12rem] xl:flex-row xl:h-[500px] xl:justify-center xl:items-center
-      md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'
-      >
-        <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
-          <h1 className='2xl:w-[80%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
-            Some of our happy Client&quot;s
-          </h1>
-          <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
-            In promotion and advertising, a testimonial or show consist&quot;s
-            of a person&quot;s written or spoken statement extolling the
-            virtue&quot;s of a product.
-          </p>
-        </article>
-
-        <div className='xl:w-[50%] xl:mt-[20rem] 2xl: xl:pl-10  '>
-          <Carousel autoplay={true} autoplayInterval={5000}>
-            {TestimonialJSON.map((testy, index) => (
-              <div
-                key={index}
-                className='flex flex-col flex-grow gap-5 bg-white text-black shadow-2xl rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[480px] '
-                // style={{ width: '750px' }}
-              >
-                <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>
-                  {testy.title}
-                </h3>
-                <p className='xl:text-base md:text-lg'>{testy.comment}</p>
-
-                <div className='flex flex-col gap-2'>
-                  <h3 className='xl:text-xl md:text-xl sm:text-lg '>
-                    Benjamin Appling
-                  </h3>
-                  <span className='text-sm text-gray-500'>Happy Client</span>
-                </div>
-              </div>
-            ))}
-          </Carousel>
-        </div>
-      </section>
-
-      <section className='flex flex-col justify-center items-center gap-10 mx-auto xl:w-[60%] md:py-16 sm:py-10   '>
-        <h1 className='xl:text-5xl xl:w-[40%] md:text-5xl md:w-[50%] sm:w-[80%] sm:text-3xl text-center '>
-          Subscribe to our newsletter
-        </h1>
-        <div className='relative'>
-          <input
-            type='email'
-            name='email'
-            id='email'
-            placeholder='Enter your email'
-            className='border bg-white rounded-md indent-3 outline-none xl:w-[45rem] xl:h-[60px] md:w-[40rem] md:h-[60px] sm:w-[25rem] sm:h-[50px] '
-          />
-          <button
-            type='button'
-            className='bg-[#090030] rounded-md text-white absolute right-0 xl:h-[60px] xl:w-[140px] md:w-[100px] md:h-[60px] sm:h-[50px] sm:w-[100px] '
-          >
-            Subscribe
-          </button>
-        </div>
-      </section>
-
-      <footer
-        className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
-      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 text-white bg-[#090030] flex   '
-      >
-        <article className='xl:w-[30%] md:w-full sm:w-full flex flex-col gap-8 '>
-          <h1 className='xl:text-5xl md:text-4xl sm:text-4xl'>Untitled</h1>
-          <p className='text-lg md:text-xl sm:text-xl'>
-            No matter how quickly you need to make an offer, our data and
-            experts are always available. Let&quot;s start here
-          </p>
-          <div className='flex items-center gap-5'>
-            <Link href={'/'}>
-              <FontAwesomeIcon icon={faLinkedin} className='text-[30px]' />
-            </Link>
-            <Link href={'/'}>
-              <FontAwesomeIcon icon={faInstagram} className='text-[30px]' />
-            </Link>
-            <Link href={'/'}>
-              <FontAwesomeIcon icon={faTwitter} className='text-[30px]' />
-            </Link>
-            <Link href={'/'}>
-              <FontAwesomeIcon icon={faFacebook} className='text-[30px]' />
-            </Link>
+                  <div className='flex justify-between items-center flex-wrap gap-3'>
+                    <h1 className='text-xl'>{home.title}</h1>
+                    <h4 className='text-base'>
+                      {home?.price?.toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'NGN',
+                      })}
+                    </h4>
+                    <span className='text-[gray] text-sm '>{home.address}</span>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
-        </article>
-        <article className='xl:w-[20%] md:w-full sm:w-full flex flex-col gap-5 '>
-          <h3 className='md:text-2xl sm:text-2xl'>Company</h3>
-          <nav className='flex flex-col gap-5 text-lg'>
-            <Link href='/about'>About us</Link>
-            <Link href='/pricing'>Pricing</Link>
-            <Link href='/contact'>Contact us</Link>
-            <Link href='/blog'>Blog</Link>
-          </nav>
-        </article>
-        <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
-          <h3 className='md:text-2xl sm:text-2xl'>Support</h3>
-          <nav className='flex flex-col gap-5 text-lg'>
-            <Link href='/helpcenter'>Help center</Link>
-            <Link href='/termsofservice'>Terms of services</Link>
-            <Link href='/legal'>Legal</Link>
-            <Link href='/privacypolicy'>Privacy policy</Link>
-          </nav>
-        </article>
-        <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
-          <h3 className='text-xl uppercase'>Our app is coming soon</h3>
-        </article>
-      </footer>
-    </main>
+        </section>
+
+        <section className='grid 2xl:grid-cols-2 xl:grid-cols-2 xl:p-14 md:grid-cols-2 md:p-10 '>
+          <article className=''>
+            <Image
+              src={'/yellowChair.avif'}
+              alt='home'
+              width={1000}
+              height={1000}
+              className=' rounded-md 2xl:right-[15rem] 2xl:top-10 2xl:w-[40rem] 2xl:h-[35rem] 2xl:flex xl:top-5 xl:right-[2rem] xl:w-[30rem] xl:h-[30rem] xl:flex
+          md:w-[20rem] md:h-[25rem] md:right-5 md:flex sm:hidden object-cover '
+            />
+          </article>
+
+          <article className='flex flex-col justify-start items-start gap-7 p-5'>
+            <h1 className='xl:text-4xl md:text-3xl sm:text-2xl'>About us</h1>
+            <p className='2xl:w-[60%] '>
+              We are a company that connects the world of real estate and
+              finance. We provide a complete service for the sale, purchase or
+              rental of real estate. Our advantage is more than 15 years of
+              experience and soil in attractive locations in Slovakia with
+              branches in Bratislava and Košice. We have a connection to all
+              banks on the Slovak market, so we can solve everything under one
+              roof. By constantly innovating our business activities, we move
+              forward and we are able to offer truly above-standard services
+              that set us apart from the competition.
+            </p>
+          </article>
+        </section>
+
+        <section
+          className='bg-color2 w-full py-5  flex 2xl:mb-[15rem] xl:mb-[12rem] xl:flex-row xl:h-[500px] xl:justify-center xl:items-center
+      md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'
+        >
+          <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
+            <h1 className='2xl:w-[80%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
+              Some of our happy Client&quot;s
+            </h1>
+            <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
+              In promotion and advertising, a testimonial or show consist&quot;s
+              of a person&quot;s written or spoken statement extolling the
+              virtue&quot;s of a product.
+            </p>
+          </article>
+
+          <div className='xl:w-[50%] xl:mt-[20rem] 2xl: xl:pl-10  '>
+            <Carousel autoplay={true} autoplayInterval={5000}>
+              {TestimonialJSON.map((testy, index) => (
+                <div
+                  key={index}
+                  className='flex flex-col flex-grow gap-5 bg-white text-black shadow-md rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[480px] '
+                >
+                  <h3 className='xl:text-2xl md:text-2xl sm:text-xl '>
+                    {testy.title}
+                  </h3>
+                  <p className='xl:text-base md:text-lg'>{testy.comment}</p>
+
+                  <div className='flex flex-col gap-2'>
+                    <h3 className='xl:text-xl md:text-xl sm:text-lg '>
+                      Benjamin Appling
+                    </h3>
+                    <span className='text-sm text-[gray]'>Happy Client</span>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
+          </div>
+        </section>
+
+        <section className='flex flex-col justify-center items-center gap-10 mx-auto xl:w-[60%] md:py-16 sm:py-10   '>
+          <div className='flex flex-col gap-2 justify-center items-center w-full'>
+            <h1 className='xl:text-5xl xl:w-[40%] md:w-full md:text-5xl sm:w-full sm:text-3xl text-center '>
+              Subscribe to our newsletter
+            </h1>
+            <p className='text-center'>
+              Get the latest news and interesting offers and real estate.
+            </p>
+          </div>
+
+          <Formik
+            initialValues={{ propertyType: '', state: '' }}
+            // onSubmit={handleSubmit}
+          >
+            <Form className='flex xl:flex-row xl:items-center xl:gap-5'>
+              <InputField
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Enter your email'
+                className='2xl:w-[40rem] xl:w-[40rem] '
+              />
+
+              <Button
+                label='Subscribe'
+                type='submit'
+                className='bg-color3 text-white xl:h-[55px] hover:bg-hover '
+              />
+            </Form>
+          </Formik>
+        </section>
+
+        <footer
+          className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
+      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 bg-color2 flex   '
+        >
+          <article className='xl:w-[30%] md:w-full sm:w-full flex flex-col gap-8 '>
+            <h1 className='xl:text-5xl md:text-4xl sm:text-4xl'>Untitled</h1>
+            <p className='text-base xl:w-[400px] md:text-xl sm:text-xl'>
+              No matter how quickly you need to make an offer, our data and
+              experts are always available. Let&quot;s start here
+            </p>
+            <div className='flex items-center gap-5'>
+              <Link href={'/'}>
+                <FontAwesomeIcon icon={faLinkedin} className='text-[30px]' />
+              </Link>
+              <Link href={'/'}>
+                <FontAwesomeIcon icon={faInstagram} className='text-[30px]' />
+              </Link>
+              <Link href={'/'}>
+                <FontAwesomeIcon icon={faTwitter} className='text-[30px]' />
+              </Link>
+              <Link href={'/'}>
+                <FontAwesomeIcon icon={faFacebook} className='text-[30px]' />
+              </Link>
+            </div>
+          </article>
+          <article className='xl:w-[20%] md:w-full sm:w-full flex flex-col gap-5 '>
+            <h3 className='md:text-2xl sm:text-2xl'>Company</h3>
+            <nav className='flex flex-col gap-5 text-lg'>
+              <Link href='/about'>About us</Link>
+              <Link href='/pricing'>Pricing</Link>
+              <Link href='/contact'>Contact us</Link>
+              <Link href='/blog'>Blog</Link>
+            </nav>
+          </article>
+          <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
+            <h3 className='md:text-2xl sm:text-2xl'>Support</h3>
+            <nav className='flex flex-col gap-5 text-lg'>
+              <Link href='/helpcenter'>Help center</Link>
+              <Link href='/termsofservice'>Terms of services</Link>
+              <Link href='/legal'>Legal</Link>
+              <Link href='/privacypolicy'>Privacy policy</Link>
+            </nav>
+          </article>
+          <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
+            <h3 className='text-xl uppercase'>Our app is coming soon</h3>
+          </article>
+        </footer>
+      </main>
+    </>
   )
 }
