@@ -100,16 +100,16 @@ export default function Home() {
       </Head>
       <main className='overflow-hidden'>
         <NavHeader />
-        <section className='relative flex 2xl:h-[50rem] 2xl:pt-[7rem] xl:h-[45rem] xl:pt-[5rem] md:h-[40rem] md:pt-[4rem] sm:pt-[5rem] sm:h-[40rem] '>
+        <section className='relative flex 2xl:h-[50rem] 2xl:pt-[10rem] xl:h-[45rem] xl:pt-[5rem] md:h-[40rem] md:pt-[4rem] sm:pt-[5rem] sm:h-[40rem] '>
           <motion.section
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className='flex flex-col justify-start items-start gap-5 2xl:w-[50%] 2xl:pl-[13rem] xl:pl-[5rem] xl:w-[50%] md:w-[50%] md:pl-5 sm:pl-5 '
+            className='flex flex-col justify-start items-start gap-5 3xl:pl-24 2xl:w-[50%] 2xl:pl-14 xl:pl-[5rem] xl:w-[50%] md:w-[50%] md:pl-5 sm:pl-5 '
           >
             <h1
               className='2xl:text-6xl 2xl:leading-[70px] xl:w-full xl:leading-[60px] xl:text-5xl lg:text-5xl md:text-4xl 
-          md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
+              md:w-full md:leading-[50px] sm:text-4xl sm:w-full '
             >
               The ease of buying and renting a dream house & apartment
             </h1>
@@ -118,7 +118,7 @@ export default function Home() {
               experts are always available. Let&quot;s start here
             </p>
             <div
-              className='bg-[#F3F3FA] p-4 rounded-lg absolute z-10 2xl:w-[50%] 2xl:bottom-[15rem] 2xl:left-[13rem] xl:bottom-[15rem] xl:w-[70%] xl:left-[5rem] 
+              className='bg-[#F3F3FA] p-4 rounded-lg absolute z-10 3xl:left-[6rem] 2xl:w-[60%] 2xl:bottom-[15rem] 2xl:left-[4rem] xl:bottom-[15rem] xl:w-[70%] xl:left-[5rem] 
             md:bottom-[12rem] md:w-[80%] sm:w-[95%] sm:left-3 sm:bottom-[5rem]  '
             >
               <Formik
@@ -130,20 +130,20 @@ export default function Home() {
                     name='propertyType'
                     id='propertyType'
                     options={options}
-                    className='2xl:w-[200px] md:w-[140px] sm:h-[55px] border-2 border-color2 focus:border-hover'
+                    className='3xl:w-[300px] 2xl:w-[200px] md:w-[140px] sm:h-[55px] border-2 border-color2 focus:border-hover'
                   />
                   <InputField
                     type='text'
                     name='state'
                     id='state'
                     placeholder='Enter your prefer destination...'
-                    className='2xl:w-[37rem] xl:w-[33rem] md:w-[23rem] sm:w-full  '
+                    className='3xl:w-[45rem] 2xl:w-[37rem] xl:w-[33rem] md:w-[23rem] sm:w-full  '
                   />
                   <Button
                     type='button'
                     name='button'
                     label='Search'
-                    className='bg-color3 w-full text-white flex justify-center items-center gap-3 hover:bg-hover xl:h-[55px] sm:h-[50px] '
+                    className='bg-color3 rounded-md w-full text-white flex justify-center items-center gap-3 hover:bg-hover xl:h-[55px] sm:h-[50px] '
                     icons={<FontAwesomeIcon icon={faMagnifyingGlass} />}
                   />
                 </Form>
@@ -156,8 +156,9 @@ export default function Home() {
             alt='home'
             width={1000}
             height={1000}
-            className='absolute rounded-md 2xl:right-[15rem] 2xl:top-10 2xl:w-[40rem] 2xl:h-[45rem] 2xl:flex xl:top-5 xl:right-[2rem] xl:w-[35rem] xl:h-[35rem] xl:flex
-          md:w-[20rem] md:h-[30rem] md:right-5 md:flex sm:hidden object-cover '
+            className='absolute rounded-md 3xl:right-[10rem] 3xl:top-28 3xl:w-[43rem] 3xl:h-[40rem] 2xl:right-[6rem] 2xl:top-14 2xl:w-[40rem] 
+            2xl:h-[38rem] 2xl:flex xl:top-5 xl:right-[2rem] xl:w-[35rem] xl:h-[35rem] xl:flex md:w-[20rem] md:h-[30rem] md:right-5 
+            md:flex sm:hidden object-cover '
           />
         </section>
 
@@ -175,7 +176,7 @@ export default function Home() {
 
             <Link
               href='/listings'
-              className='border-2 border-color3 h-[50px] text-color3 flex justify-center items-center w-[170px] font-semibold hover:border-hover hover:border-none '
+              className='border-2 border-color3 h-[50px] text-color3 flex justify-center items-center w-[170px] font-semibold hover:border-hover '
             >
               Show all offers{' '}
             </Link>
@@ -233,7 +234,9 @@ export default function Home() {
           </article>
 
           <article className='flex flex-col justify-start items-start gap-7 p-5'>
-            <h1 className='xl:text-4xl md:text-3xl sm:text-2xl'>About us</h1>
+            <h1 className='2xl:text-5xl xl:text-4xl md:text-3xl sm:text-2xl'>
+              About us
+            </h1>
             <p className='2xl:w-[60%] '>
               We are a company that connects the world of real estate and
               finance. We provide a complete service for the sale, purchase or
@@ -253,10 +256,10 @@ export default function Home() {
       md:flex-col md:py-8 md:gap-8 sm:flex-col sm:gap-8 sm:py-10'
         >
           <article className='2xl:pl-[10rem] xl:w-[50%] xl:pl-10 md:px-10 sm:px-5 flex flex-col gap-5'>
-            <h1 className='2xl:w-[80%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
+            <h1 className='2xl:w-[90%] xl:text-6xl xl:w-[70%] xl:leading-[70px] md:text-5xl md:w-[70%] md:leading-[70px] sm:text-4xl sm:leading-[50px] '>
               Some of our happy Client&quot;s
             </h1>
-            <p className='text-lg 2xl:w-[70%] xl:w-[85%] md:w-[85%] sm:w-full'>
+            <p className='text-lg 2xl:w-[80%] xl:w-[85%] md:w-[85%] sm:w-full'>
               In promotion and advertising, a testimonial or show consist&quot;s
               of a person&quot;s written or spoken statement extolling the
               virtue&quot;s of a product.
@@ -313,7 +316,7 @@ export default function Home() {
               <Button
                 label='Subscribe'
                 type='submit'
-                className='bg-color3 text-white xl:h-[55px] hover:bg-hover '
+                className='bg-color3 text-white xl:h-[55px] rounded-md hover:bg-hover '
               />
             </Form>
           </Formik>

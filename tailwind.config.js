@@ -21,6 +21,7 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
+      '3xl': '1920px',
     },
     colors: {
       color1: '#091638',
@@ -28,7 +29,8 @@ module.exports = {
       hover: '#6E8AE9',
       color3: '#1C3988',
       white: '#fff',
-      black: '#000'
+      black: '#000',
+      red: '#FF0303',
     },
     extend: {
       backgroundImage: {
