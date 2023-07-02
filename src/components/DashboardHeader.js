@@ -15,6 +15,7 @@ import {
   setToken,
   setUserProfile,
 } from '@/slice/userSlice'
+import Button from '@/hooks/button'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -113,20 +114,20 @@ const DashboardHeader = () => {
 
   return (
     <>
-      <main className='flex xl:flex-row md:p-5 md:flex-col-reverse sm:p-5 sm:gap-5 sm:flex-col-reverse '>
-        <div className='relative xl:w-[50%] w-full'>
+      <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center '>
+        <div className='relative xl:w-[50%] md:w-[50%] w-full'>
           <input
             type='text'
             name='search'
-            placeholder='Search property'
-            className='lg:h-[55px] lg:w-[400px] md:w-[350px] sm:w-full sm:h-[55px] border border-gray-500 rounded-full indent-3 '
+            placeholder='Search estate agent'
+            className='h-[55px] lg:w-[400px] md:w-[400px] sm:w-full sm:h-[55px] py-4 rounded-full outline-none border-2 border-color2 focus:border-hover indent-3 '
             value={searchQuery}
             onChange={(e) => {
               dispatch(setSearchQuery(e.target.value))
             }}
           />
           {searchQuery && (
-            <div className='w-auto h-auto absolute top-20 left-0 p-5 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
+            <div className='xl:w-auto md:w-full sm:w-full h-auto absolute top-20 left-0 p-5 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
               {searchedKeywords?.users?.map((usersFound) => {
                 return (
                   <Link
@@ -160,19 +161,22 @@ const DashboardHeader = () => {
           )}
         </div>
 
-        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center sm:justify-between sm:items-center '>
+        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center md:w-[50%] md:gap-8 md:justify-end md:items-center '>
           <button
             type='button'
             onClick={() => {
               dispatch(setAddListingModal(true))
             }}
-            className='bg-[#F30A49] text-white h-[50px] 2xl:px-5 xl:px-5 md:px-5 sm:px-5 rounded-full shadow-2xl font-medium '
+            className='bg-color3 text-white h-[50px] justify-center items-center 2xl:px-5 xl:px-5 xl:flex md:px-5 sm:px-5 sm:hidden rounded-full shadow-2xl font-medium '
           >
             Add Listing
           </button>
 
-          <button type='button' className='xl:flex md:flex sm:hidden'>
-            <FontAwesomeIcon icon={faBell} className='text-3xl' />
+          <button
+            type='button'
+            className='xl:flex xl:bg-color3 xl:w-[50px] xl:h-[50px] xl:justify-center xl:items-center xl:rounded-full md:flex sm:hidden '
+          >
+            <FontAwesomeIcon icon={faBell} className='text-3xl text-white' />
           </button>
 
           <Link href={'/profile'} className='xl:flex md:flex sm:hidden'>
@@ -185,7 +189,7 @@ const DashboardHeader = () => {
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full border-[3px] border-[#F30A49] 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[80px] sm:h-[80px] object-cover'
+              className='rounded-full border-[3px] border-color3 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[80px] sm:h-[80px] object-cover'
             />
           </Link>
 
@@ -210,7 +214,8 @@ const DashboardHeader = () => {
             animate={showModal ? 'open' : 'closed'}
             variants={variants}
             transition={{ duration: 0.5 }}
-            className='flex flex-col justify-start items-start gap-5 absolute top-0 left-0 bg-white h-auto rounded-lg pb-10 md:w-[70%] sm:w-full mx-auto z-10 text-black'
+            className='flex flex-col justify-start items-start gap-5 absolute top-0 left-0 bg-white h-auto rounded-lg pb-10 md:w-full 
+            sm:w-full z-10 text-black'
           >
             <header className='flex justify-between w-full p-5'>
               <Link href={'/'} className='logo font-bold text-2xl'>
@@ -225,16 +230,14 @@ const DashboardHeader = () => {
             <article className='flex flex-col justify-start items-start gap-5 px-5 font-medium w-full text-lg'>
               <Link href={'/rent'}>Rent</Link>
               <Link href={'/sell'}>Sell</Link>
-              <Link href={'/buy'}>Buy</Link>
               <Link href={'/listings'}>Listings</Link>
-              <Link href={'/profile'}>Profile</Link>
 
               <Link
                 href={'/messages'}
                 className='flex justify-between items-center relative w-full'
               >
                 Messages
-                <span className='bg-red-600 rounded-full w-[20px] h-[20px] absolute right-0 top-2 flex justify-center items-center text-sm '>
+                <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
                   3
                 </span>
               </Link>
@@ -244,18 +247,18 @@ const DashboardHeader = () => {
                 className='flex justify-between items-center relative w-full'
               >
                 Notifications
-                <span className='bg-red-600 rounded-full w-[20px] h-[20px] absolute right-0 top-2 flex justify-center items-center text-sm '>
+                <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
                   1
                 </span>
               </Link>
 
-              <button
+              <Button
                 type='button'
+                label='Logout'
                 onClick={handleLogout}
-                className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
-              >
-                Logout
-              </button>
+                className='w-full rounded-md'
+                // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
+              />
             </article>
           </motion.nav>
         </>

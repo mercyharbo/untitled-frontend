@@ -12,13 +12,13 @@ import { useSelector } from 'react-redux'
 
 const GridView = () => {
   const listings = useSelector((state) => state.listings.listings)
-  const searchQuery = useSelector((state) => state.user.searchQuery)
+  const searchProperties = useSelector((state) => state.user.searchProperties)
 
   return (
-    <article className='grid xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
+    <article className='grid 3xl:grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
       {listings
         ?.filter((homes) =>
-          homes.title?.toLowerCase().includes(searchQuery?.toLowerCase())
+          homes.title?.toLowerCase().includes(searchProperties?.toLowerCase())
         )
         ?.map((homes) => {
           return (
@@ -32,12 +32,12 @@ const GridView = () => {
                 alt='homes'
                 width={500}
                 height={500}
-                className='rounded-lg object-cover w-full lg:h-[250px]  '
+                className='rounded-lg object-cover w-full lg:h-[250px] sm:h-[200px]  '
               />
               <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
-                <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>
+                <span className='flex items-center gap-1 text-[gray] sm:text-sm sm:pt-3 '>
                   Posted by
-                  <p className='lowercase'>
+                  <p className='lowercase  '>
                     {homes?.user?.username || 'Not found'}
                   </p>
                 </span>
@@ -46,9 +46,7 @@ const GridView = () => {
                 <div className='flex lg:flex-col sm:flex-col gap-5'>
                   <span className='flex justify-start items-start gap-2'>
                     <FontAwesomeIcon icon={faLocationDot} className='pt-1' />
-                    <span className='text-sm text-gray-500'>
-                      {homes.address}
-                    </span>
+                    <span className='text-sm text-[gray]'>{homes.address}</span>
                   </span>
 
                   <div className='flex justify-between items-center'>
@@ -72,7 +70,7 @@ const GridView = () => {
                     </p>
                   </div>
 
-                  <h1 className='sm:ml-auto text-[#ef476f]'>
+                  <h1 className=' text-color3'>
                     {homes?.price?.toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'NGN',
