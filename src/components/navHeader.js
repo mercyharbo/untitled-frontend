@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setUserProfile } from '@/slice/userSlice'
 
 import { setLoading } from '@/slice/listingSlice'
+import Button from '@/hooks/button'
 
 const NavHeader = () => {
   const router = useRouter()
@@ -69,20 +70,20 @@ const NavHeader = () => {
     }
 
     getUserProfile()
-  }, [dispatch])
+  }, [])
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     dispatch(setToken(token || null)) // Set token to null if undefined
-  }, [dispatch])
+  }, [])
 
   return (
     <main>
-      <nav className=' shadow-md w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
+      <nav className='w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
           <Link
             href={'/'}
-            className='logo font-bold xl:text-2xl lg:2xl md:text-xl sm:text'
+            className='font-bold text-2xl'
           >
             Untitlted
           </Link>
@@ -107,20 +108,15 @@ const NavHeader = () => {
           {token && (
             <Link
               href='/profile'
-              className='bg-transparent border text-black font-medium h-[45px] px-6 rounded-full flex justify-center items-center hover:bg-[#F30A49] hover:border-none '
+              className='bg-transparent border text-black font-medium h-[45px] px-6 rounded-full flex justify-center items-center hover:bg-hover 
+              hover:border-none  hover:text-white '
             >
               Profile
             </Link>
           )}
 
           {token && (
-            <button
-              type='button'
-              onClick={handleLogout}
-              className='bg-[#F30A49] text-white font-medium h-[45px] px-4 rounded-full '
-            >
-              Logout
-            </button>
+            <Button type='button' label='Logout' onClick={handleLogout} className='rounded-full px-5' />
           )}
 
           {!token && (

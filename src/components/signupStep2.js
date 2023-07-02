@@ -1,9 +1,14 @@
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useState } from 'react'
+
+import InputField from '@/hooks/InputField'
+import Button from '@/hooks/button'
+import Image from 'next/image'
+import { setSelectedImage } from '@/slice/userSlice'
 
 const SignupStep2 = () => {
   const router = useRouter()
@@ -13,14 +18,15 @@ const SignupStep2 = () => {
   const [isLoading, setIsloading] = useState(true)
 
   const { email } = useSelector((state) => state.signup)
+  const selectedImage = useSelector((state) => state.user.selectedImage)
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required'),
     first_name: Yup.string().required('Firstname is required'),
     last_name: Yup.string().required('Lastname is required'),
-    // state: Yup.string().required('State is required'),
-    // city: Yup.string().required('City is required'),
+    state: Yup.string().required('State is required'),
+    city: Yup.string().required('City is required'),
     address: Yup.string().required('Address is required'),
   })
 
@@ -42,6 +48,7 @@ const SignupStep2 = () => {
             state: values.state,
             city: values.city,
             address: values.address,
+            avatarUrl: selectedImage,
           }),
         }
       )
@@ -62,11 +69,53 @@ const SignupStep2 = () => {
     }
   }
 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0]
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        const base64Image = reader.result
+        dispatch(setSelectedImage(base64Image))
+      }
+    }
+
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
-    <main className='flex flex-col justify-between items-start gap-5  '>
-      <p className='text-base xl:pl-[6rem] md:pl-5 sm:pl-5 '>
+    <main className='flex flex-col gap-5 3xl:w-[90%]  '>
+      {/* <p className='text-base text-left flex justify-start items-start xl:pl-[6rem] md:pl-5 sm:pl-5 '>
         Fill out the following details to complete your registration.
-      </p>
+      </p> */}
+
+      <div className='flex justify-start items-center gap-4 lg:flex-row md:flex-row sm:flex-row'>
+        <Image
+          src={selectedImage || '/avatar.jpg'}
+          alt='Profile Picture'
+          width={1000}
+          height={1000}
+          className='rounded-full bg-hover object-cover 2xl:h-[150px] 2xl:w-[150px] xl:w-[130px] xl:h-[130px] md:w-[120px] 
+          md:h-[120px] sm:w-[100px] sm:h-[100px] '
+        />
+        <div className='flex flex-row justify-start items-start gap-5'>
+          <input
+            type='file'
+            accept='image/*'
+            onChange={handleImageUpload}
+            className='hidden'
+            id='upload-input'
+          />
+          <label
+            htmlFor='upload-input'
+            className='border h-[40px] px-4 rounded-lg font-semibold cursor-pointer flex justify-center items-center hover:bg-[#F30A49] hover:text-white'
+          >
+            Upload
+          </label>
+        </div>
+      </div>
 
       <Formik
         initialValues={{
@@ -82,43 +131,35 @@ const SignupStep2 = () => {
         onSubmit={handleSubmit}
       >
         {() => (
-          <Form className='flex flex-col gap-5 xl:w-[80%] md:w-full sm:w-full sm:px-5 mx-auto  '>
+          <Form className='flex flex-col gap-5 w-full px-5 '>
             <div className='flex flex-col justify-start items-start gap-2'>
               <label htmlFor='username' className='font-medium'>
                 Username
               </label>
-              <Field
-                type='username'
-                name='username'
-                id='username'
-                placeholder='Enter your username'
-                autoComplete='off'
-                className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-              />
-              <ErrorMessage
-                name='username'
-                component='div'
-                className='font-medium text-[#F30A49]'
-              />
+              <div className='w-full'>
+                <InputField
+                  type='username'
+                  name='username'
+                  id='username'
+                  placeholder='Enter your username'
+                  className='w-full'
+                />
+              </div>
             </div>
 
-            <div className='flex flex-col justify-start items-start gap-2'>
+            <div className='flex flex-col justify-start items-start gap-2 w-full'>
               <label htmlFor='password' className='font-medium'>
                 Password
               </label>
-              <Field
-                type='password'
-                name='password'
-                id='password'
-                autoComplete='off'
-                placeholder='Enter your password'
-                className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-              />
-              <ErrorMessage
-                name='password'
-                component='div'
-                className='font-medium text-[#F30A49]'
-              />
+              <div className='w-full'>
+                <InputField
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='Enter your password'
+                  className='w-full'
+                />
+              </div>
             </div>
 
             <div className='grid lg:grid-cols-2 lg:gap-5'>
@@ -126,37 +167,29 @@ const SignupStep2 = () => {
                 <label htmlFor='username' className='font-medium'>
                   Firstname
                 </label>
-                <Field
-                  type='first_name'
-                  name='first_name'
-                  id='first_name'
-                  placeholder='Enter your firstname'
-                  autoComplete='off'
-                  className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-                />
-                <ErrorMessage
-                  name='first_name'
-                  component='div'
-                  className='font-medium text-[#F30A49]'
-                />
+                <div className='w-full'>
+                  <InputField
+                    type='first_name'
+                    name='first_name'
+                    id='first_name'
+                    placeholder='Enter your firstname'
+                    className='w-full'
+                  />
+                </div>
               </div>
               <div className='flex flex-col justify-start items-start gap-2'>
                 <label htmlFor='username' className='font-medium'>
                   Lastname
                 </label>
-                <Field
-                  type='last_name'
-                  name='last_name'
-                  id='last_name'
-                  placeholder='Enter your lastname'
-                  autoComplete='off'
-                  className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-                />
-                <ErrorMessage
-                  name='last_name'
-                  component='div'
-                  className='font-medium text-[#F30A49]'
-                />
+                <div className='w-full'>
+                  <InputField
+                    type='last_name'
+                    name='last_name'
+                    id='last_name'
+                    placeholder='Enter your lastname'
+                    className='w-full'
+                  />
+                </div>
               </div>
             </div>
             <div className='grid lg:grid-cols-2 lg:gap-5'>
@@ -164,72 +197,79 @@ const SignupStep2 = () => {
                 <label htmlFor='state' className='font-medium'>
                   State
                 </label>
-                <Field
-                  type='text'
-                  name='state'
-                  id='state'
-                  placeholder='Enter your state'
-                  autoComplete='off'
-                  className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-                />
-                <ErrorMessage
-                  name='state'
-                  component='div'
-                  className='font-medium text-[#F30A49]'
-                />
+                <div className='w-full'>
+                  <InputField
+                    type='text'
+                    name='state'
+                    id='state'
+                    placeholder='Enter your state'
+                    className='w-full'
+                  />
+                </div>
               </div>
               <div className='flex flex-col justify-start items-start gap-2'>
                 <label htmlFor='city' className='font-medium'>
                   City
                 </label>
-                <Field
-                  type='text'
-                  name='city'
-                  id='city'
-                  placeholder='Enter your city'
-                  autoComplete='off'
-                  className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-                />
-                <ErrorMessage
-                  name='city'
-                  component='div'
-                  className='font-medium text-[#F30A49]'
-                />
+                <div className='w-full'>
+                  <InputField
+                    type='text'
+                    name='city'
+                    id='city'
+                    placeholder='Enter your city'
+                    className='w-full'
+                  />
+                </div>
               </div>
             </div>
 
-            <div className='flex flex-col justify-start items-start gap-2'>
-              <label htmlFor='address' className='font-medium'>
-                Address
-              </label>
-              <Field
-                type='text'
-                name='address'
-                id='address'
-                autoComplete='off'
-                placeholder='Enter your address'
-                className='border h-[50px] w-full rounded-lg outline-none indent-3 text-black'
-              />
-              <ErrorMessage
-                name='address'
-                component='div'
-                className='font-medium text-[#F30A49]'
-              />
+            <div className='grid 2xl:grid-cols-2 gap-5 w-full'>
+              <div className='flex flex-col justify-start items-start gap-2'>
+                <label htmlFor='address' className='font-medium'>
+                  Address
+                </label>
+                <div className='w-full'>
+                  <InputField
+                    type='text'
+                    name='address'
+                    id='address'
+                    placeholder='Enter your address'
+                    className='w-full'
+                  />
+                </div>
+              </div>
+
+              <div className='flex flex-col justify-start items-start gap-2'>
+                <label htmlFor='phoneNumber' className='font-medium'>
+                  Phone Number
+                </label>
+                <div className='w-full'>
+                  <InputField
+                    type='text'
+                    name='phoneNumber'
+                    id='phoneNumber'
+                    placeholder='Enter your phone number'
+                    className='w-full'
+                  />
+                </div>
+              </div>
             </div>
 
-            <button
+            <Button
+              label='Create account'
               type='submit'
-              className='h-[50px] w-full rounded-lg bg-[#F30A49] text-white font-medium cursor-pointer'
               // disabled={isLoading || isSubmitting}
-            >
-              Create account
-            </button>
+              className='rounded-md'
+            />
 
             {errorMsg && (
-              <div className='font-medium text-[#F30A49]'>{errorMsg}</div>
+              <span className='font-medium text-sm' style={{ color: 'red' }}>
+                {errorMsg}
+              </span>
             )}
+
             <p className='text-sm'>
-              By submitting, I accept to the {' '}
+              By submitting, I accept to the{' '}
               <Link href={'/terms&condition'} className='text-[#F30A49] '>
                 terms of use
               </Link>

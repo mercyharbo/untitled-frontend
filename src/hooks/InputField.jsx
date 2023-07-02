@@ -11,7 +11,12 @@ const InputField = ({ type, name, id, placeholder, className, style }) => {
         className={`${className} bg-transparent py-4 rounded-lg indent-2 outline-none border-2 border-color2 focus:border-hover `}
         style={style}
       />
-      <ErrorMessage name={name} component='div' className='error' />
+      <ErrorMessage
+        name={name}
+        component='span'
+        className='text-sm font-medium '
+        style={{ color: 'red' }}
+      />
     </div>
   )
 }

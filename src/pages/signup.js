@@ -61,13 +61,13 @@ const Signup = () => {
       </Head>
       <div className=''>
         <NavHeader />
-        <main className='grid xl:grid-cols-2 lg:grid-cols-2 lg:gap-5 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-3'>
+        <main className='grid place-items-center xl:grid-cols-2 lg:grid-cols-2 lg:gap-5 md:grid-cols-1 md:gap-5 sm:grid-cols-1 sm:gap-3'>
           <Image
-            src='/aside.png'
+            src='/avyyy.jpg'
             alt='images'
             width={1000}
             height={1000}
-            className='xl:h-screen md:h-[450px] sm:h-[350px] w-full object-cover'
+            className='h-auto xl:w-full xl:flex md:w-[35rem] md:hidden sm:w-full sm:hidden object-cover'
           />
 
           <section className='flex flex-col justify-start w-full m-auto py-10'>
