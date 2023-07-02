@@ -190,7 +190,7 @@ export default function Home() {
               }
             `}
             </style>
-            {listings.map((home) => {
+            {listings?.slice(0, 6).map((home) => {
               return (
                 <Link
                   key={home._id}
@@ -202,12 +202,12 @@ export default function Home() {
                     alt='homes'
                     width={500}
                     height={500}
-                    className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px]'
+                    className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px] sm:h-[200px] '
                   />
 
-                  <div className='flex justify-between items-center flex-wrap gap-3'>
+                  <div className='flex flex-col gap-3'>
                     <h1 className='text-xl'>{home.title}</h1>
-                    <h4 className='text-base'>
+                    <h4 className='text-base text-color3'>
                       {home?.price?.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'NGN',

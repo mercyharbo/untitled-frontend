@@ -7,6 +7,7 @@ import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
 import { setLoading } from '@/slice/listingSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
+import Button from '@/hooks/button'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -61,7 +62,7 @@ const Profile = () => {
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
+              className='rounded-full p-[2px] bg-color3 object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
               sm:w-[120px] sm:h-[120px] '
             />
           </div>
@@ -71,7 +72,7 @@ const Profile = () => {
               <h1 className='2xl:text-5xl xl:text-5xl lg:text-5xl md:text-4xl sm:text-4xl text-center '>
                 {userProfile?.firstname} {userProfile?.lastname}
               </h1>
-              <span className='text-base text-gray-400 font-medium'>
+              <span className='text-base text-[gray] font-medium'>
                 @{userProfile?.username}
               </span>
             </div>
@@ -80,19 +81,19 @@ const Profile = () => {
             </p>
           </div>
           <div className='flex justify-center items-center gap-3'>
-            <button
+            <Button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full '
-            >
-              Share
-            </button>
-            <button
+              label='Share'
+              className='px-5 rounded-full bg-color3 '
+        
+            />
+
+            <Button
               type='button'
+              label='Edit profile'
               onClick={() => dispatch(setEditProfileModal(true))}
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full '
-            >
-              Edit profiile
-            </button>
+              className='px-5 rounded-full '
+            />
           </div>
         </header>
 
@@ -101,7 +102,7 @@ const Profile = () => {
             type='button'
             onClick={() => setProfileTab('listings')}
             className={`${
-              profileTab === 'listings' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'listings' ? 'border-b-[3px] border-color3' : ''
             }`}
           >
             Listings
@@ -110,7 +111,7 @@ const Profile = () => {
             type='button'
             onClick={() => setProfileTab('sold')}
             className={`${
-              profileTab === 'sold' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'sold' ? 'border-b-[3px] border-color3' : ''
             }`}
           >
             Sold
@@ -119,7 +120,7 @@ const Profile = () => {
             type='button'
             onClick={() => setProfileTab('favorite')}
             className={`${
-              profileTab === 'favorite' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'favorite' ? 'border-b-[3px] border-color3' : ''
             }`}
           >
             Favorite

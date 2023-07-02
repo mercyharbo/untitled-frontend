@@ -7,6 +7,7 @@ const initialState = {
   editProfileModal: false,
   searched: [],
   selectedImage: null,
+  searchProperties: '',
 }
 
 const userSlice = createSlice({
@@ -31,6 +32,9 @@ const userSlice = createSlice({
     setSelectedImage: (state, action) => {
       state.selectedImage = action.payload
     },
+    setSearchProperties: (state, action) => {
+      state.searchProperties = action.payload
+    },
   },
 })
 
@@ -41,5 +45,6 @@ export const {
   setEditProfileModal,
   setSearched,
   setSelectedImage,
+  setSearchProperties,
 } = userSlice.actions
 export default userSlice.reducer

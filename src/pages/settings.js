@@ -10,23 +10,12 @@ const Settings = () => {
 
   return (
     <DashboardLayout>
-      <main className='flex'>
-        <section
-          className='2xl:w-[20%] xl:w-[20%] xl:flex-col xl:justify-start xl:items-start md:flex-col md:justify-start md:items-start md:w-[20%] 
-      sm:flex-row sm:justify-between sm:items-center sm:w-full sm:p-3 rounded-lg bg-white shadow-2xl flex gap-2 cursor-pointer'
-        >
+      <main className='flex flex-col p-5'>
+        <section className='rounded-lg bg-white shadow-2xl flex gap-5 py-3 cursor-pointer'>
           <span
-            className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
-              activeTab === 'Profile' ? 'bg-[#F30A49] h-[40px] rounded-md' : ''
-            }`}
-            onClick={() => handleTabClick('Profile')}
-          >
-            Profile
-          </span>
-          <span
-            className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
+            className={`text-base h-[40px] w-full px-2 flex justify-start items-center ${
               activeTab === 'Notification'
-                ? 'bg-[#F30A49] h-[40px] rounded-md'
+                ? 'bg-color3 text-white h-[40px] rounded-md'
                 : ''
             }`}
             onClick={() => handleTabClick('Notification')}
@@ -34,9 +23,9 @@ const Settings = () => {
             Notification
           </span>
           <span
-            className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
+            className={`text-base h-[40px] w-full px-2 flex justify-start items-center ${
               activeTab === 'Password'
-                ? 'bg-[#F30A49] h-[40px] rounded-md '
+                ? 'bg-color3 text-white h-[40px] rounded-md '
                 : ''
             }`}
             onClick={() => handleTabClick('Password')}
@@ -44,8 +33,10 @@ const Settings = () => {
             Password
           </span>
           <span
-            className={`text-base h-[40px] w-full px-2 flex justify-start items-center font-semibold ${
-              activeTab === 'Privacy' ? 'bg-[#F30A49] h-[40px] rounded-md' : ''
+            className={`text-base h-[40px] w-full px-2 flex justify-start items-center ${
+              activeTab === 'Privacy'
+                ? 'bg-color3 text-white h-[40px] rounded-md'
+                : ''
             }`}
             onClick={() => handleTabClick('Privacy')}
           >
@@ -54,20 +45,20 @@ const Settings = () => {
         </section>
 
         {activeTab === 'Notification' && (
-          <section className=''>
-            <h1 className='text-4xl font-semibold'>Notification</h1>
+          <section className='py-5'>
+            <h1 className='text-4xl'>Notification</h1>
           </section>
         )}
 
         {activeTab === 'Password' && (
-          <section className=''>
-            <h1 className='text-4xl font-semibold'>Password</h1>
+          <section className='py-5'>
+            <h1 className='text-4xl'>Password</h1>
           </section>
         )}
 
         {activeTab === 'Privacy' && (
-          <section className=''>
-            <h1 className='text-4xl font-semibold'>Privacy</h1>
+          <section className='py-5'>
+            <h1 className='text-4xl'>Privacy</h1>
           </section>
         )}
       </main>

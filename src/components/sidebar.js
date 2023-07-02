@@ -48,7 +48,7 @@ const SideBarNavigation = () => {
     <main
       className='2xl:w-[17%] 2xl:flex xl:w-[17%] xl:flex lg:w-[17%] lg:flex md:hidden sm:hidden py-10 h-screen bg-white p-5 
      flex-col justify-between items-start fixed top-0 left-0 after:absolute after:h-full after:w-10 after:border-r-[1px] after:right-0 after:top-0  
-     after:border-gray-400  '
+     after:border-color2  '
     >
       <Link
         href={'/'}

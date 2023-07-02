@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faChevronCircleLeft,
-  faChevronCircleRight,
-} from '@fortawesome/free-solid-svg-icons'
-
 import {
   setListings,
   setLoading,
@@ -14,9 +8,8 @@ import {
   setTotalPages,
 } from '@/slice/listingSlice'
 
-import ListView from '@/components/ListView'
 import GridView from '@/components/GridView'
-import HeaderFilter from '@/components/topHeader'
+import HeaderFilter from '@/components/ListingsHeader'
 import usePagination from '@/hooks/usePagination'
 import DashboardLayout from '@/components/DashboardLayout'
 
@@ -26,7 +19,6 @@ export default function Home() {
     usePagination()
 
   const [activeTab, setActiveTab] = useState('All Listings')
-  const [viewMode, setViewMode] = useState('list')
 
   const loading = useSelector((state) => state.listings.loading)
 
@@ -85,14 +77,6 @@ export default function Home() {
     getListings(currentPage)
   }, [currentPage])
 
-  const handleListViewClick = () => {
-    setViewMode('list')
-  }
-
-  const handleGridViewClick = () => {
-    setViewMode('grid')
-  }
-
   if (loading) {
     return <p className='text.3xl font-bold'>Loading...</p>
   }
@@ -100,32 +84,17 @@ export default function Home() {
   return (
     <DashboardLayout>
       <main className='flex flex-col p-5 w-full'>
-        <HeaderFilter
-          setActiveTab={setActiveTab}
-          activeTab={activeTab}
-          handleGridViewClick={handleGridViewClick}
-          handleListViewClick={handleListViewClick}
-        />
+        <HeaderFilter setActiveTab={setActiveTab} activeTab={activeTab} />
 
-        {activeTab === 'All Listings' && viewMode === 'list' ? (
-          <ListView />
-        ) : activeTab === 'All Listings' && viewMode === 'grid' ? (
+        {activeTab === 'All Listings' ? (
           <GridView />
-        ) : activeTab === 'Recently Added' && viewMode === 'list' ? (
+        ) : activeTab === 'Recently Added' ? (
           <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
             <h1>Recently added</h1>
           </article>
-        ) : activeTab === 'Recently Added' && viewMode === 'grid' ? (
-          <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
-            <h1>Recently added grid</h1>
-          </article>
-        ) : activeTab === 'Featured' && viewMode === 'list' ? (
+        ) : activeTab === 'Featured Post' ? (
           <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
             <h1>Featured post </h1>
-          </article>
-        ) : activeTab === 'Featured' && viewMode === 'grid' ? (
-          <article className='bg-white shadow-2xl rounded-xl w-full h-full'>
-            <h1>Featured post grid </h1>
           </article>
         ) : null}
       </main>

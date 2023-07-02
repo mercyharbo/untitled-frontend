@@ -8,25 +8,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import {
-  setListings,
-  setLoading,
-  setTotal,
-  setTotalPages,
-} from '@/slice/listingSlice'
-import usePagination from '@/hooks/usePagination'
 import DashboardLayout from '@/components/DashboardLayout'
+import ListingHeader from '@/components/ListingsHeader'
 
 const ListingsForSell = () => {
   const listings = useSelector((state) => state.listings.listings)
+  const searchProperties = useSelector((state) => state.user.searchProperties)
 
   return (
     <DashboardLayout>
       <main className='p-5'>
-        <h1 className='flex justify-start items-center gap-2 2xl:text-2xl xl:text-2xl lg:text-2xl'>
+        <ListingHeader />
+        {/* <h1 className='flex justify-start items-center gap-2 2xl:text-2xl xl:text-2xl lg:text-2xl'>
           Properties
           <span className='text-lg text-gray-500 font-semibold'>
             {
@@ -35,10 +30,15 @@ const ListingsForSell = () => {
             }{' '}
             Results
           </span>
-        </h1>
-        <article className='grid 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
+        </h1> */}
+        <article className='grid 3xl:grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
           {listings
             ?.filter((homes) => homes.isPropertyForSale === true)
+            ?.filter((homes) =>
+              homes.title
+                ?.toLowerCase()
+                .includes(searchProperties?.toLowerCase())
+            )
             ?.map((homes) => {
               return (
                 <Link
@@ -56,7 +56,9 @@ const ListingsForSell = () => {
                   <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
                     <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>
                       Posted by
-                      <p className='lowercase'>{homes?.user?.username || 'Not found'}</p>
+                      <p className='lowercase'>
+                        {homes?.user?.username || 'Not found'}
+                      </p>
                     </span>
                     <h1 className='w-full'>{homes.title}</h1>
 
@@ -94,7 +96,7 @@ const ListingsForSell = () => {
                         </p>
                       </div>
 
-                      <h1 className='sm:ml-auto text-[#ef476f]'>
+                      <h1 className='text-color3'>
                         {homes?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
