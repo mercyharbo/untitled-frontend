@@ -8,6 +8,7 @@ import { setLoading } from '@/slice/listingSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
+import Spinner from '@/hooks/LoadingSpinner'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getUserProfile = async () => {
+      dispatch(setLoading(true))
       const token = localStorage.getItem('token')
       const userId = localStorage.getItem('userId')
       try {
@@ -49,7 +51,11 @@ const Profile = () => {
   }, [dispatch])
 
   if (loading) {
-    return <p className='p-10 text-4xl'>Loading...</p>
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
   }
 
   return (
@@ -85,7 +91,6 @@ const Profile = () => {
               type='button'
               label='Share'
               className='px-5 rounded-full bg-color3 '
-        
             />
 
             <Button

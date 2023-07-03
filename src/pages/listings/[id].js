@@ -14,10 +14,11 @@ import {
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import Head from 'next/head'
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
+
 import DashboardLayout from '@/components/DashboardLayout'
+import Spinner from '@/hooks/LoadingSpinner'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -33,6 +34,7 @@ const ListingDetail = () => {
   }
 
   const getListingDetails = async () => {
+    dispatch(setLoading(true))
     try {
       const response = await fetch(
         `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
@@ -47,6 +49,7 @@ const ListingDetail = () => {
 
       if (data.status === true) {
         dispatch(setListingDetail(data.listing))
+        dispatch(setLoading(false))
         dispatch(setLoading(false))
       } else {
         console.log('there is an error')
@@ -111,12 +114,16 @@ const ListingDetail = () => {
   }, [listingDetails])
 
   if (loading) {
-    return <p className='text.3xl font-bold'>Loading...</p>
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
   }
 
   return (
     <DashboardLayout>
-      <div className='flex justify-start items-center gap-2 flex-wrap 2xl:w-[50%] xl:w-[60%] xl:pl-10 '>
+      <div className='flex justify-start items-center gap-2 flex-wrap 2xl:w-[50%] xl:w-[60%] xl:pl-10 md:pl-5 sm:pl-5 '>
         <button
           type='button'
           onClick={() => router.back()}
