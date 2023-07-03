@@ -81,10 +81,7 @@ const NavHeader = () => {
     <main>
       <nav className='w-full flex justify-between items-center h-[80px] 2xl:px-10 md:flex md:px-5 sm:flex sm:px-5 '>
         <div className='xl:flex xl:flex-row xl:justify-start xl:w-auto md:flex md:flex-row md:justify-between md:w-full sm:flex sm:justify-between sm:w-full items-center gap-10 '>
-          <Link
-            href={'/'}
-            className='font-bold text-2xl'
-          >
+          <Link href={'/'} className='font-bold text-2xl'>
             Untitlted
           </Link>
 
@@ -116,7 +113,12 @@ const NavHeader = () => {
           )}
 
           {token && (
-            <Button type='button' label='Logout' onClick={handleLogout} className='rounded-full px-5' />
+            <Button
+              type='button'
+              label='Logout'
+              onClick={handleLogout}
+              className='rounded-full px-5'
+            />
           )}
 
           {!token && (
@@ -157,28 +159,30 @@ const NavHeader = () => {
 
             <div className='flex flex-col justify-start items-start gap-2 py-10 font-medium'>
               <Link
-                href='/listings'
-                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
-              >
-                Listings
-              </Link>
-              <Link
-                href='/rent'
-                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
-              >
-                Rent
-              </Link>
-              <Link
-                href='/sell'
-                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
-              >
-                Sell
-              </Link>
-              <Link
                 href='/profile'
                 className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
               >
                 Profile
+              </Link>
+
+              <Link
+                href='/'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                About
+              </Link>
+              <Link
+                href='/'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Help Center
+              </Link>
+
+              <Link
+                href='/Contact'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Contact
               </Link>
             </div>
 
@@ -196,13 +200,13 @@ const NavHeader = () => {
               <div className='flex flex-col gap-2'>
                 <Link
                   href='/login'
-                  className='bg-transparent border h-[50px] w-full text-black rounded-lg '
+                  className='bg-transparent border border-color2 h-[50px] w-full text-black rounded-lg flex justify-center items-center '
                 >
                   Login
                 </Link>
                 <Link
                   href='/signup'
-                  className='bg-color3 h-[50px] w-full text-white rounded-lg '
+                  className='bg-color3 h-[50px] w-full text-white rounded-lg flex justify-center items-center '
                 >
                   Signup
                 </Link>

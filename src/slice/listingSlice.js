@@ -8,6 +8,8 @@ const initialState = {
   addListingModal: false,
   totalPages: null,
   filteredListing: [],
+  editListing: [],
+  modal: false,
 }
 
 const listingsSlice = createSlice({
@@ -36,6 +38,12 @@ const listingsSlice = createSlice({
     setFilteredListing: (state, action) => {
       state.filteredListing = action.payload
     },
+    setEditListing: (state, action) => {
+      state.editListing = action.payload
+    },
+    setModal: (state, action) => {
+      state.modal = action.payload
+    },
   },
 })
 
@@ -47,5 +55,7 @@ export const {
   setAddListingModal,
   setTotalPages,
   setFilteredListing,
+  setEditListing,
+  setModal,
 } = listingsSlice.actions
 export default listingsSlice.reducer
