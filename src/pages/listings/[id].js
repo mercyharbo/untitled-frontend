@@ -174,7 +174,7 @@ const ListingDetail = () => {
                     height={200}
                     className={`rounded-lg cursor-pointer object-cover lg:w-[80px] lg:h-[80px] md:w-[80px] md:h-[80px] sm:w-[80px] sm:h-[80px]  ${
                       selectedImage === thumbnail
-                        ? 'border-[3px] border-[#F30A49] p-1'
+                        ? 'border-[3px] border-black p-1'
                         : ''
                     }`}
                     onClick={() => handleImageClick(thumbnail)}
@@ -188,7 +188,7 @@ const ListingDetail = () => {
                   <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full '>
                     {listingDetails.title}
                   </h1>
-                  <span className='flex text-[#F30A49] font-bold 2xl:text-xl xl:text-xl lg:text-xl md:text-lg sm:text-lg '>
+                  <span className='flex text-black font-bold 2xl:text-xl xl:text-xl lg:text-xl md:text-lg sm:text-lg '>
                     Price:{' '}
                     {listingDetails?.price?.toLocaleString('en-US', {
                       style: 'currency',
@@ -246,7 +246,7 @@ const ListingDetail = () => {
               alt='Selected Image'
               width={500}
               height={500}
-              className='object-cover rounded-full border-2 border-[#F30A49] p-1 2xl:w-[60px] 2xl:h-[60px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
+              className='object-cover rounded-full border-2 border-black p-1 2xl:w-[60px] 2xl:h-[60px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
               md:h-[80px] sm:h-[70px] sm:w-[70px] '
             />
             <div className='flex flex-col gap-1'>
@@ -268,14 +268,14 @@ const ListingDetail = () => {
             <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
               <Link
                 href={`mailto:${listingDetails?.user?.email}`}
-                className='border-2 border-[#F30A49] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faEnvelope} />
                 Email
               </Link>
               <Link
                 href={`tel:${listingDetails?.user?.phoneNumber}`}
-                className='border-2 border-[#F30A49] h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+                className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
               >
                 <FontAwesomeIcon icon={faPhone} />
                 Call

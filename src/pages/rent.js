@@ -12,20 +12,10 @@ import { useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import ListingHeader from '@/components/ListingsHeader'
-import Spinner from '@/hooks/LoadingSpinner'
 
 const Rent = () => {
   const listings = useSelector((state) => state.listings.listings)
   const searchProperties = useSelector((state) => state.user.searchProperties)
-  const loading = useSelector((state) => state.listings.loading)
-
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen m-auto'>
-        <Spinner />
-      </div>
-    )
-  }
 
   return (
     <DashboardLayout>
@@ -104,7 +94,7 @@ const Rent = () => {
                         </p>
                       </div>
 
-                      <h1 className='text-color3'>
+                      <h1>
                         {homes?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',

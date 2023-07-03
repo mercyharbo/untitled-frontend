@@ -96,7 +96,7 @@ const ListingsForSell = () => {
                         </p>
                       </div>
 
-                      <h1 className='text-color3'>
+                      <h1>
                         {homes?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',

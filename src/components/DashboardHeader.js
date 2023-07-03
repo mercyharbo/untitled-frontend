@@ -231,6 +231,7 @@ const DashboardHeader = () => {
               <Link href={'/rent'}>Rent</Link>
               <Link href={'/sell'}>Sell</Link>
               <Link href={'/listings'}>Listings</Link>
+              <Link href={'/profile'}>Profile</Link>
 
               <Link
                 href={'/messages'}
