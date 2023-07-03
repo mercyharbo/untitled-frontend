@@ -13,22 +13,21 @@ import {
   faPhone,
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
+import Spinner from '@/hooks/LoadingSpinner'
 
 const User = () => {
   const router = useRouter()
   const { id } = router.query // Get the id parameter from the router query
 
-  console.log(id, 'as id')
-  console.log(router, 'as id')
-
   const dispatch = useDispatch()
   const [profileTab, setProfileTab] = useState('listings')
 
   const user = useSelector((state) => state.usersAccount.user)
-  console.log(user, 'as userssss')
+  const loading = useSelector((state) => state.listings.loading)
 
   useEffect(() => {
     const getUser = async () => {
+      dispatch(setLoading(true))
       try {
         const response = await fetch(
           `${process.env.API_ENDPOINT_RENDER}/api/users/${id}`,
@@ -54,6 +53,14 @@ const User = () => {
 
     getUser()
   }, [dispatch, id])
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <DashboardLayout>

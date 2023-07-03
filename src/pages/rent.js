@@ -12,10 +12,20 @@ import { useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import ListingHeader from '@/components/ListingsHeader'
+import Spinner from '@/hooks/LoadingSpinner'
 
 const Rent = () => {
   const listings = useSelector((state) => state.listings.listings)
   const searchProperties = useSelector((state) => state.user.searchProperties)
+  const loading = useSelector((state) => state.listings.loading)
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <DashboardLayout>
@@ -31,7 +41,7 @@ const Rent = () => {
             Results
           </span>
         </h1> */}
-        <article className='grid 3xl:grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
+        <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
           {listings
             ?.filter((homes) => homes.isPropertyForSale !== true)
             .filter((homes) =>

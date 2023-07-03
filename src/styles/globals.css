@@ -27,3 +27,42 @@ button {
   height: 0;
   background: transparent;
 }
+
+/* use tailwind utility classes to style the spinner */
+.spinner {
+  width: 100px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #3490dc; /* change the color as you like */
+  border-radius: 100%;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  animation-delay: -0.16s;
+}
+
+.spinner .bounce3 {
+  animation-delay: -0.8s;
+}
+
+/* use keyframes to create the bounce animation */
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}

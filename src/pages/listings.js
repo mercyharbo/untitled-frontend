@@ -12,6 +12,7 @@ import GridView from '@/components/GridView'
 import HeaderFilter from '@/components/ListingsHeader'
 import usePagination from '@/hooks/usePagination'
 import DashboardLayout from '@/components/DashboardLayout'
+import Spinner from '@/hooks/LoadingSpinner'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -19,7 +20,6 @@ export default function Home() {
     usePagination()
 
   const [activeTab, setActiveTab] = useState('All Listings')
-
   const loading = useSelector((state) => state.listings.loading)
 
   // const getProtectedRoute = async () => {
@@ -49,6 +49,7 @@ export default function Home() {
 
   useEffect(() => {
     const getListings = async (page) => {
+      dispatch(setLoading(true))
       try {
         const response = await fetch(
           `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
@@ -78,7 +79,11 @@ export default function Home() {
   }, [currentPage])
 
   if (loading) {
-    return <p className='text.3xl font-bold'>Loading...</p>
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
   }
 
   return (
