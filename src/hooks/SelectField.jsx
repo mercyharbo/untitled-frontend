@@ -7,11 +7,11 @@ const SelectField = ({ options, name, id, className, style }) => {
         name={name}
         id={id}
         as='select'
-        className={`${className} bg-transparent py-4 rounded-lg outline-none cursor-pointer `}
+        className={`${className} bg-transparent py-4 rounded-lg outline-none cursor-pointer`}
         style={style}
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value.toString()}>
             {option.label}
           </option>
         ))}
