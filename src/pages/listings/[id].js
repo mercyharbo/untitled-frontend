@@ -2,10 +2,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setListingDetail, setLoading } from '@/slice/listingSlice'
+import { setListingDetail, setLoading, setModal } from '@/slice/listingSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBed,
+  faCheckDouble,
   faChevronLeft,
   faEnvelope,
   faPhone,
@@ -14,11 +15,12 @@ import {
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
+import { faMessage, faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
+import Button from '@/hooks/button'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -93,7 +95,7 @@ const ListingDetail = () => {
       const data = await response.json()
 
       if (data.status === true) {
-        toast.success(data.message)
+        toast.success('Your listing has been deleted successfully')
         router.push('/listings')
       } else {
         console.log('there is an error')
@@ -142,7 +144,7 @@ const ListingDetail = () => {
         </button>
         <button
           type='button'
-          onClick={() => getEditListings()}
+          onClick={() => dispatch(setModal(true))}
           className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
         >
           <FontAwesomeIcon icon={faPenToSquare} className='text-white ' />
@@ -159,7 +161,7 @@ const ListingDetail = () => {
                   alt='Selected Image'
                   width={1000}
                   height={1000}
-                  className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] md:h-[300px] sm:h-[250px] '
+                  className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] md:h-[400px] sm:h-[270px] '
                 />
               )}
             </div>
@@ -183,9 +185,9 @@ const ListingDetail = () => {
               })}
             </div>
             <article className='flex 2xl:gap-8 xl:gap-6 lg:flex-col lg:gap-4 md:flex-col md:gap-5 sm:flex-col sm:gap-5'>
-              <div className='flex flex-col gap-3'>
+              <div className='flex flex-col gap-1'>
                 <div className='flex lg:justify-between lg:items-center md:justify-between md:flex-row sm:flex-col sm:gap-5'>
-                  <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full '>
+                  <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full capitalize '>
                     {listingDetails.title}
                   </h1>
                   <span className='flex text-black font-bold 2xl:text-xl xl:text-xl lg:text-xl md:text-lg sm:text-lg '>
@@ -196,41 +198,48 @@ const ListingDetail = () => {
                     })}
                   </span>
                 </div>
-                <p className='text-gray-400'>{listingDetails.address}</p>
+                <p className='text-[gray] '>{listingDetails.address}</p>
               </div>
-              <div className='flex lg:justify-between lg:items-center 2xl:w-[40%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
-                <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                  Bathroom
-                  <span className='flex items-center gap-2 font-normal'>
-                    <FontAwesomeIcon icon={faSink} />
-                    {listingDetails.bathroom}
+              <div className='flex flex-wrap gap-5 xl:justify-between xl:items-center md:justify-between md:items-center'>
+                <div className='flex lg:justify-between lg:items-center 2xl:w-[40%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
+                  <span className='flex flex-col justify-start items-start gap-2 font-medium'>
+                    Bathroom
+                    <span className='flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faSink} />
+                      {listingDetails.bathroom}
+                    </span>
                   </span>
-                </span>
-                <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                  Bedrooms
-                  <span className='flex items-center gap-2 font-normal'>
-                    <FontAwesomeIcon icon={faBed} />
-                    {listingDetails.bedrooms}
+                  <span className='flex flex-col justify-start items-start gap-2 font-medium'>
+                    Bedrooms
+                    <span className='flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faBed} />
+                      {listingDetails.bedrooms}
+                    </span>
                   </span>
-                </span>
-                <span className='flex flex-col justify-start items-start gap-2 font-semibold'>
-                  Area Space
-                  <div className='span flex items-center gap-2 font-normal'>
-                    <FontAwesomeIcon icon={faVectorSquare} />
-                    {listingDetails.areaSpace}
-                  </div>
-                </span>
+                  <span className='flex flex-col justify-start items-start gap-2 font-medium'>
+                    Area Space
+                    <div className='span flex items-center gap-2 font-normal'>
+                      <FontAwesomeIcon icon={faVectorSquare} />
+                      {listingDetails.areaSpace}
+                    </div>
+                  </span>
+                </div>
+
+                <Button
+                  label='Mark as sold'
+                  type='button'
+                  icons={<FontAwesomeIcon icon={faCheckDouble} />}
+                  className='rounded-md flex justify-center items-center gap-2'
+                />
               </div>
 
               <article className='flex flex-col gap-3'>
-                <h1 className='lg:text-2xl md:text-xl sm:text-lg font-semibold '>
-                  Description
-                </h1>
+                <h1 className='text-xl font-medium '>Description</h1>
                 <p className=''>{listingDetails.description}</p>
               </article>
 
               <div className=''>
-                <h3 className='font-semibold text-xl py-2'>Amenities</h3>
+                <h3 className='font-medium text-xl py-2'>Amenities</h3>
                 {listingDetails?.amenities?.map((amenty, index) => {
                   return <li key={index}>{amenty}</li>
                 })}
@@ -239,18 +248,18 @@ const ListingDetail = () => {
           </section>
         </section>
 
-        <section className='flex flex-col gap-5 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:w-full sm:w-full p-5  '>
-          <header className='flex justify-start items-center gap-4'>
+        <section className='flex flex-col gap-5 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:w-full sm:w-full  '>
+          <header className='flex justify-start items-center gap-4 flex-wrap'>
             <Image
               src={listingDetails?.user?.avatarUrl || '/img3.jpg'}
               alt='Selected Image'
               width={500}
               height={500}
               className='object-cover rounded-full border-2 border-black p-1 2xl:w-[60px] 2xl:h-[60px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
-              md:h-[80px] sm:h-[70px] sm:w-[70px] '
+              md:h-[80px] sm:h-[60px] sm:w-[60px] '
             />
             <div className='flex flex-col gap-1'>
-              <h1 className='2xl:text-2xl lg:text-2xl md:text-xl sm:text-lg font-semibold '>
+              <h1 className='2xl:text-2xl lg:text-2xl md:text-xl sm:text-lg font-medium '>
                 {listingDetails?.user?.firstname}{' '}
                 {listingDetails?.user?.lastname}
               </h1>
@@ -259,12 +268,10 @@ const ListingDetail = () => {
               </span>
             </div>
           </header>
-          <p className='leading-[30px] text-base'>
-            {listingDetails?.user?.bio}
-          </p>
+          <p className='leading-[30px] text-sm'>{listingDetails?.user?.bio}</p>
 
           <div className='flex flex-col justify-start items-start gap-3'>
-            <h3 className='font-semibold'>Contact with host:</h3>
+            <h3 className='font-medium'>Contact with host:</h3>
             <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
               <Link
                 href={`mailto:${listingDetails?.user?.email}`}
@@ -279,6 +286,13 @@ const ListingDetail = () => {
               >
                 <FontAwesomeIcon icon={faPhone} />
                 Call
+              </Link>
+              <Link
+                href={`tel:${listingDetails?.user?.phoneNumber}`}
+                className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
+              >
+                <FontAwesomeIcon icon={faMessage} />
+                Message
               </Link>
             </div>
           </div>
