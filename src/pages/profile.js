@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
-import { setLoading } from '@/slice/listingSlice'
+import { setLoading, setUserListings } from '@/slice/listingSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
@@ -16,37 +16,67 @@ const Profile = () => {
 
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.listings.loading)
+  const userListing = useSelector((state) => state.listings.userListings)
+
+  const getUserListing = async () => {
+    dispatch(setLoading(true))
+
+    const userId = localStorage.getItem('userId')
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/users/${userId}/listings`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+
+      const data = await response.json()
+
+      if (data?.status === true) {
+        dispatch(setUserListings(data.listings))
+        dispatch(setLoading(false))
+      } else {
+        dispatch(setLoading(false))
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const getUserProfile = async () => {
+    dispatch(setLoading(true))
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      const data = await response.json()
+
+      if (data?.status === true) {
+        dispatch(setUserProfile(data.profile))
+        dispatch(setLoading(false))
+      } else {
+        dispatch(setLoading(false))
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
-    const getUserProfile = async () => {
-      dispatch(setLoading(true))
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-
-        const data = await response.json()
-
-        if (data?.status === true) {
-          dispatch(setUserProfile(data.profile))
-          dispatch(setLoading(false))
-        } else {
-          dispatch(setLoading(false))
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
+    getUserListing()
     getUserProfile()
   }, [dispatch])
 
@@ -116,7 +146,7 @@ const Profile = () => {
             type='button'
             onClick={() => setProfileTab('sold')}
             className={`${
-              profileTab === 'sold' ? 'border-b-[3px] border-color3' : ''
+              profileTab === 'sold' ? 'border-b-[2px] border-black' : ''
             }`}
           >
             Sold
@@ -125,7 +155,7 @@ const Profile = () => {
             type='button'
             onClick={() => setProfileTab('favorite')}
             className={`${
-              profileTab === 'favorite' ? 'border-b-[3px] border-color3' : ''
+              profileTab === 'favorite' ? 'border-b-[2px] border-black' : ''
             }`}
           >
             Favorite
@@ -133,28 +163,30 @@ const Profile = () => {
         </div>
 
         {profileTab === 'listings' && (
-          <section className='grid 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-            {userProfile?.listings?.map((userListing) => {
+          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {userListing?.map((listing) => {
               return (
                 <article
-                  key={userListing.id}
+                  key={listing.id}
                   className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
                 >
                   <Image
-                    src={userListing?.images?.[0]}
+                    src={listing?.images?.[0]}
                     alt='image'
                     width={500}
                     height={500}
-                    className='rounded-lg'
+                    className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] '
                   />
-                  <div className=''>
-                    <h1 className='2xl:text-lg '>{userListing.title}</h1>
-                    <span className='text-sm text-gray-400'>
-                      {userListing.address}
-                    </span>
+                  <div className='h-full flex flex-col justify-between items-start'>
+                    <div className='flex flex-col gap-1'>
+                      <h1 className='2xl:text-lg '>{listing.title}</h1>
+                      <span className='text-sm text-[gray] '>
+                        {listing.address}
+                      </span>
+                    </div>
                   </div>
-                  <h1 className='2xl:text-xl text-[#F30A49] '>
-                    {userListing.price.toLocaleString('en-US', {
+                  <h1 className='2xl:text-xl text-black '>
+                    {listing.price.toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'NGN',
                     })}

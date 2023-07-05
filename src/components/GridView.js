@@ -15,7 +15,7 @@ const GridView = () => {
   const searchProperties = useSelector((state) => state.user.searchProperties)
 
   return (
-    <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
+    <article className='grid 3xl:grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
       {listings
         ?.filter((homes) =>
           homes.title?.toLowerCase().includes(searchProperties?.toLowerCase())

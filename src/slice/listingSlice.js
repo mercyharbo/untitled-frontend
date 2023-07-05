@@ -10,6 +10,7 @@ const initialState = {
   filteredListing: [],
   editListing: [],
   modal: false,
+  userListings: [],
 }
 
 const listingsSlice = createSlice({
@@ -44,6 +45,9 @@ const listingsSlice = createSlice({
     setModal: (state, action) => {
       state.modal = action.payload
     },
+    setUserListings: (state, action) => {
+      state.userListings = action.payload
+    },
   },
 })
 
@@ -57,5 +61,6 @@ export const {
   setFilteredListing,
   setEditListing,
   setModal,
+  setUserListings,
 } = listingsSlice.actions
 export default listingsSlice.reducer

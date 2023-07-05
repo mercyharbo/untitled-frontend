@@ -66,7 +66,7 @@ export default function Home() {
     const getListings = async () => {
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT}/api/listings`,
+          `${process.env.API_ENDPOINT_RENDER}/api/listings`,
           {
             method: 'GET',
             headers: {

@@ -31,7 +31,7 @@ const Rent = () => {
             Results
           </span>
         </h1> */}
-        <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
+        <article className='grid 3xl:grid-cols-4 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
           {listings
             ?.filter((homes) => homes.isPropertyForSale !== true)
             .filter((homes) =>
