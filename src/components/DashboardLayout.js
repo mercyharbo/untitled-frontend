@@ -260,7 +260,7 @@ const DashboardLayout = ({ children }) => {
                   alt='Profile Picture'
                   width={1000}
                   height={1000}
-                  className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[130px] xl:h-[130px] md:w-[120px] 
+                  className='rounded-full p-[2px] bg-color3 object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[130px] xl:h-[130px] md:w-[120px] 
                   md:h-[120px] sm:w-[100px] sm:h-[100px] '
                 />
                 <div className='flex flex-row justify-start items-start gap-5'>
@@ -397,7 +397,7 @@ const DashboardLayout = ({ children }) => {
 
                   <button
                     type='submit'
-                    className='bg-[#F30A49] text-white px-4 py-2 rounded-lg  h-[45px] flex justify-center items-center ml-auto xl:mt-10 lg:mt-5 lg:w-[150px] 
+                    className='bg-color3 text-white px-4 py-2 rounded-lg  h-[45px] flex justify-center items-center ml-auto xl:mt-10 lg:mt-5 lg:w-[150px] 
                     md:w-[150px] sm:w-full '
                   >
                     {loading ? 'Loading...' : 'Save'}
