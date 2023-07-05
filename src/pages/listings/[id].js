@@ -64,7 +64,7 @@ const ListingDetail = () => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
         {
           method: 'DELETE',
           headers: {
