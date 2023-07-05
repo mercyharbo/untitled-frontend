@@ -27,6 +27,7 @@ const ListingDetail = () => {
   const { id } = router.query
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState(null)
+  const [userId, setUserId] = useState(null)
 
   const listingDetails = useSelector((state) => state.listings.listingDetail)
   const loading = useSelector((state) => state.listings.loading)
@@ -59,35 +60,15 @@ const ListingDetail = () => {
     } catch (error) {}
   }
 
-  const getEditListings = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/listings/${id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        dispatch(setListingDetail(data.listing))
-        dispatch(setLoading(false))
-      } else {
-        console.log('there is an error')
-      }
-    } catch (error) {}
-  }
-
   const deleteListing = async () => {
+    const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT}/api/listings/${id}`,
+        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}`,
         {
           method: 'DELETE',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         }
@@ -115,6 +96,11 @@ const ListingDetail = () => {
     }
   }, [listingDetails])
 
+  useEffect(() => {
+    const userId = localStorage.getItem('userId')
+    setUserId(userId)
+  }, [])
+
   if (loading) {
     return (
       <div className='flex justify-center items-center h-screen m-auto'>
@@ -134,22 +120,26 @@ const ListingDetail = () => {
           <FontAwesomeIcon icon={faChevronLeft} className='text-white ' />
           back
         </button>
-        <button
-          type='button'
-          onClick={() => deleteListing()}
-          className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
-        >
-          <FontAwesomeIcon icon={faTrash} className='text-white ' />
-          Delete
-        </button>
-        <button
-          type='button'
-          onClick={() => dispatch(setModal(true))}
-          className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
-        >
-          <FontAwesomeIcon icon={faPenToSquare} className='text-white ' />
-          Edit
-        </button>
+        {listingDetails.user?._id === userId && (
+          <button
+            type='button'
+            onClick={() => deleteListing()}
+            className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
+          >
+            <FontAwesomeIcon icon={faTrash} className='text-white ' />
+            Delete
+          </button>
+        )}
+        {listingDetails.user?._id === userId && (
+          <button
+            type='button'
+            onClick={() => dispatch(setModal(true))}
+            className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
+          >
+            <FontAwesomeIcon icon={faPenToSquare} className='text-white ' />
+            Edit
+          </button>
+        )}
       </div>
       <main className='flex lg:flex-row lg:gap-5 md:flex-col md:gap-5 sm:flex-col sm:gap-5 sm:p-5'>
         <section className='xl:w-[70%] lg:w-[80%] md:w-full sm:w-full '>
@@ -225,12 +215,14 @@ const ListingDetail = () => {
                   </span>
                 </div>
 
-                <Button
-                  label='Mark as sold'
-                  type='button'
-                  icons={<FontAwesomeIcon icon={faCheckDouble} />}
-                  className='rounded-md flex justify-center items-center gap-2'
-                />
+                {listingDetails.user?._id === userId && (
+                  <Button
+                    label='Mark as sold'
+                    type='button'
+                    icons={<FontAwesomeIcon icon={faCheckDouble} />}
+                    className='rounded-md flex justify-center items-center gap-2'
+                  />
+                )}
               </div>
 
               <article className='flex flex-col gap-3'>
