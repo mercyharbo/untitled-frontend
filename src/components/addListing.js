@@ -10,6 +10,17 @@ import { toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
+const propertyType = [
+  { id: 1, name: 'All' },
+  { id: 2, name: 'House' },
+  { id: 3, name: 'Apartment' },
+  { id: 4, name: 'House' },
+  { id: 5, name: 'Villa' },
+  { id: 6, name: 'Self-contain' },
+  { id: 7, name: 'Duplex' },
+  { id: 8, name: 'Bungalow' },
+]
+
 const AddListingModal = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -22,6 +33,8 @@ const AddListingModal = () => {
   const [selectedPictures, setSelectedPictures] = useState([])
   const [previewPictures, setPreviewPictures] = useState([])
   const [errorMsg, setErrorMsg] = useState([])
+  const [categories, setCategories] = useState(propertyType)
+  const [selectedCategoryId, setSelectedCategoryId] = useState(1)
 
   const addListingModal = useSelector((state) => state.listings.addListingModal)
 
@@ -63,6 +76,11 @@ const AddListingModal = () => {
 
   const handleReset = () => {
     setStep(1)
+  }
+
+  // Function to handle category selection
+  const handleCategorySelection = (categoryId) => {
+    setSelectedCategoryId(categoryId)
   }
 
   const handleSubmit = async (values) => {
@@ -132,15 +150,11 @@ const AddListingModal = () => {
   }
 
   return (
-    <div
-      className={`fixed inset-0 z-50 flex justify-center items-center bg-[#000000dd] overflow-auto bg-opacity-50 ${
-        addListingModal ? '' : 'hidden'
-      }`}
-      //   onClick={() => dispatch(setAddListingModal(false))}
-    >
+    <>
+      <div className='bg-[#000000b1] fixed top-0 left-0 w-full h-screen z-10 overflow-hidden '></div>
       <main
-        className=' flex flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:relative 2xl:top-[0] 2xl:left-[0] 2xl:w-[60%] 
-      xl:w-[80%] lg:w-[80%] xl:my-5 xl:p-8 lg:relative lg:top-0 lg:p-10 md:relative md:top-0 md:w-full md:mx-10 sm:mx-2 sm:w-full sm:relative sm:top-0'
+        className='z-20 flex flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:relative 2xl:top-[0] 2xl:left-[0] 2xl:w-[60%] 
+      xl:w-[80%] lg:w-[80%] xl:my-5 xl:p-8 lg:relative lg:top-0 lg:p-10 md:relative md:top-0 md:w-full md:mx-10 sm:mx-2 sm:w-full sm:absolute sm:top-0 sm:left-0'
       >
         <button
           type='button'
@@ -486,7 +500,7 @@ const AddListingModal = () => {
           </Form>
         </Formik>
       </main>
-    </div>
+    </>
   )
 }
 
