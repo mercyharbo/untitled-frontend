@@ -175,7 +175,7 @@ const Profile = () => {
                     alt='image'
                     width={500}
                     height={500}
-                    className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] '
+                    className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
                   />
                   <div className='h-full flex flex-col justify-between items-start'>
                     <div className='flex flex-col gap-1'>

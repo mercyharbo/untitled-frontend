@@ -255,6 +255,16 @@ const DashboardHeader = () => {
 
               <Button
                 type='button'
+                label='Add listings'
+                onClick={() => {
+                  dispatch(setAddListingModal(true))
+                  setShowModal(false)
+                }}
+                className='w-full rounded-md'
+                // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
+              />
+              <Button
+                type='button'
                 label='Logout'
                 onClick={handleLogout}
                 className='w-full rounded-md'

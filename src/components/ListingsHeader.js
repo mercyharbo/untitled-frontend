@@ -1,6 +1,5 @@
 import InputField from '@/hooks/InputField'
 import { setSearchProperties, setSearchQuery } from '@/slice/userSlice'
-import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -24,6 +23,7 @@ const ListingHeader = () => {
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId)
   }
+  
   const listing = useSelector((state) => state.listings.listings)
   const searchProperties = useSelector((state) => state.user.searchProperties)
 

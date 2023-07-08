@@ -207,7 +207,7 @@ export default function Home() {
 
                   <div className='flex flex-col gap-3'>
                     <h1 className='text-xl'>{home.title}</h1>
-                    <h4 className='text-base text-color3'>
+                    <h4 className='text-base'>
                       {home?.price?.toLocaleString('en-US', {
                         style: 'currency',
                         currency: 'NGN',
@@ -237,7 +237,7 @@ export default function Home() {
             <h1 className='2xl:text-5xl xl:text-4xl md:text-3xl sm:text-2xl'>
               About us
             </h1>
-            <p className='2xl:w-[60%] '>
+            <p>
               We are a company that connects the world of real estate and
               finance. We provide a complete service for the sale, purchase or
               rental of real estate. Our advantage is more than 15 years of
