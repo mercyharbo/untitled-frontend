@@ -38,7 +38,7 @@ const User = () => {
       // dispatch(setLoading(true))
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT_DEV}/api/users/${id}`,
+          `${process.env.API_ENDPOINT_RENDER}/api/users/${id}`,
           {
             method: 'GET',
             headers: {
