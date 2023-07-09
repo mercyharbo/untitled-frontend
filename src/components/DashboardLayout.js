@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import Image from 'next/image'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -20,11 +21,12 @@ import {
   setModal,
   setTotalPages,
 } from '@/slice/listingSlice'
-import Image from 'next/image'
+
 import TextareaField from '@/hooks/Textarea'
 import InputField from '@/hooks/InputField'
 import SelectField from '@/hooks/SelectField'
 import Button from '@/hooks/button'
+import AddListingModal from './addListing'
 
 const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch()
@@ -49,6 +51,7 @@ const DashboardLayout = ({ children }) => {
   const selectedImage = useSelector((state) => state.user.selectedImage)
   const modal = useSelector((state) => state.listings.modal)
   const listingDetails = useSelector((state) => state.listings.listingDetail)
+  const addListingModal = useSelector((state) => state.listings.addListingModal)
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
@@ -125,13 +128,13 @@ const DashboardLayout = ({ children }) => {
       ...values,
     }
 
-      if (previewPictures.length > 0) {
-        const combinedImages = [...listingDetails.images, ...previewPictures]
-        updateListing = {
-          ...updateListing,
-          images: combinedImages,
-        }
+    if (previewPictures.length > 0) {
+      const combinedImages = [...listingDetails.images, ...previewPictures]
+      updateListing = {
+        ...updateListing,
+        images: combinedImages,
       }
+    }
 
     try {
       const response = await fetch(
@@ -233,12 +236,12 @@ const DashboardLayout = ({ children }) => {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='flex w-full relative'>
+      <main className='flex w-full relative'>
         <SideBarNavigation />
-        <main className='2xl:w-[83%] xl:w-[83%] lg:w-[83%] md:w-full sm:w-full bg-white absolute top-0 right-0 h-screen '>
+        <section className='2xl:w-[83%] xl:w-[83%] lg:w-[83%] md:w-full sm:w-full bg-white absolute top-0 right-0 h-screen '>
           <DashboardHeader />
           {children}
-        </main>
+        </section>
 
         {editProfileModal && (
           <>
@@ -549,7 +552,9 @@ const DashboardLayout = ({ children }) => {
             </section>
           </>
         )}
-      </div>
+
+        {addListingModal && <AddListingModal />}
+      </main>
     </>
   )
 }
