@@ -28,10 +28,30 @@ import SelectField from '@/hooks/SelectField'
 import Button from '@/hooks/button'
 import AddListingModal from './addListing'
 
+const propertyType = [
+  { id: 1, name: 'House' },
+  { id: 2, name: 'Apartment' },
+  { id: 3, name: 'House' },
+  { id: 4, name: 'Villa' },
+  { id: 5, name: 'Self-contain' },
+  { id: 6, name: 'Duplex' },
+  { id: 7, name: 'Bungalow' },
+]
+
+const paymentOption = [
+  { id: 1, name: 'Daily' },
+  { id: 2, name: 'Monthly' },
+  { id: 3, name: 'Annually' },
+]
+
 const DashboardLayout = ({ children }) => {
   const dispatch = useDispatch()
   const [selectedPictures, setSelectedPictures] = useState([])
   const [previewPictures, setPreviewPictures] = useState([])
+  const [categories, setCategories] = useState(propertyType)
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null)
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null)
+
   const numbers = [
     { value: 1, label: 1 },
     { value: 2, label: 2 },
@@ -126,6 +146,8 @@ const DashboardLayout = ({ children }) => {
     let updateListing = {
       ...listingDetails,
       ...values,
+
+      paymentOption: selectedPaymentOption,
     }
 
     if (previewPictures.length > 0) {
@@ -133,6 +155,20 @@ const DashboardLayout = ({ children }) => {
       updateListing = {
         ...updateListing,
         images: combinedImages,
+      }
+    }
+
+    if (selectedCategoryId !== null) {
+      updateListing = {
+        ...updateListing,
+        propertyType: selectedCategoryId,
+      }
+    }
+
+    if (selectedPaymentOption !== null) {
+      updateListing = {
+        ...updateListing,
+        paymentOption: selectedPaymentOption,
       }
     }
 
@@ -152,6 +188,7 @@ const DashboardLayout = ({ children }) => {
       if (data.status === true) {
         dispatch(setListingDetail(updateListing))
         dispatch(setLoading(false))
+        dispatch(setModal(false))
         toast.success('Your listing has been updated successfully', {
           position: 'top-right',
           autoClose: 3000,
@@ -207,6 +244,16 @@ const DashboardLayout = ({ children }) => {
     getRentingListings()
   }, [dispatch])
 
+  // Function to handle category selection
+  const handleCategorySelection = (categoryId) => {
+    setSelectedCategoryId(categoryId)
+  }
+
+  // Function to handle payment option selection
+  const handlePaymentOptionSelection = (optionId) => {
+    setSelectedPaymentOption(optionId)
+  }
+
   const handlePictureSelect = async (event) => {
     const files = event.target.files
     const selected = Array.from(files)
@@ -225,7 +272,6 @@ const DashboardLayout = ({ children }) => {
     )
     setPreviewPictures(previews)
   }
-
   return (
     <>
       <Head>
@@ -291,7 +337,7 @@ const DashboardLayout = ({ children }) => {
               >
                 <Form className='flex flex-col gap-5 w-full'>
                   <div className='flex flex-col gap-3'>
-                    <label htmlFor='bio' className='font-medium'>
+                    <label htmlFor='bio' className='font-semibold'>
                       Bio:
                     </label>
                     <Field
@@ -305,7 +351,7 @@ const DashboardLayout = ({ children }) => {
                   </div>
                   <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-5'>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='username' className='font-medium'>
+                      <label htmlFor='username' className='font-semibold'>
                         Username
                       </label>
                       <Field
@@ -316,7 +362,7 @@ const DashboardLayout = ({ children }) => {
                     </div>
 
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='email' className='font-medium'>
+                      <label htmlFor='email' className='font-semibold'>
                         Email
                       </label>
                       <Field
@@ -330,7 +376,7 @@ const DashboardLayout = ({ children }) => {
 
                   <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-5'>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='firstname' className='font-medium'>
+                      <label htmlFor='firstname' className='font-semibold'>
                         First name
                       </label>
                       <Field
@@ -340,7 +386,7 @@ const DashboardLayout = ({ children }) => {
                       />
                     </div>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='lastname' className='font-medium'>
+                      <label htmlFor='lastname' className='font-semibold'>
                         Last Name
                       </label>
                       <Field
@@ -353,7 +399,7 @@ const DashboardLayout = ({ children }) => {
 
                   <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-5'>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='address' className='font-medium'>
+                      <label htmlFor='address' className='font-semibold'>
                         Address
                       </label>
                       <Field
@@ -363,7 +409,7 @@ const DashboardLayout = ({ children }) => {
                       />
                     </div>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='state' className='font-medium'>
+                      <label htmlFor='state' className='font-semibold'>
                         State
                       </label>
                       <Field
@@ -376,7 +422,7 @@ const DashboardLayout = ({ children }) => {
 
                   <div className='grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-5'>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='phoneNumber' className='font-medium'>
+                      <label htmlFor='phoneNumber' className='font-semibold'>
                         Phone Number
                       </label>
                       <Field
@@ -386,7 +432,7 @@ const DashboardLayout = ({ children }) => {
                       />
                     </div>
                     <div className='flex flex-col gap-3'>
-                      <label htmlFor='dob' className='font-medium'>
+                      <label htmlFor='dob' className='font-semibold'>
                         Date of birth
                       </label>
                       <Field
@@ -429,7 +475,7 @@ const DashboardLayout = ({ children }) => {
               >
                 <Form className='flex flex-col gap-5 w-full'>
                   <div className='flex flex-col gap-2'>
-                    <label htmlFor='title' className='font-medium'>
+                    <label htmlFor='title' className='font-semibold'>
                       Title
                     </label>
                     <InputField
@@ -440,7 +486,7 @@ const DashboardLayout = ({ children }) => {
                     />
                   </div>
                   <div className='flex flex-col gap-2'>
-                    <label htmlFor='description' className='font-medium'>
+                    <label htmlFor='description' className='font-semibold'>
                       Description
                     </label>
                     <TextareaField
@@ -453,7 +499,7 @@ const DashboardLayout = ({ children }) => {
 
                   <div className='flex w-full xl:justify-between xl:flex-row md:flex-col sm:flex-col gap-2'>
                     <div className='flex flex-col gap-2 w-full'>
-                      <label htmlFor='address' className='font-medium'>
+                      <label htmlFor='address' className='font-semibold'>
                         Address
                       </label>
                       <InputField
@@ -464,7 +510,7 @@ const DashboardLayout = ({ children }) => {
                       />
                     </div>
                     <div className='flex flex-col gap-2 w-full'>
-                      <label htmlFor='price' className='font-medium'>
+                      <label htmlFor='price' className='font-semibold'>
                         Price
                       </label>
                       <InputField
@@ -476,34 +522,77 @@ const DashboardLayout = ({ children }) => {
                     </div>
                   </div>
 
-                  <div className='flex w-full xl:justify-between xl:flex-row md:flex-col sm:flex-col gap-2'>
+                  <div className='flex w-full xl:justify-between xl:flex-row md:flex-row sm:flex-col gap-2'>
                     <div className='flex flex-col gap-2 w-full'>
-                      <label htmlFor='bedrooms' className='font-medium'>
+                      <label htmlFor='bedrooms' className='font-semibold'>
                         Bedrooms
                       </label>
                       <SelectField
                         options={numbers.map((x) => x)}
                         name='bedrooms'
                         id='bedrooms'
-                        className='w-full'
+                        className='w-full border border-color2 indent-2 '
                       />
                     </div>
                     <div className='flex flex-col gap-2 w-full'>
-                      <label htmlFor='bathroom' className='font-medium'>
+                      <label htmlFor='bathroom' className='font-semibold'>
                         Bathrooms
                       </label>
                       <SelectField
                         options={numbers.map((x) => x)}
                         name='bathroom'
                         id='bathroom'
-                        className='w-full'
+                        className='w-full border border-color2 indent-2 '
                       />
+                    </div>
+                  </div>
+                  <div className='flex flex-col gap-3'>
+                    <label htmlFor='propertyType' className='font-semibold'>
+                      Property Type
+                    </label>
+                    <div className='category-container flex flex-row gap-5 flex-wrap'>
+                      {categories.map((category) => (
+                        <div
+                          key={category.id}
+                          className={`${
+                            selectedCategoryId === category.name
+                              ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                              : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                          } category-item`}
+                          onClick={() => handleCategorySelection(category.name)}
+                        >
+                          {category.name}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className='flex flex-col gap-3'>
+                    <label htmlFor='payment' className='font-semibold'>
+                      Payment Option:
+                    </label>
+                    <div className='flex flex-wrap gap-2'>
+                      {paymentOption.map((option) => (
+                        <span
+                          key={option.id}
+                          className={`${
+                            selectedPaymentOption === option.name
+                              ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                              : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                          } category-item`}
+                          onClick={() =>
+                            handlePaymentOptionSelection(option.name)
+                          }
+                        >
+                          {option.name}
+                        </span>
+                      ))}
                     </div>
                   </div>
 
                   <label
                     htmlFor='upload'
-                    className='cursor-pointer border py-2 px-5 capitalize flex  justify-center items-center font-medium rounded-md'
+                    className='cursor-pointer border py-2 px-5 capitalize flex  justify-center items-center font-semibold rounded-md'
                   >
                     Upload
                     <input
@@ -541,6 +630,7 @@ const DashboardLayout = ({ children }) => {
                       />
                     ))}
                   </div>
+
                   <Button
                     type='submit'
                     label='Save'

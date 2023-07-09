@@ -5,19 +5,25 @@ import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 const propertyType = [
-  { id: 2, name: 'House' },
-  { id: 3, name: 'Apartment' },
-  { id: 4, name: 'House' },
-  { id: 5, name: 'Villa' },
-  { id: 6, name: 'Self-contain' },
-  { id: 7, name: 'Duplex' },
-  { id: 8, name: 'Bungalow' },
+  { id: 1, name: 'House' },
+  { id: 2, name: 'Apartment' },
+  { id: 3, name: 'House' },
+  { id: 4, name: 'Villa' },
+  { id: 5, name: 'Self-contain' },
+  { id: 6, name: 'Duplex' },
+  { id: 7, name: 'Bungalow' },
+]
+
+const paymentOption = [
+  { id: 1, name: 'Daily' },
+  { id: 2, name: 'Monthly' },
+  { id: 3, name: 'Annually' },
 ]
 
 const AddListingModal = () => {
@@ -35,8 +41,7 @@ const AddListingModal = () => {
   const [errorMsg, setErrorMsg] = useState([])
   const [categories, setCategories] = useState(propertyType)
   const [selectedCategoryId, setSelectedCategoryId] = useState(null)
-
-  const addListingModal = useSelector((state) => state.listings.addListingModal)
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null)
 
   const initialValues = {
     title: '',
@@ -64,6 +69,21 @@ const AddListingModal = () => {
     'Outdoor BBQ area',
     'Spa or hot tub',
     'Game room',
+    'Washer', 
+    'Dryer', 
+    'Dishwasher',
+    'Microwave',
+    'Fridge',
+    'Freeze',
+    'Oven',
+    'Gas Cooker',
+    'Smart TV',
+    'Gym',
+    'Sauna',
+    'Parking Space',
+    '24/7 Electricity',
+    'Free Wi-Fi',
+    'Air Condition'
   ]
 
   const handleNext = () => {
@@ -81,6 +101,11 @@ const AddListingModal = () => {
   // Function to handle category selection
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId)
+  }
+
+  // Function to handle payment option selection
+  const handlePaymentOptionSelection = (optionId) => {
+    setSelectedPaymentOption(optionId)
   }
 
   const handleSubmit = async (values) => {
@@ -102,6 +127,8 @@ const AddListingModal = () => {
             isPropertyForSale: isPropertyForSale,
             amenities: selectedAmenities,
             images: previewPictures,
+            propertyType: selectedCategoryId,
+            paymentOption: selectedPaymentOption,
             userId: userId,
           }),
         }
@@ -177,7 +204,7 @@ const AddListingModal = () => {
                   </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='title' className='font-semibold'>
+                  <label htmlFor='title' className='font-medium'>
                     Title
                   </label>
                   <Field
@@ -188,7 +215,7 @@ const AddListingModal = () => {
                   />
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='description' className='font-semibold'>
+                  <label htmlFor='description' className='font-medium'>
                     Description
                   </label>
                   <Field
@@ -218,7 +245,7 @@ const AddListingModal = () => {
                   </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='address' className='font-semibold'>
+                  <label htmlFor='address' className='font-medium'>
                     Location:
                   </label>
                   <Field
@@ -231,7 +258,7 @@ const AddListingModal = () => {
 
                 <div className='grid grid-cols-2 gap-5 w-full'>
                   <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                    <label htmlFor='price' className='font-semibold'>
+                    <label htmlFor='price' className='font-medium'>
                       Price:
                     </label>
                     <Field
@@ -243,7 +270,7 @@ const AddListingModal = () => {
                   </div>
 
                   <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                    <label htmlFor='areaSpace' className='font-semibold'>
+                    <label htmlFor='areaSpace' className='font-medium'>
                       Area Space:
                     </label>
                     <Field
@@ -336,7 +363,7 @@ const AddListingModal = () => {
                 <h2 className='xl:text-xl '>Fill all the required</h2>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='amenities' className='font-semibold'>
+                  <label htmlFor='amenities' className='font-medium'>
                     Amenities:
                   </label>
                   <div className='flex flex-wrap gap-5'>
@@ -360,7 +387,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='bedrooms' className='font-semibold'>
+                  <label htmlFor='bedrooms' className='font-medium'>
                     Bedrooms:
                   </label>
                   <div className='flex gap-5'>
@@ -384,7 +411,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='bathrooms' className='font-semibold'>
+                  <label htmlFor='bathrooms' className='font-medium'>
                     Bathrooms:
                   </label>
                   <div className='flex gap-5'>
@@ -408,8 +435,8 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col gap-4'>
-                  <label htmlFor='isNewProperty' className='font-semibold'>
-                    Is this a newly built and used property?
+                  <label htmlFor='isNewProperty' className='font-medium'>
+                    Property Status:
                   </label>
                   <div className='flex gap-4'>
                     <button
@@ -438,7 +465,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col gap-4'>
-                  <label htmlFor='isNewProperty' className='font-semibold'>
+                  <label htmlFor='isNewProperty' className='font-medium'>
                     Is this property for sale or rent?
                   </label>
                   <div className='flex gap-4'>
@@ -467,20 +494,44 @@ const AddListingModal = () => {
                   </div>
                 </div>
 
-                <div className='category-container flex flex-row gap-5 flex-wrap '>
-                  {categories.map((category) => (
-                    <div
-                      key={category.id}
-                      className={`${
-                        selectedCategoryId === category.id
-                          ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
-                          : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
-                      } category-item`}
-                      onClick={() => handleCategorySelection(category.id)}
-                    >
-                      {category.name}
-                    </div>
-                  ))}
+                <div className='flex flex-col gap-2'>
+                  <label htmlFor='propertyType' className='font-medium'>
+                    Property Type
+                  </label>
+                  <div className='category-container flex flex-row gap-5 flex-wrap'>
+                    {categories.map((category) => (
+                      <div
+                        key={category.id}
+                        className={`${
+                          selectedCategoryId === category.name
+                            ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                            : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                        } category-item`}
+                        onClick={() => handleCategorySelection(category.id)}
+                      >
+                        {category.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <label htmlFor='payment'>Payment Option:</label>
+                  <div className='flex flex-wrap gap-2'>
+                    {paymentOption.map((option) => (
+                      <span
+                        key={option.id}
+                        className={`${
+                          selectedPaymentOption === option.name
+                            ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                            : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                        } category-item`}
+                        onClick={() => handlePaymentOptionSelection(option.id)}
+                      >
+                        {option.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className=''>

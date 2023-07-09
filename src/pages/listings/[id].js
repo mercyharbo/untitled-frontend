@@ -180,13 +180,28 @@ const ListingDetail = () => {
                   <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full capitalize '>
                     {listingDetails.title}
                   </h1>
-                  <span className='flex text-black font-bold 2xl:text-xl xl:text-xl lg:text-xl md:text-lg sm:text-lg '>
-                    Price:{' '}
-                    {listingDetails?.price?.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'NGN',
-                    })}
-                  </span>
+                  <div className='2xl:w-[15rem] xl:w-[15rem] md:w-[15rem] sm:w-full '>
+                    {listingDetails.isPropertyForSale === true ? (
+                      <span className='flex text-black font-semibold text-xl '>
+                        Price:{' '}
+                        {listingDetails?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                      </span>
+                    ) : (
+                      <span className='flex justify-start items-end text-black font-semibold text-xl '>
+                        Price:{' '}
+                        {listingDetails?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm '>
+                          /{listingDetails.paymentOption}
+                        </span>
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className='text-[gray] '>{listingDetails.address}</p>
               </div>
