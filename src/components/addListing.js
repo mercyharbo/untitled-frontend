@@ -211,7 +211,7 @@ const AddListingModal = () => {
                     type='text'
                     id='title'
                     name='title'
-                    className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-2 '
+                    className='border h-[40px] rounded-md w-full outline-color3 indent-2 '
                   />
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
@@ -222,13 +222,13 @@ const AddListingModal = () => {
                     as='textarea'
                     id='description'
                     name='description'
-                    className='h-[150px] border rounded-md w-full outline-[#F30A49] p-2 '
+                    className='h-[150px] border rounded-md w-full outline-color3 p-2 '
                   />
                 </div>
                 <button
                   type='button'
                   onClick={handleNext}
-                  className='bg-[#F30A49] text-white py-2 px-5 rounded-md flex justify-end items-end ml-auto '
+                  className='bg-color3 text-white py-2 px-5 rounded-md flex justify-end items-end ml-auto '
                 >
                   Next
                 </button>
@@ -252,7 +252,7 @@ const AddListingModal = () => {
                     type='text'
                     id='address'
                     name='address'
-                    className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
+                    className='border h-[40px] rounded-md w-full outline-color3 indent-3 '
                   />
                 </div>
 
@@ -265,7 +265,7 @@ const AddListingModal = () => {
                       type='number'
                       id='price'
                       name='price'
-                      className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
+                      className='border h-[40px] rounded-md w-full outline-color3 indent-3 '
                     />
                   </div>
 
@@ -277,7 +277,7 @@ const AddListingModal = () => {
                       type='number'
                       id='areaSpace'
                       name='areaSpace'
-                      className='border h-[40px] rounded-md w-full outline-[#F30A49] indent-3 '
+                      className='border h-[40px] rounded-md w-full outline-color3 indent-3 '
                     />
                   </div>
                 </div>
@@ -293,7 +293,7 @@ const AddListingModal = () => {
 
                   <button
                     onClick={handleNext}
-                    className='bg-[#F30A49] text-white py-2 px-5 rounded-md '
+                    className='bg-color3 text-white py-2 px-5 rounded-md '
                   >
                     Next
                   </button>
@@ -350,7 +350,7 @@ const AddListingModal = () => {
 
                   <button
                     onClick={handleNext}
-                    className='bg-[#F30A49] text-white py-2 px-5 rounded-md '
+                    className='bg-color3 text-white py-2 px-5 rounded-md '
                   >
                     Next
                   </button>
@@ -374,7 +374,7 @@ const AddListingModal = () => {
                           type='button'
                           className={`${
                             selectedAmenities.includes(amenty)
-                              ? 'bg-[#F30A49] text-white'
+                              ? 'bg-color3 text-white'
                               : 'bg-transparent'
                           } border p-1 px-3 rounded-md`}
                           onClick={() => handleAmenitySelect(amenty)}
@@ -398,7 +398,7 @@ const AddListingModal = () => {
                           type='button'
                           className={`${
                             bedrooms === num
-                              ? 'bg-[#F30A49] text-white'
+                              ? 'bg-color3 text-white'
                               : 'bg-transparent'
                           } border p-1 px-3 rounded-md`}
                           onClick={() => setBedrooms(num)}
@@ -422,7 +422,7 @@ const AddListingModal = () => {
                           type='button'
                           className={`${
                             bathrooms === num
-                              ? 'bg-[#F30A49] text-white'
+                              ? 'bg-color3 text-white'
                               : 'bg-transparent'
                           } border p-1 px-3 rounded-md`}
                           onClick={() => setBathrooms(num)}
@@ -444,7 +444,7 @@ const AddListingModal = () => {
                       onClick={() => setIsNewProperty(true)}
                       className={`${
                         isNewProperty === true
-                          ? 'bg-[#F30A49] text-white p-2 px-5 rounded-md '
+                          ? 'bg-color3 text-white p-2 px-5 rounded-md '
                           : 'border px-5 py-2 rounded-md'
                       }`}
                     >
@@ -455,7 +455,7 @@ const AddListingModal = () => {
                       onClick={() => setIsNewProperty(false)}
                       className={`${
                         isNewProperty === false
-                          ? 'bg-[#F30A49] text-white p-2 px-5 rounded-md '
+                          ? 'bg-color3 text-white p-2 px-5 rounded-md '
                           : 'border px-5 py-2 rounded-md'
                       }`}
                     >
@@ -474,7 +474,7 @@ const AddListingModal = () => {
                       onClick={() => setIsPropertyForSale(true)}
                       className={`${
                         isPropertyForSale === true
-                          ? 'bg-[#F30A49] text-white p-2 px-5 rounded-md '
+                          ? 'bg-color3 text-white p-2 px-5 rounded-md '
                           : 'border px-5 py-2 rounded-md'
                       }`}
                     >
@@ -485,7 +485,7 @@ const AddListingModal = () => {
                       onClick={() => setIsPropertyForSale(false)}
                       className={`${
                         isPropertyForSale === false
-                          ? 'bg-[#F30A49] text-white p-2 px-5 rounded-md '
+                          ? 'bg-color3 text-white p-2 px-5 rounded-md '
                           : 'border px-5 py-2 rounded-md'
                       }`}
                     >
@@ -537,12 +537,12 @@ const AddListingModal = () => {
                 <div className=''>
                   {Array.isArray(errorMsg) ? (
                     errorMsg.map((err, index) => (
-                      <li key={index} className='text-[#F30A49]'>
+                      <li key={index} className='text-color3'>
                         {err}
                       </li>
                     ))
                   ) : (
-                    <li className='text-[#F30A49]'>{errorMsg}</li>
+                    <li className='text-color3'>{errorMsg}</li>
                   )}
                 </div>
 
@@ -557,7 +557,7 @@ const AddListingModal = () => {
 
                   <button
                     type='submit'
-                    className='bg-[#F30A49] text-white py-2 px-5 rounded-md '
+                    className='bg-color3 text-white py-2 px-5 rounded-md '
                   >
                     Next
                   </button>

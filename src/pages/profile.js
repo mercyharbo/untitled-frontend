@@ -9,6 +9,14 @@ import { setLoading, setUserListings } from '@/slice/listingSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
 import Spinner from '@/hooks/LoadingSpinner'
+import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faBed,
+  faLocationDot,
+  faShower,
+} from '@fortawesome/free-solid-svg-icons'
+import { faBuilding, faStar } from '@fortawesome/free-regular-svg-icons'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -166,8 +174,9 @@ const Profile = () => {
           <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {userListing?.map((listing) => {
               return (
-                <article
-                  key={listing.id}
+                <Link
+                  key={listing._id}
+                  href={`/listings/${listing._id}`}
                   className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
                 >
                   <Image
@@ -177,21 +186,59 @@ const Profile = () => {
                     height={500}
                     className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
                   />
-                  <div className='h-full flex flex-col justify-between items-start'>
-                    <div className='flex flex-col gap-1'>
+                  <div className='h-full flex flex-col justify-between items-start gap-4'>
+                    <div className='flex flex-col gap-2'>
                       <h1 className='2xl:text-lg '>{listing.title}</h1>
-                      <span className='text-sm text-[gray] '>
+                      <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
+                        <FontAwesomeIcon icon={faLocationDot} />
                         {listing.address}
                       </span>
                     </div>
+
+                    <div className='flex justify-between items-center flex-wrap w-full'>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faBuilding} color='grey' />
+                        {listing.isNewProperty === true
+                          ? 'Newly Built'
+                          : 'Used Property'}
+                      </span>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faStar} color='grey' />
+                        {listing.isPropertyForSale === true
+                          ? 'Selling'
+                          : 'Renting'}
+                      </span>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faBed} color='grey' />
+                        {listing.bedrooms}
+                      </p>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faShower} color='grey' />
+                        {listing.bathroom}
+                      </p>
+                    </div>
                   </div>
-                  <h1 className='2xl:text-xl text-black '>
-                    {listing.price.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'NGN',
-                    })}
-                  </h1>
-                </article>
+                  <span>
+                    {listing.isPropertyForSale === true ? (
+                      <div className='font-semibold'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                      </div>
+                    ) : (
+                      <div className='font-semibold'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm font-normal '>
+                          /{listing.paymentOption}
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                </Link>
               )
             })}
           </section>

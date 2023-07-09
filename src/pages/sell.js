@@ -3,7 +3,7 @@ import {
   faBed,
   faBuilding,
   faLocationDot,
-  faVectorSquare,
+  faShower,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -91,16 +91,30 @@ const ListingsForSell = () => {
                           {homes.bedrooms}
                         </p>
                         <p className='font-medium flex items-center gap-2 text-sm'>
-                          <FontAwesomeIcon icon={faVectorSquare} color='grey' />
-                          {homes.areaSpace}
+                          <FontAwesomeIcon icon={faShower} color='grey' />
+                          {homes.bathroom}
                         </p>
                       </div>
 
                       <span>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
+                        {homes.isPropertyForSale === true ? (
+                          <div className='font-semibold'>
+                            {homes?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                          </div>
+                        ) : (
+                          <div className='font-semibold'>
+                            {homes?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                            <span className='text-[gray] text-sm font-normal '>
+                              /{homes.paymentOption}
+                            </span>
+                          </div>
+                        )}
                       </span>
                     </div>
                   </div>

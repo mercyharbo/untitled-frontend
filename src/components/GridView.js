@@ -2,6 +2,7 @@ import {
   faBed,
   faBuilding,
   faLocationDot,
+  faShower,
   faStar,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
@@ -65,66 +66,30 @@ const GridView = () => {
                       {homes.bedrooms}
                     </p>
                     <p className='font-medium flex items-center gap-2 text-sm'>
-                      <FontAwesomeIcon icon={faVectorSquare} color='grey' />
-                      {homes.areaSpace}
+                      <FontAwesomeIcon icon={faShower} color='grey' />
+                      {homes.bathroom}
                     </p>
                   </div>
 
                   <span>
-                    {homes.paymentOption === 'Monthly' && (
-                      <div className=''>
+                    {homes.isPropertyForSale === true ? (
+                      <div className='font-semibold'>
                         {homes?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
-                        / Monthly
+                      </div>
+                    ) : (
+                      <div className='font-semibold'>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm font-normal '>
+                          /{homes.paymentOption}
+                        </span>
                       </div>
                     )}
-
-                    {homes.paymentOption === 'Daily' && (
-                      <div className=''>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
-                        / Daily
-                      </div>
-                    )}
-
-                    {homes.paymentOption === 'Annually' && (
-                      <div className=''>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
-                        / Annually
-                      </div>
-                    )}
-                    {/* {homes.paymentOption === 'Monthly' ? (
-                      <div className=''>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
-                        / Monthly
-                      </div>
-                    ) : homes.paymentOption === 'Daily' ? (
-                      <div className=''>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
-                        / Daily
-                      </div>
-                    ) : homes.paymentOption === 'Annually' ? (
-                      <div className=''>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
-                        / Annually
-                      </div>
-                    ) : null} */}
                   </span>
                 </div>
               </div>

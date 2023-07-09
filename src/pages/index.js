@@ -194,7 +194,7 @@ export default function Home() {
               return (
                 <Link
                   key={home._id}
-                  href={`/listings/${home.id}`}
+                  href={`/listings/${home._id}`}
                   className='flex-shrink-0 2xl:w-[350px] xl:w-[400px] md:w-[350px] sm:w-[350px] bg-white text-black rounded-lg p-3 flex flex-col gap-4'
                 >
                   <Image
@@ -207,12 +207,26 @@ export default function Home() {
 
                   <div className='flex flex-col gap-3'>
                     <h1 className='text-xl'>{home.title}</h1>
-                    <h4 className='text-base'>
-                      {home?.price?.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'NGN',
-                      })}
-                    </h4>
+                    <span>
+                      {home.isPropertyForSale === true ? (
+                        <div className='font-semibold'>
+                          {home?.price?.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'NGN',
+                          })}
+                        </div>
+                      ) : (
+                        <div className='font-semibold'>
+                          {home?.price?.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'NGN',
+                          })}
+                          <span className='text-[gray] text-sm font-normal '>
+                            /{home.paymentOption}
+                          </span>
+                        </div>
+                      )}
+                    </span>
                     <span className='text-[gray] text-sm '>{home.address}</span>
                   </div>
                 </Link>

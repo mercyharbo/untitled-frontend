@@ -10,6 +10,7 @@ import {
   faChevronLeft,
   faEnvelope,
   faPhone,
+  faShower,
   faSink,
   faTrash,
   faVectorSquare,
@@ -176,11 +177,11 @@ const ListingDetail = () => {
             </div>
             <article className='flex 2xl:gap-8 xl:gap-6 lg:flex-col lg:gap-4 md:flex-col md:gap-5 sm:flex-col sm:gap-5'>
               <div className='flex flex-col gap-1'>
-                <div className='flex lg:justify-between lg:items-center md:justify-between md:flex-row sm:flex-col sm:gap-5'>
+                <div className='flex lg:justify-between lg:items-start md:justify-between md:flex-row sm:flex-col sm:gap-5'>
                   <h1 className='2xl:text-4xl 2xl:w-[60%] lg:w-[70%] md:w-[50%] md:text-2xl sm:text-xl sm:w-full capitalize '>
                     {listingDetails.title}
                   </h1>
-                  <div className='2xl:w-[15rem] xl:w-[15rem] md:w-[15rem] sm:w-full '>
+                  <div className='3xl:w-[20rem] 2xl:w-[15rem] xl:w-[15rem] md:w-[15rem] sm:w-full '>
                     {listingDetails.isPropertyForSale === true ? (
                       <span className='flex text-black font-semibold text-xl '>
                         Price:{' '}
@@ -190,7 +191,7 @@ const ListingDetail = () => {
                         })}
                       </span>
                     ) : (
-                      <span className='flex justify-start items-end text-black font-semibold text-xl '>
+                      <span className='flex justify-start items-center text-black font-semibold text-xl '>
                         Price:{' '}
                         {listingDetails?.price?.toLocaleString('en-US', {
                           style: 'currency',
@@ -210,7 +211,7 @@ const ListingDetail = () => {
                   <span className='flex flex-col justify-start items-start gap-2 font-medium'>
                     Bathroom
                     <span className='flex items-center gap-2 font-normal'>
-                      <FontAwesomeIcon icon={faSink} />
+                      <FontAwesomeIcon icon={faShower} />
                       {listingDetails.bathroom}
                     </span>
                   </span>
