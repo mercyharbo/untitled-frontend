@@ -9,6 +9,7 @@ import { setLoading, setUserListings } from '@/slice/listingSlice'
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
 import Spinner from '@/hooks/LoadingSpinner'
+import Link from 'next/link'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -166,8 +167,9 @@ const Profile = () => {
           <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {userListing?.map((listing) => {
               return (
-                <article
-                  key={listing.id}
+                <Link
+                  key={listing._id}
+                  href={`/listings/${listing._id}`}
                   className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
                 >
                   <Image
@@ -191,7 +193,7 @@ const Profile = () => {
                       currency: 'NGN',
                     })}
                   </h1>
-                </article>
+                </Link>
               )
             })}
           </section>

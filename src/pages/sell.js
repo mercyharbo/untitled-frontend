@@ -97,10 +97,24 @@ const ListingsForSell = () => {
                       </div>
 
                       <span>
-                        {homes?.price?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'NGN',
-                        })}
+                        {homes.isPropertyForSale === true ? (
+                          <div className='font-semibold'>
+                            {homes?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                          </div>
+                        ) : (
+                          <div className='font-semibold'>
+                            {homes?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                            <span className='text-[gray] text-sm font-normal '>
+                              /{homes.paymentOption}
+                            </span>
+                          </div>
+                        )}
                       </span>
                     </div>
                   </div>
