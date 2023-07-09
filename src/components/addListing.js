@@ -5,26 +5,32 @@ import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 const propertyType = [
-  { id: 1, name: 'All' },
-  { id: 2, name: 'House' },
-  { id: 3, name: 'Apartment' },
-  { id: 4, name: 'House' },
-  { id: 5, name: 'Villa' },
-  { id: 6, name: 'Self-contain' },
-  { id: 7, name: 'Duplex' },
-  { id: 8, name: 'Bungalow' },
+  { id: 1, name: 'House' },
+  { id: 2, name: 'Apartment' },
+  { id: 3, name: 'House' },
+  { id: 4, name: 'Villa' },
+  { id: 5, name: 'Self-contain' },
+  { id: 6, name: 'Duplex' },
+  { id: 7, name: 'Bungalow' },
+]
+
+const paymentOption = [
+  { id: 1, name: 'Daily' },
+  { id: 2, name: 'Monthly' },
+  { id: 3, name: 'Annually' },
 ]
 
 const AddListingModal = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const [step, setStep] = useState(1)
+
   const [bedrooms, setBedrooms] = useState(null)
   const [bathrooms, setBathrooms] = useState(null)
   const [isNewProperty, setIsNewProperty] = useState(false)
@@ -34,9 +40,8 @@ const AddListingModal = () => {
   const [previewPictures, setPreviewPictures] = useState([])
   const [errorMsg, setErrorMsg] = useState([])
   const [categories, setCategories] = useState(propertyType)
-  const [selectedCategoryId, setSelectedCategoryId] = useState(1)
-
-  const addListingModal = useSelector((state) => state.listings.addListingModal)
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null)
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null)
 
   const initialValues = {
     title: '',
@@ -64,6 +69,21 @@ const AddListingModal = () => {
     'Outdoor BBQ area',
     'Spa or hot tub',
     'Game room',
+    'Washer', 
+    'Dryer', 
+    'Dishwasher',
+    'Microwave',
+    'Fridge',
+    'Freeze',
+    'Oven',
+    'Gas Cooker',
+    'Smart TV',
+    'Gym',
+    'Sauna',
+    'Parking Space',
+    '24/7 Electricity',
+    'Free Wi-Fi',
+    'Air Condition'
   ]
 
   const handleNext = () => {
@@ -81,6 +101,11 @@ const AddListingModal = () => {
   // Function to handle category selection
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId)
+  }
+
+  // Function to handle payment option selection
+  const handlePaymentOptionSelection = (optionId) => {
+    setSelectedPaymentOption(optionId)
   }
 
   const handleSubmit = async (values) => {
@@ -102,6 +127,8 @@ const AddListingModal = () => {
             isPropertyForSale: isPropertyForSale,
             amenities: selectedAmenities,
             images: previewPictures,
+            propertyType: selectedCategoryId,
+            paymentOption: selectedPaymentOption,
             userId: userId,
           }),
         }
@@ -153,8 +180,8 @@ const AddListingModal = () => {
     <>
       <div className='bg-[#000000b1] fixed top-0 left-0 w-full h-screen z-10 overflow-hidden '></div>
       <main
-        className='z-20 flex flex-col justify-center items-center m-auto bg-white shadow-2xl rounded-lg 2xl:relative 2xl:top-[0] 2xl:left-[0] 2xl:w-[60%] 
-      xl:w-[80%] lg:w-[80%] xl:my-5 xl:p-8 lg:relative lg:top-0 lg:p-10 md:relative md:top-0 md:w-full md:mx-10 sm:mx-2 sm:w-full sm:absolute sm:top-0 sm:left-0'
+        className='flex flex-col justify-start items-start gap-2 mx-auto absolute bg-white rounded-md shadow-2xl z-20 3xl:w-[50%] 2xl:w-[60%] xl:w-[70%] 
+        xl:left-1/2 xl:top-[2rem] xl:transform xl:-translate-x-1/2 xl:-translate-y-[2rem] md:w-full sm:w-full '
       >
         <button
           type='button'
@@ -177,7 +204,7 @@ const AddListingModal = () => {
                   </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='title' className='font-semibold'>
+                  <label htmlFor='title' className='font-medium'>
                     Title
                   </label>
                   <Field
@@ -188,7 +215,7 @@ const AddListingModal = () => {
                   />
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='description' className='font-semibold'>
+                  <label htmlFor='description' className='font-medium'>
                     Description
                   </label>
                   <Field
@@ -218,7 +245,7 @@ const AddListingModal = () => {
                   </p>
                 </div>
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='address' className='font-semibold'>
+                  <label htmlFor='address' className='font-medium'>
                     Location:
                   </label>
                   <Field
@@ -231,7 +258,7 @@ const AddListingModal = () => {
 
                 <div className='grid grid-cols-2 gap-5 w-full'>
                   <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                    <label htmlFor='price' className='font-semibold'>
+                    <label htmlFor='price' className='font-medium'>
                       Price:
                     </label>
                     <Field
@@ -243,7 +270,7 @@ const AddListingModal = () => {
                   </div>
 
                   <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                    <label htmlFor='areaSpace' className='font-semibold'>
+                    <label htmlFor='areaSpace' className='font-medium'>
                       Area Space:
                     </label>
                     <Field
@@ -298,7 +325,7 @@ const AddListingModal = () => {
                   </div>
                 )}
 
-                <div className='grid 2xl:grid-cols-5 2xl:py-5 xl:grid-cols-4 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 md:gap-5 sm:grid-cols-2 sm:gap-5 w-full '>
+                <div className='grid 2xl:grid-cols-5 2xl:py-5 xl:grid-cols-4 lg:grid-cols-3 lg:gap-5 md:grid-cols-4 md:gap-5 sm:grid-cols-2 sm:gap-5 w-full '>
                   {previewPictures.map((preview, index) => (
                     <Image
                       key={index}
@@ -306,7 +333,7 @@ const AddListingModal = () => {
                       alt={`Preview ${index}`}
                       width={1000}
                       height={1000}
-                      className='object-cover rounded-md 2xl:h-[200px] xl:h-[150px] lg:h-[150px] md:h-[120px]
+                      className='object-cover rounded-md 2xl:h-[200px] xl:h-[150px] lg:h-[150px] md:h-[150px]
                       w-full sm:h-[100px] '
                     />
                   ))}
@@ -336,7 +363,7 @@ const AddListingModal = () => {
                 <h2 className='xl:text-xl '>Fill all the required</h2>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='amenities' className='font-semibold'>
+                  <label htmlFor='amenities' className='font-medium'>
                     Amenities:
                   </label>
                   <div className='flex flex-wrap gap-5'>
@@ -360,7 +387,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='bedrooms' className='font-semibold'>
+                  <label htmlFor='bedrooms' className='font-medium'>
                     Bedrooms:
                   </label>
                   <div className='flex gap-5'>
@@ -384,7 +411,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col justify-start items-start gap-2 w-full'>
-                  <label htmlFor='bathrooms' className='font-semibold'>
+                  <label htmlFor='bathrooms' className='font-medium'>
                     Bathrooms:
                   </label>
                   <div className='flex gap-5'>
@@ -408,8 +435,8 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col gap-4'>
-                  <label htmlFor='isNewProperty' className='font-semibold'>
-                    Is this a newly built and used property?
+                  <label htmlFor='isNewProperty' className='font-medium'>
+                    Property Status:
                   </label>
                   <div className='flex gap-4'>
                     <button
@@ -438,7 +465,7 @@ const AddListingModal = () => {
                 </div>
 
                 <div className='flex flex-col gap-4'>
-                  <label htmlFor='isNewProperty' className='font-semibold'>
+                  <label htmlFor='isNewProperty' className='font-medium'>
                     Is this property for sale or rent?
                   </label>
                   <div className='flex gap-4'>
@@ -464,6 +491,46 @@ const AddListingModal = () => {
                     >
                       Rent
                     </button>
+                  </div>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <label htmlFor='propertyType' className='font-medium'>
+                    Property Type
+                  </label>
+                  <div className='category-container flex flex-row gap-5 flex-wrap'>
+                    {categories.map((category) => (
+                      <div
+                        key={category.id}
+                        className={`${
+                          selectedCategoryId === category.name
+                            ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                            : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                        } category-item`}
+                        onClick={() => handleCategorySelection(category.id)}
+                      >
+                        {category.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className='flex flex-col gap-2'>
+                  <label htmlFor='payment'>Payment Option:</label>
+                  <div className='flex flex-wrap gap-2'>
+                    {paymentOption.map((option) => (
+                      <span
+                        key={option.id}
+                        className={`${
+                          selectedPaymentOption === option.name
+                            ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
+                            : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
+                        } category-item`}
+                        onClick={() => handlePaymentOptionSelection(option.id)}
+                      >
+                        {option.name}
+                      </span>
+                    ))}
                   </div>
                 </div>
 

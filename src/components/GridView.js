@@ -71,10 +71,60 @@ const GridView = () => {
                   </div>
 
                   <span>
-                    {homes?.price?.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'NGN',
-                    })}
+                    {homes.paymentOption === 'Monthly' && (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Monthly
+                      </div>
+                    )}
+
+                    {homes.paymentOption === 'Daily' && (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Daily
+                      </div>
+                    )}
+
+                    {homes.paymentOption === 'Annually' && (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Annually
+                      </div>
+                    )}
+                    {/* {homes.paymentOption === 'Monthly' ? (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Monthly
+                      </div>
+                    ) : homes.paymentOption === 'Daily' ? (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Daily
+                      </div>
+                    ) : homes.paymentOption === 'Annually' ? (
+                      <div className=''>
+                        {homes?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        / Annually
+                      </div>
+                    ) : null} */}
                   </span>
                 </div>
               </div>
