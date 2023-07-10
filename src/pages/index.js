@@ -62,29 +62,29 @@ export default function Home() {
   const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.listings.listings)
 
-  useEffect(() => {
-    const getListings = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/listings`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        const data = await response.json()
-
-        if (data.status === true) {
-          dispatch(setListings(data.listings))
-          dispatch(setLoading(false))
-        } else {
-          console.log('there is an error')
+  const getListings = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/listings`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      } catch (error) {}
-    }
+      )
+      const data = await response.json()
 
+      if (data.status === true) {
+        dispatch(setListings(data.listings))
+        dispatch(setLoading(false))
+      } else {
+        console.log('there is an error')
+      }
+    } catch (error) {}
+  }
+
+  useEffect(() => {
     getListings()
   }, [])
 

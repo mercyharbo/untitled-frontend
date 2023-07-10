@@ -1,12 +1,14 @@
-import { setAddListingModal } from '@/slice/listingSlice'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Field, Form, Formik } from 'formik'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+
+import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+import { setAddListingModal } from '@/slice/listingSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -69,8 +71,8 @@ const AddListingModal = () => {
     'Outdoor BBQ area',
     'Spa or hot tub',
     'Game room',
-    'Washer', 
-    'Dryer', 
+    'Washer',
+    'Dryer',
     'Dishwasher',
     'Microwave',
     'Fridge',
@@ -83,7 +85,7 @@ const AddListingModal = () => {
     'Parking Space',
     '24/7 Electricity',
     'Free Wi-Fi',
-    'Air Condition'
+    'Air Condition',
   ]
 
   const handleNext = () => {

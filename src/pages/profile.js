@@ -25,6 +25,7 @@ const Profile = () => {
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.listings.loading)
   const userListing = useSelector((state) => state.listings.userListings)
+  const soldListings = useSelector((state) => state.user.soldListing)
 
   const getUserListing = async () => {
     dispatch(setLoading(true))
@@ -54,38 +55,38 @@ const Profile = () => {
     }
   }
 
-  const getUserProfile = async () => {
-    dispatch(setLoading(true))
-    const token = localStorage.getItem('token')
-    const userId = localStorage.getItem('userId')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+  // const getUserProfile = async () => {
+  //   dispatch(setLoading(true))
+  //   const token = localStorage.getItem('token')
+  //   const userId = localStorage.getItem('userId')
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     )
 
-      const data = await response.json()
+  //     const data = await response.json()
 
-      if (data?.status === true) {
-        dispatch(setUserProfile(data.profile))
-        dispatch(setLoading(false))
-      } else {
-        dispatch(setLoading(false))
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  //     if (data?.status === true) {
+  //       dispatch(setUserProfile(data.profile))
+  //       dispatch(setLoading(false))
+  //     } else {
+  //       dispatch(setLoading(false))
+  //     }
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   useEffect(() => {
     getUserListing()
-    getUserProfile()
+    // getUserProfile()
   }, [dispatch])
 
   if (loading) {
@@ -169,6 +170,80 @@ const Profile = () => {
             Favorite
           </button>
         </div>
+
+        {/* {profileTab === 'sold' && (
+          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {soldListings?.map((listing) => {
+              return (
+                <Link
+                  key={listing._id}
+                  href={`/listings/${listing._id}`}
+                  className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
+                >
+                  <Image
+                    src={listing?.images?.[0]}
+                    alt='image'
+                    width={500}
+                    height={500}
+                    className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
+                  />
+                  <div className='h-full flex flex-col justify-between items-start gap-4'>
+                    <div className='flex flex-col gap-2'>
+                      <h1 className='2xl:text-lg '>{listing.title}</h1>
+                      <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
+                        <FontAwesomeIcon icon={faLocationDot} />
+                        {listing.address}
+                      </span>
+                    </div>
+
+                    <div className='flex justify-between items-center flex-wrap w-full'>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faBuilding} color='grey' />
+                        {listing.isNewProperty === true
+                          ? 'Newly Built'
+                          : 'Used Property'}
+                      </span>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faStar} color='grey' />
+                        {listing.isPropertyForSale === true
+                          ? 'Selling'
+                          : 'Renting'}
+                      </span>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faBed} color='grey' />
+                        {listing.bedrooms}
+                      </p>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faShower} color='grey' />
+                        {listing.bathroom}
+                      </p>
+                    </div>
+                  </div>
+                  <span>
+                    {listing.isPropertyForSale === true ? (
+                      <div className='font-semibold'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                      </div>
+                    ) : (
+                      <div className='font-semibold'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm font-normal '>
+                          /{listing.paymentOption}
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                </Link>
+              )
+            })}
+          </section>
+        )} */}
 
         {profileTab === 'listings' && (
           <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>

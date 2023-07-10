@@ -15,8 +15,7 @@ import {
   faShower,
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
-import Spinner from '@/hooks/LoadingSpinner'
-import { setUserListing } from '@/slice/userSlice'
+import { setSoldListing, setUserListing } from '@/slice/userSlice'
 import { faBuilding } from '@fortawesome/free-regular-svg-icons'
 
 const User = () => {
@@ -29,7 +28,7 @@ const User = () => {
   const user = useSelector((state) => state.usersAccount.user)
   const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.user.userListing)
-  console.log(listings, 'as listingss....')
+  const soldListings = useSelector((state) => state.user.soldListing)
 
   useEffect(() => {
     if (!id) return
@@ -38,7 +37,7 @@ const User = () => {
       // dispatch(setLoading(true))
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/users/${id}`,
+          `${process.env.API_ENDPOINT_DEV}/api/users/${id}`,
           {
             method: 'GET',
             headers: {
@@ -50,6 +49,7 @@ const User = () => {
         if (data?.status === true) {
           dispatch(setUser(data.user))
           dispatch(setUserListing(data.listings))
+          dispatch(setSoldListing(data.soldListings))
           // dispatch(setLoading(false))
         } else {
           dispatch(setLoading(false))
@@ -170,12 +170,88 @@ const User = () => {
           </button>
         </div>
 
+        {profileTab === 'sold' && (
+          <section className='grid p-5 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {soldListings?.map((aptListing) => {
+              return (
+                <Link
+                  key={aptListing._id}
+                  href={`/listings/${aptListing._id}`}
+                  className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
+                >
+                  <Image
+                    src={aptListing?.images?.[0]}
+                    alt='image'
+                    width={500}
+                    height={500}
+                    className='rounded-lg object-cover w-full lg:h-[250px] sm:h-[200px] '
+                  />
+                  <div className='flex flex-col gap-2'>
+                    <h1 className='text-xl '>{aptListing.title}</h1>
+                    <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
+                      <FontAwesomeIcon icon={faLocationDot} />
+                      {aptListing.address}
+                    </span>
+                    <p className='flex items-center gap-2 text-sm font-medium'>
+                      Property Type:{' '}
+                      <span className=''>{aptListing.propertyType}</span>
+                    </p>
+                  </div>
+
+                  <div className='flex justify-between items-center flex-wrap w-full'>
+                    <span className='flex items-center gap-1 font-medium text-sm'>
+                      <FontAwesomeIcon icon={faBuilding} color='grey' />
+                      {aptListing.isNewProperty === true
+                        ? 'Newly Built'
+                        : 'Used Property'}
+                    </span>
+                    <span className='flex items-center gap-1 font-medium text-sm'>
+                      <FontAwesomeIcon icon={faStar} color='grey' />
+                      {aptListing.isPropertyForSale === true
+                        ? 'Selling'
+                        : 'Renting'}
+                    </span>
+                    <p className='font-medium flex items-center gap-2 text-sm'>
+                      <FontAwesomeIcon icon={faBed} color='grey' />
+                      {aptListing.bedrooms}
+                    </p>
+                    <p className='font-medium flex items-center gap-2 text-sm'>
+                      <FontAwesomeIcon icon={faShower} color='grey' />
+                      {aptListing.bathroom}
+                    </p>
+                  </div>
+
+                  <span>
+                    {aptListing.isPropertyForSale === true ? (
+                      <div className='font-semibold'>
+                        {aptListing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                      </div>
+                    ) : (
+                      <div className='font-semibold'>
+                        {aptListing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm font-normal '>
+                          /{aptListing.paymentOption}
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                </Link>
+              )
+            })}
+          </section>
+        )}
         {profileTab === 'listings' && (
           <section className='grid p-5 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {listings?.map((aptListing) => {
               return (
                 <Link
-                  key={aptListing.id}
+                  key={aptListing._id}
                   href={`/listings/${aptListing._id}`}
                   className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg'
                 >

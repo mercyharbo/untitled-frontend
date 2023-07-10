@@ -41,7 +41,7 @@ const ListingDetail = () => {
     dispatch(setLoading(true))
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
+        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}`,
         {
           method: 'GET',
           headers: {
@@ -81,6 +81,29 @@ const ListingDetail = () => {
         router.push('/listings')
       } else {
         console.log('there is an error')
+      }
+    } catch (error) {}
+  }
+
+  const markAsSold = async () => {
+    // const token = localStorage.getItem('token')
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}/sold`,
+        {
+          method: 'PUT',
+          headers: {
+            // Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.error)
       }
     } catch (error) {}
   }
@@ -183,16 +206,14 @@ const ListingDetail = () => {
                   </h1>
                   <div className='3xl:w-[20rem] 2xl:w-[15rem] xl:w-[15rem] md:w-[15rem] sm:w-full '>
                     {listingDetails.isPropertyForSale === true ? (
-                      <span className='flex text-black font-semibold text-xl '>
-                        Price:{' '}
+                      <span className=' text-black font-semibold text-xl '>
                         {listingDetails?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </span>
                     ) : (
-                      <span className='flex justify-start items-center text-black font-semibold text-xl '>
-                        Price:{' '}
+                      <span className=' text-black font-semibold text-xl '>
                         {listingDetails?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
@@ -236,6 +257,7 @@ const ListingDetail = () => {
                     label='Mark as sold'
                     type='button'
                     icons={<FontAwesomeIcon icon={faCheckDouble} />}
+                    onClick={() => markAsSold()}
                     className='rounded-md flex justify-center items-center gap-2'
                   />
                 )}

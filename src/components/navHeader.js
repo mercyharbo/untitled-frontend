@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
-import { useDispatch, useSelector } from 'react-redux'
-import { setToken, setUserProfile } from '@/slice/userSlice'
-
-import { setLoading } from '@/slice/listingSlice'
+import { setToken } from '@/slice/userSlice'
 import Button from '@/hooks/button'
 
 const NavHeader = () => {
@@ -38,39 +36,6 @@ const NavHeader = () => {
       console.error('An error occurred during logout', error)
     }
   }
-
-  useEffect(() => {
-    const getUserProfile = async () => {
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-
-        const data = await response.json()
-
-        if (data?.status === true) {
-          dispatch(setUserProfile(data.profile))
-          dispatch(setLoading(false))
-        } else {
-          dispatch(setLoading(false))
-          // setErrorMsg(data.error)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    getUserProfile()
-  }, [])
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -165,6 +130,12 @@ const NavHeader = () => {
                 Profile
               </Link>
 
+              <Link
+                href='/listings'
+                className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
+              >
+                Listing
+              </Link>
               <Link
                 href='/'
                 className='h-[50px] hover:bg-color2 flex justify-start items-center pl-2 w-full rounded-md '
