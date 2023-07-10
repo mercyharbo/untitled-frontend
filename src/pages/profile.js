@@ -1,10 +1,9 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
-import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
-import { setLoading, setUserListings } from '@/slice/listingSlice'
+import { setEditProfileModal } from '@/slice/userSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
@@ -24,70 +23,6 @@ const Profile = () => {
 
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.listings.loading)
-  const userListing = useSelector((state) => state.listings.userListings)
-  const soldListings = useSelector((state) => state.user.soldListing)
-
-  const getUserListing = async () => {
-    dispatch(setLoading(true))
-
-    const userId = localStorage.getItem('userId')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/users/${userId}/listings`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-
-      const data = await response.json()
-
-      if (data?.status === true) {
-        dispatch(setUserListings(data.listings))
-        dispatch(setLoading(false))
-      } else {
-        dispatch(setLoading(false))
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  // const getUserProfile = async () => {
-  //   dispatch(setLoading(true))
-  //   const token = localStorage.getItem('token')
-  //   const userId = localStorage.getItem('userId')
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     )
-
-  //     const data = await response.json()
-
-  //     if (data?.status === true) {
-  //       dispatch(setUserProfile(data.profile))
-  //       dispatch(setLoading(false))
-  //     } else {
-  //       dispatch(setLoading(false))
-  //     }
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
-
-  useEffect(() => {
-    getUserListing()
-    // getUserProfile()
-  }, [dispatch])
 
   if (loading) {
     return (
@@ -121,7 +56,7 @@ const Profile = () => {
                 @{userProfile?.username}
               </span>
             </div>
-            <p className='2xl:w-[60%] text-center text-base '>
+            <p className='2xl:w-[60%] xl:w-[60%] md:w-full sm:w-full text-center text-base '>
               {userProfile?.bio}
             </p>
           </div>
@@ -171,9 +106,9 @@ const Profile = () => {
           </button>
         </div>
 
-        {/* {profileTab === 'sold' && (
-          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-            {soldListings?.map((listing) => {
+        {profileTab === 'sold' && (
+          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {userProfile?.soldListings?.map((listing) => {
               return (
                 <Link
                   key={listing._id}
@@ -243,11 +178,11 @@ const Profile = () => {
               )
             })}
           </section>
-        )} */}
+        )}
 
         {profileTab === 'listings' && (
-          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-            {userListing?.map((listing) => {
+          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {userProfile?.listings?.map((listing) => {
               return (
                 <Link
                   key={listing._id}

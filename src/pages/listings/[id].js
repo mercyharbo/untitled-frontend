@@ -11,7 +11,6 @@ import {
   faEnvelope,
   faPhone,
   faShower,
-  faSink,
   faTrash,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
@@ -41,7 +40,7 @@ const ListingDetail = () => {
     dispatch(setLoading(true))
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
         {
           method: 'GET',
           headers: {
@@ -89,7 +88,7 @@ const ListingDetail = () => {
     // const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}/sold`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}/sold`,
         {
           method: 'PUT',
           headers: {
