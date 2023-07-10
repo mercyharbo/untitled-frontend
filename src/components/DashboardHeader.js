@@ -88,7 +88,7 @@ const DashboardHeader = () => {
       const userId = localStorage.getItem('userId')
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+          `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
           {
             method: 'GET',
             headers: {
@@ -110,12 +110,12 @@ const DashboardHeader = () => {
     }
 
     getUserProfile()
-  }, [dispatch])
+  }, [])
 
   return (
     <>
       <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center '>
-        <div className='relative xl:w-[50%] md:w-[50%] w-full'>
+        <div className='relative xl:w-[50%] md:w-[50%] sm:w-full'>
           <input
             type='text'
             name='search'
@@ -144,13 +144,13 @@ const DashboardHeader = () => {
                       className='h-[70px] w-[70px] rounded-full object-cover '
                     />
                     <div className='flex flex-col gap-1'>
-                      <h1 className='text-xl font-bold'>
+                      <h1 className='text-xl font-semibold'>
                         {usersFound.firstname} {usersFound.lastname}
                       </h1>
-                      <span className='text-sm text-gray-500 font-semibold'>
+                      <span className='text-sm text-[gray]'>
                         @{usersFound.username}
                       </span>
-                      <span className='text-sm text-gray-500 font-medium'>
+                      <span className='text-sm text-[gray]'>
                         {usersFound.address}
                       </span>
                     </div>
