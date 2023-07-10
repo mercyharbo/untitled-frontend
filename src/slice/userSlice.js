@@ -9,6 +9,7 @@ const initialState = {
   selectedImage: null,
   searchProperties: '',
   userListing: [],
+  soldListing: [],
 }
 
 const userSlice = createSlice({
@@ -39,6 +40,9 @@ const userSlice = createSlice({
     setUserListing: (state, action) => {
       state.userListing = action.payload
     },
+    setSoldListing: (state, action) => {
+      state.soldListing = action.payload
+    },
   },
 })
 
@@ -51,5 +55,6 @@ export const {
   setSelectedImage,
   setSearchProperties,
   setUserListing,
+  setSoldListing,
 } = userSlice.actions
 export default userSlice.reducer

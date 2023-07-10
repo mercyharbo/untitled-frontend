@@ -20,6 +20,7 @@ export default function Home() {
     usePagination()
 
   const [activeTab, setActiveTab] = useState('All Listings')
+
   const loading = useSelector((state) => state.listings.loading)
 
   // const getProtectedRoute = async () => {
