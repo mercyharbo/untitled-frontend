@@ -215,34 +215,34 @@ const DashboardLayout = ({ children }) => {
     }
   }
 
-  useEffect(() => {
-    const getRentingListings = async (page) => {
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        const data = await response.json()
-
-        if (data.status === true) {
-          dispatch(setListings(data.listings))
-          dispatch(setLoading(false))
-          dispatch(setTotalPages(data.totalPages))
-        } else {
-          console.log('there is an error')
+  const getRentingListings = async (page) => {
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      } catch (error) {
-        console.error(error)
-      }
-    }
+      )
+      const data = await response.json()
 
+      if (data.status === true) {
+        dispatch(setListings(data.listings))
+        dispatch(setLoading(false))
+        dispatch(setTotalPages(data.totalPages))
+      } else {
+        console.log('there is an error')
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
     getRentingListings()
-  }, [dispatch])
+  }, [])
 
   // Function to handle category selection
   const handleCategorySelection = (categoryId) => {
@@ -272,7 +272,6 @@ const DashboardLayout = ({ children }) => {
     )
     setPreviewPictures(previews)
   }
-
 
   return (
     <>

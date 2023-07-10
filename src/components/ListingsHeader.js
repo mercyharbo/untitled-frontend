@@ -1,7 +1,7 @@
-import InputField from '@/hooks/InputField'
-import { setSearchProperties, setSearchQuery } from '@/slice/userSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { setSearchProperties } from '@/slice/userSlice'
 
 const CategoriesData = [
   { id: 1, name: 'All' },
@@ -23,7 +23,7 @@ const ListingHeader = () => {
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId)
   }
-  
+
   const listing = useSelector((state) => state.listings.listings)
   const searchProperties = useSelector((state) => state.user.searchProperties)
 
