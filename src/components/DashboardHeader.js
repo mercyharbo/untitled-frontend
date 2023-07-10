@@ -88,7 +88,7 @@ const DashboardHeader = () => {
       const userId = localStorage.getItem('userId')
       try {
         const response = await fetch(
-          `${process.env.API_ENDPOINT_DEV}/api/profile?userId=${userId}`,
+          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
           {
             method: 'GET',
             headers: {
