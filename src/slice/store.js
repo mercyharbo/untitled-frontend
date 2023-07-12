@@ -3,6 +3,7 @@ import userSlice from './userSlice'
 import singupSlice from './singupSlice'
 import listingSlice from './listingSlice'
 import userAccountSlice from './userAccountSlice'
+import favoriteSlice from './favoriteSlice'
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export default configureStore({
     signup: singupSlice,
     listings: listingSlice,
     usersAccount: userAccountSlice,
+    favorite: favoriteSlice,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })
