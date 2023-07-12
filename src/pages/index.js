@@ -330,7 +330,7 @@ export default function Home() {
               <Button
                 label='Subscribe'
                 type='submit'
-                className='bg-color3 text-white xl:h-[55px] rounded-md hover:bg-hover '
+                className='bg-color3 text-white xl:h-[55px] rounded-md h-[50px] hover:bg-hover '
               />
             </Form>
           </Formik>
