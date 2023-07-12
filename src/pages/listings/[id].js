@@ -9,6 +9,7 @@ import {
   faCheckDouble,
   faChevronLeft,
   faEnvelope,
+  faHeart,
   faPhone,
   faShower,
   faTrash,
@@ -107,6 +108,36 @@ const ListingDetail = () => {
     } catch (error) {}
   }
 
+  const AddFavorites = async (event, listing_id) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    const token = localStorage.getItem('token')
+
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_DEV}/api/favorites/add`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ listingId: listing_id }),
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.error)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     if (id) {
       getListingDetails()
@@ -167,7 +198,7 @@ const ListingDetail = () => {
       <main className='flex lg:flex-row lg:gap-5 md:flex-col md:gap-5 sm:flex-col sm:gap-5 sm:p-5'>
         <section className='xl:w-[70%] lg:w-[80%] md:w-full sm:w-full '>
           <section className='flex flex-col gap-5 lg:p-5'>
-            <div className='selected-image'>
+            <div className='relative'>
               {selectedImage && (
                 <Image
                   src={selectedImage}
@@ -177,6 +208,25 @@ const ListingDetail = () => {
                   className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] md:h-[400px] sm:h-[270px] '
                 />
               )}
+              <Button
+                type='button'
+                label={
+                  listingDetails.favorites ? (
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      className='text-xl text-red'
+                    />
+                  ) : (
+                    <FontAwesomeIcon icon={faHeart} className='text-xl ' />
+                  )
+                }
+                onClick={(event) => AddFavorites(event, listingDetails._id)}
+                className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-8 top-5 hover:bg-hover ${
+                  listingDetails.favorites
+                    ? 'bg-[#ffffffc4] shadow-2xl '
+                    : 'bg-[#0b0101c3] shadow-2xl'
+                }`}
+              />
             </div>
             <div className='flex overflow-x-auto xl:flex-row lg:flex-row lg:justify-start lg:items-start lg:gap-5 md:gap-5 sm:gap-5'>
               {listingDetails?.images?.map((thumbnail, index) => {
@@ -257,7 +307,7 @@ const ListingDetail = () => {
                     type='button'
                     icons={<FontAwesomeIcon icon={faCheckDouble} />}
                     onClick={() => markAsSold()}
-                    className='rounded-md flex justify-center items-center gap-2'
+                    className='rounded-md flex justify-center items-center gap-2 h-[50px] '
                   />
                 )}
               </div>

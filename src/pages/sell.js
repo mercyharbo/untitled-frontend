@@ -4,6 +4,7 @@ import {
   faBuilding,
   faLocationDot,
   faShower,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
@@ -12,25 +13,48 @@ import { useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import ListingHeader from '@/components/ListingsHeader'
+import Button from '@/hooks/button'
+import { toast } from 'react-toastify'
 
 const ListingsForSell = () => {
   const listings = useSelector((state) => state.listings.listings)
   const searchProperties = useSelector((state) => state.user.searchProperties)
 
+  const AddFavorites = async (event, listing_id) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    const token = localStorage.getItem('token')
+
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/favorites/add`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ listingId: listing_id }),
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.error)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <DashboardLayout>
       <main className='p-5'>
         <ListingHeader />
-        {/* <h1 className='flex justify-start items-center gap-2 2xl:text-2xl xl:text-2xl lg:text-2xl'>
-          Properties
-          <span className='text-lg text-gray-500 font-semibold'>
-            {
-              listings?.filter((homes) => homes.isPropertyForSale === true)
-                .length
-            }{' '}
-            Results
-          </span>
-        </h1> */}
+
         <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
           {listings
             ?.filter((homes) => homes.isPropertyForSale === true)
@@ -44,7 +68,7 @@ const ListingsForSell = () => {
                 <Link
                   key={homes._id}
                   href={`/listings/${homes._id}`}
-                  className='flex flex-col bg-white shadow-2xl p-5 rounded-lg'
+                  className='flex flex-col bg-white shadow-2xl p-5 rounded-lg relative'
                 >
                   <Image
                     src={homes?.images?.[0]}
@@ -52,6 +76,25 @@ const ListingsForSell = () => {
                     width={500}
                     height={500}
                     className='rounded-lg object-cover w-full lg:h-[250px]  '
+                  />
+                  <Button
+                    type='button'
+                    label={
+                      homes.favorites ? (
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className='text-xl text-red'
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeart} className='text-xl ' />
+                      )
+                    }
+                    onClick={(event) => AddFavorites(event, homes._id)}
+                    className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-6 top-5 hover:bg-hover ${
+                      homes.favorites
+                        ? 'bg-[#ffffffc4] shadow-2xl '
+                        : 'bg-[#0b0101c3] shadow-2xl'
+                    }`}
                   />
                   <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
                     <span className='flex items-center gap-2 text-gray-500 sm:text-sm sm:pt-3 '>

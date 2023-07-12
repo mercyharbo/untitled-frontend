@@ -82,7 +82,7 @@ const NavHeader = () => {
               type='button'
               label='Logout'
               onClick={handleLogout}
-              className='rounded-full px-5'
+              className='rounded-full px-5 h-[50px] '
             />
           )}
 

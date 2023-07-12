@@ -260,14 +260,14 @@ const DashboardHeader = () => {
                   dispatch(setAddListingModal(true))
                   setShowModal(false)
                 }}
-                className='w-full rounded-md'
+                className='w-full rounded-md h-[50px] '
                 // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               />
               <Button
                 type='button'
                 label='Logout'
                 onClick={handleLogout}
-                className='w-full rounded-md'
+                className='w-full rounded-md h-[50px] '
                 // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               />
             </article>
