@@ -28,7 +28,7 @@ const Rent = () => {
 
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/favorites/add`,
+        `${process.env.API_ENDPOINT_RENDER}/api/favorites/add`,
         {
           method: 'POST',
           headers: {

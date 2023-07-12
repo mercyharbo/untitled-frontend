@@ -27,13 +27,12 @@ const Profile = () => {
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.listings.loading)
   const favorite = useSelector((state) => state.favorite.favorites)
-  console.log(favorite, 'as fav')
 
   const getFavorites = async () => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/favorites`,
+        `${process.env.API_ENDPOINT_RENDER}/api/favorites`,
         {
           method: 'GET',
           headers: {
