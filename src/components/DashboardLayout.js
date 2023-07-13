@@ -226,23 +226,36 @@ const DashboardLayout = ({ children }) => {
           },
         }
       )
-      const data = await response.json()
 
-      if (data.status === true) {
+      // Introduce a timeout here (e.g., 5 seconds)
+      const TIMEOUT_DURATION = 40000 // 5 seconds
+      const timeoutPromise = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(null) // Resolve with null to indicate a timeout
+        }, TIMEOUT_DURATION)
+      })
+
+      const dataPromise = response.json()
+      const data = await Promise.race([dataPromise, timeoutPromise])
+
+      if (data === null) {
+        // Handle timeout here (e.g., show a message or retry)
+        console.log('Request timed out')
+      } else if (data.status === true) {
         dispatch(setListings(data.listings))
-        dispatch(setLoading(false))
         dispatch(setTotalPages(data.totalPages))
+        dispatch(setLoading(false))
       } else {
-        console.log('there is an error')
+        console.log('There is an error')
       }
     } catch (error) {
       console.error(error)
     }
   }
 
-  useEffect(() => {
-    getRentingListings()
-  }, [])
+  // useEffect(() => {
+  //   getRentingListings()
+  // }, [])
 
   // Function to handle category selection
   const handleCategorySelection = (categoryId) => {

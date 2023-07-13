@@ -185,7 +185,12 @@ const Login = () => {
                 </Link>
               </div>
 
-              <Button type='submit' label='Login' name='login' />
+              <Button
+                type='submit'
+                label='Login'
+                name='login'
+                className='h-[50px] rounded-md '
+              />
             </Form>
           </Formik>
 

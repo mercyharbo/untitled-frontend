@@ -1,4 +1,4 @@
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
 import Layout from '@/components/Layout'

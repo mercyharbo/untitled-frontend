@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
-import { setEditProfileModal } from '@/slice/userSlice'
+import { setEditProfileModal, setUserProfile } from '@/slice/userSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 import Button from '@/hooks/button'
@@ -17,8 +17,10 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding, faStar } from '@fortawesome/free-regular-svg-icons'
-import { setFavorites } from '@/slice/favoriteSlice'
+import { getFavorites, setFavorites } from '@/slice/favoriteSlice'
 import { toast } from 'react-toastify'
+import { fetchUserProfile } from '@/components/api/ownerProfile'
+import { setLoading } from '@/slice/listingSlice'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -55,13 +57,13 @@ const Profile = () => {
     getFavorites()
   }, [])
 
-  if (loading) {
-    return (
-      <div className='flex justify-center items-center h-screen m-auto'>
-        <Spinner />
-      </div>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <div className='flex justify-center items-center h-screen m-auto'>
+  //       <Spinner />
+  //     </div>
+  //   )
+  // }
 
   return (
     <DashboardLayout>

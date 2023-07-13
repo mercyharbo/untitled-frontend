@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
-import { setAddListingModal } from '@/slice/listingSlice'
+import { setAddListingModal, setLoading } from '@/slice/listingSlice'
 import {
   setSearchQuery,
   setSearched,
@@ -82,35 +82,21 @@ const DashboardHeader = () => {
     }
   }, [searchQuery])
 
-  useEffect(() => {
-    const getUserProfile = async () => {
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token')
+  //   const userId = localStorage.getItem('userId')
 
-        const data = await response.json()
-        if (data?.status === true) {
-          dispatch(setUserProfile(data.profile))
-        } else {
-          console.log('error occured')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  //   const getUserProfile = async () => {
+  //     dispatch(setLoading(true))
+  //     const profileData = await fetchUserProfile(userId, token)
+  //     if (profileData) {
+  //       dispatch(setUserProfile(profileData))
+  //       dispatch(setLoading(false))
+  //     }
+  //   }
 
-    getUserProfile()
-  }, [])
+  //   getUserProfile()
+  // }, [])
 
   return (
     <>

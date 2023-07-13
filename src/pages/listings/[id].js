@@ -22,6 +22,7 @@ import { toast } from 'react-toastify'
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
 import Button from '@/hooks/button'
+import { fetchListingDetails } from '@/slice/listingDetailSlice'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -30,35 +31,13 @@ const ListingDetail = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [userId, setUserId] = useState(null)
 
-  const listingDetails = useSelector((state) => state.listings.listingDetail)
-  const loading = useSelector((state) => state.listings.loading)
+  const listingDetails = useSelector(
+    (state) => state.listingDetail.listingDetail
+  )
+  const loading = useSelector((state) => state.listingDetail.loading)
 
   const handleImageClick = (image) => {
     setSelectedImage(image)
-  }
-
-  const getListingDetails = async () => {
-    dispatch(setLoading(true))
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        dispatch(setListingDetail(data.listing))
-        dispatch(setLoading(false))
-        dispatch(setLoading(false))
-      } else {
-        console.log('there is an error')
-      }
-    } catch (error) {}
   }
 
   const deleteListing = async () => {
@@ -113,7 +92,6 @@ const ListingDetail = () => {
     event.preventDefault()
 
     const token = localStorage.getItem('token')
-
     try {
       const response = await fetch(
         `${process.env.API_ENDPOINT_DEV}/api/favorites/add`,
@@ -127,7 +105,6 @@ const ListingDetail = () => {
         }
       )
       const data = await response.json()
-
       if (data.status === true) {
         toast.success(data.message)
       } else {
@@ -139,10 +116,8 @@ const ListingDetail = () => {
   }
 
   useEffect(() => {
-    if (id) {
-      getListingDetails()
-    }
-  }, [id])
+    dispatch(fetchListingDetails(id))
+  }, [dispatch, id])
 
   useEffect(() => {
     if (listingDetails?.images?.length > 0) {
