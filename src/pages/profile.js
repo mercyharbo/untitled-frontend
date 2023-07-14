@@ -17,8 +17,8 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding, faStar } from '@fortawesome/free-regular-svg-icons'
-import { getFavorites } from '@/slice/favoriteSlice'
 import { setProfileModal } from '@/slice/updateProfileSlice'
+import { getFavorites } from '@/slice/favoriteSlice'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -27,30 +27,6 @@ const Profile = () => {
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.user.loading)
   const favorite = useSelector((state) => state.favorite.favListing)
-  // console.log(favorite, 'as fav...')
-
-  // const getFavorites = async () => {
-  //   const token = localStorage.getItem('token')
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.API_ENDPOINT_RENDER}/api/favorites`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     )
-
-  //     const data = await response.json()
-  //     if (data.status === true) {
-  //       dispatch(setFavorites(data.favorites))
-  //     } else {
-  //       toast.error(data.error)
-  //     }
-  //   } catch (error) {}
-  // }
 
   useEffect(() => {
     dispatch(getFavorites())

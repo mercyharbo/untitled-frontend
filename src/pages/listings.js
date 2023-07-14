@@ -28,7 +28,7 @@ export default function Home() {
 
   const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.listings.listings)
-  const searchProperties = useSelector((state) => state.user.searchProperties)
+  const searchListing = useSelector((state) => state.search.searchListing)
 
   const AddFavorites = async (event, listing_id) => {
     event.stopPropagation()
@@ -80,7 +80,7 @@ export default function Home() {
                 ?.filter((homes) =>
                   homes.title
                     ?.toLowerCase()
-                    .includes(searchProperties?.toLowerCase())
+                    .includes(searchListing?.toLowerCase())
                 )
                 ?.map((homes) => {
                   return (

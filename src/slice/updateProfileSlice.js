@@ -5,7 +5,7 @@ import { setUserProfile } from './userSlice'
 
 export const updateUserProfile = createAsyncThunk(
   '/profile/update',
-  async (values, { dispatch, getState }) => {
+  async (values, { dispatch }) => {
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('userId')
 

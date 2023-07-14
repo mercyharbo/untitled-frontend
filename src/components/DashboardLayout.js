@@ -67,7 +67,6 @@ const DashboardLayout = ({ children }) => {
   const selectedImage = useSelector(
     (state) => state.updateProfile.selectedImage
   )
-  console.log(selectedImage, 'as select image')
   const modal = useSelector((state) => state.listings.modal)
   const listingDetails = useSelector((state) => state.listings.listingDetail)
   const addListingModal = useSelector((state) => state.listings.addListingModal)
