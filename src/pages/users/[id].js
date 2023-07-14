@@ -74,10 +74,10 @@ const User = () => {
                 {user?.firstname} {user?.lastname}
               </h1>
               <div className='flex gap-3 divide-x-2'>
-                <span className='text-sm text-gray-500 font-medium'>
+                <span className='text-sm text-[gray] font-medium'>
                   @{user.username}
                 </span>
-                <span className='text-sm text-gray-500 font-medium flex items-center gap-1 px-3'>
+                <span className='text-sm text-[gray] font-medium flex items-center gap-1 px-3'>
                   <FontAwesomeIcon icon={faLocationDot} />
                   {user.address}
                 </span>
@@ -89,21 +89,21 @@ const User = () => {
           <div className='flex justify-center items-center gap-3'>
             <Link
               href={`tel:${user.phoneNumber}`}
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faPhone} />
               Contact
             </Link>
             <button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faMessage} />
               Message
             </button>
             <button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faStar} />
               Rate
@@ -111,7 +111,7 @@ const User = () => {
           </div>
         </header>
 
-        <div className='flex justify-center items-center gap-5 w-full py-4 font-semibold'>
+        <div className='flex justify-center items-center gap-5 w-full py-4 font-medium'>
           <button
             type='button'
             onClick={() => setProfileTab('listings')}
@@ -194,14 +194,14 @@ const User = () => {
 
                   <span>
                     {aptListing.isPropertyForSale === true ? (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </div>
                     ) : (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
@@ -271,14 +271,14 @@ const User = () => {
 
                   <span>
                     {aptListing.isPropertyForSale === true ? (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </div>
                     ) : (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
@@ -363,14 +363,14 @@ const User = () => {
                   </div>
                   <span>
                     {listing.isPropertyForSale === true ? (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {listing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </div>
                     ) : (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {listing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
