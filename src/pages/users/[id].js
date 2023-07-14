@@ -2,10 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-
-import DashboardLayout from '@/components/DashboardLayout'
-import { setLoading, setUser } from '@/slice/userAccountSlice'
 import Link from 'next/link'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBed,
@@ -15,8 +13,12 @@ import {
   faShower,
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
-import { setSoldListing, setUserListing } from '@/slice/userSlice'
 import { faBuilding } from '@fortawesome/free-regular-svg-icons'
+
+import DashboardLayout from '@/components/DashboardLayout'
+import { getUser } from '@/slice/userProfile'
+import Spinner from '@/hooks/LoadingSpinner'
+import { getFavorites } from '@/slice/favoriteSlice'
 
 const User = () => {
   const router = useRouter()
@@ -25,51 +27,28 @@ const User = () => {
   const dispatch = useDispatch()
   const [profileTab, setProfileTab] = useState('listings')
 
-  const user = useSelector((state) => state.usersAccount.user)
-  const loading = useSelector((state) => state.listings.loading)
-  const listings = useSelector((state) => state.user.userListing)
-  const soldListings = useSelector((state) => state.user.soldListing)
+  const user = useSelector((state) => state.userProfileDetails.user)
+  const loading = useSelector((state) => state.userProfileDetails.loading)
+  const listings = useSelector((state) => state.userProfileDetails.userListing)
+  const soldListings = useSelector(
+    (state) => state.userProfileDetails.soldListing
+  )
 
   useEffect(() => {
-    if (!id) return
+    dispatch(getUser(id))
+  }, [dispatch, id])
 
-    const getUser = async () => {
-      // dispatch(setLoading(true))
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/users/${id}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
-        const data = await response.json()
-        if (data?.status === true) {
-          dispatch(setUser(data.user))
-          dispatch(setUserListing(data.listings))
-          dispatch(setSoldListing(data.soldListings))
-          // dispatch(setLoading(false))
-        } else {
-          dispatch(setLoading(false))
-          // setErrorMsg(data.error)
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  useEffect(() => {
+    dispatch(getFavorites())
+  }, [dispatch])
 
-    getUser()
-  }, [id])
-
-  // if (loading) {
-  //   return (
-  //     <div className='flex justify-center items-center h-screen m-auto'>
-  //       <Spinner />
-  //     </div>
-  //   )
-  // }
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center h-screen m-auto'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <DashboardLayout>
@@ -77,14 +56,11 @@ const User = () => {
         <header className='flex flex-col justify-center items-center gap-5 mx-auto'>
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
-              src={
-                // selectedImage ||
-                user?.avatarUrl || 'https://via.placeholder.com/500'
-              }
+              src={user?.avatarUrl || 'https://via.placeholder.com/500'}
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
+              className='rounded-full p-[2px] bg-color3 object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
               sm:w-[120px] sm:h-[120px] '
             />
           </div>

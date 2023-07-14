@@ -8,8 +8,9 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
-import { setAddListingModal } from '@/slice/listingSlice'
+import { setAddListingModal, setLoading } from '@/slice/listingSlice'
 import {
+  getProfile,
   setSearchQuery,
   setSearched,
   setToken,
@@ -83,34 +84,10 @@ const DashboardHeader = () => {
   }, [searchQuery])
 
   useEffect(() => {
-    const getUserProfile = async () => {
-      const token = localStorage.getItem('token')
-      const userId = localStorage.getItem('userId')
-      try {
-        const response = await fetch(
-          `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
+    const userId = localStorage.getItem('userId')
 
-        const data = await response.json()
-        if (data?.status === true) {
-          dispatch(setUserProfile(data.profile))
-        } else {
-          console.log('error occured')
-        }
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    getUserProfile()
-  }, [])
+    dispatch(getProfile(userId))
+  }, [dispatch])
 
   return (
     <>

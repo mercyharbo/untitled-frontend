@@ -16,7 +16,7 @@ import {
 import { motion } from 'framer-motion'
 
 import Carousel from '@/components/Carousel'
-import { setListings, setLoading } from '@/slice/listingSlice'
+import { fetchListings } from '@/slice/listingSlice'
 import NavHeader from '@/components/navHeader'
 import SelectField from '@/hooks/SelectField'
 
@@ -59,34 +59,11 @@ const TestimonialJSON = [
 
 export default function Home() {
   const dispatch = useDispatch()
-  const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.listings.listings)
 
-  const getListings = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/listings`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        dispatch(setListings(data.listings))
-        dispatch(setLoading(false))
-      } else {
-        console.log('there is an error')
-      }
-    } catch (error) {}
-  }
-
   useEffect(() => {
-    getListings()
-  }, [])
+    dispatch(fetchListings(1))
+  }, [dispatch])
 
   return (
     <>
