@@ -18,6 +18,7 @@ import { faBuilding } from '@fortawesome/free-regular-svg-icons'
 import DashboardLayout from '@/components/DashboardLayout'
 import { getUser } from '@/slice/userProfile'
 import Spinner from '@/hooks/LoadingSpinner'
+import { getFavorites } from '@/slice/favoriteSlice'
 
 const User = () => {
   const router = useRouter()
@@ -37,6 +38,10 @@ const User = () => {
     dispatch(getUser(id))
   }, [dispatch, id])
 
+  useEffect(() => {
+    dispatch(getFavorites())
+  }, [dispatch])
+
   if (loading) {
     return (
       <div className='flex justify-center items-center h-screen m-auto'>
@@ -51,14 +56,11 @@ const User = () => {
         <header className='flex flex-col justify-center items-center gap-5 mx-auto'>
           <div className='flex justify-start 2xl:items-center xl:items-center lg:items-center md:items-start sm:items-start gap-4 lg:flex-row md:flex-row sm:flex-col'>
             <Image
-              src={
-                // selectedImage ||
-                user?.avatarUrl || 'https://via.placeholder.com/500'
-              }
+              src={user?.avatarUrl || 'https://via.placeholder.com/500'}
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full p-[2px] bg-[#F30A49] object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
+              className='rounded-full p-[2px] bg-color3 object-cover 2xl:h-[130px] 2xl:w-[130px] xl:w-[80px] xl:h-[80px] md:w-[120px] md:h-[120px] 
               sm:w-[120px] sm:h-[120px] '
             />
           </div>

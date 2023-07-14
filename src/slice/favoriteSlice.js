@@ -19,29 +19,39 @@ export const getFavorites = createAsyncThunk(
 
       const data = await response.json()
       if (data.status === true) {
-        dispatch(setFavorites(data.favorites))
+        dispatch(setFavListing(data.favorites))
       } else {
         toast.error(data.error)
       }
-    } catch (error) {
-      console.error(error)
-    }
+    } catch (error) {}
   }
 )
 
 const initialState = {
-  favorites: [],
+  favListing: [],
+  loading: false,
 }
 
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    setFavorites: (state, action) => {
-      state.favorites = action.payload
+    setFavListing: (state, action) => {
+      state.favListing = action.payload
     },
+    setLoading: (state, action) => {
+      state.favListing = action.payload
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getFavorites.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(getFavorites.fulfilled, (state) => {
+      state.loading = false
+    })
   },
 })
 
-export const { setFavorites } = favoritesSlice.actions
+export const { setFavListing, setLoading } = favoritesSlice.actions
 export default favoritesSlice.reducer

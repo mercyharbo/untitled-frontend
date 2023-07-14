@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 
 import { setAddListingModal, setLoading } from '@/slice/listingSlice'
 import {
+  getProfile,
   setSearchQuery,
   setSearched,
   setToken,
@@ -82,21 +83,11 @@ const DashboardHeader = () => {
     }
   }, [searchQuery])
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   const userId = localStorage.getItem('userId')
+  useEffect(() => {
+    const userId = localStorage.getItem('userId')
 
-  //   const getUserProfile = async () => {
-  //     dispatch(setLoading(true))
-  //     const profileData = await fetchUserProfile(userId, token)
-  //     if (profileData) {
-  //       dispatch(setUserProfile(profileData))
-  //       dispatch(setLoading(false))
-  //     }
-  //   }
-
-  //   getUserProfile()
-  // }, [])
+    dispatch(getProfile(userId))
+  }, [dispatch])
 
   return (
     <>

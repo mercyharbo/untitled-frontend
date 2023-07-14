@@ -1,15 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+export const getProfile = createAsyncThunk(
+  'profile',
+  async (userId, { dispatch }) => {
+    const token = localStorage.getItem('token')
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      const data = await response.json()
+      if (data?.status === true) {
+        dispatch(setUserProfile(data.profile))
+        dispatch(setLoading(false))
+      } else {
+        dispatch(setLoading(false))
+        // setErrorMsg(data.error)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+)
 
 const initialState = {
-  userProfile: {},
+  userProfile: [],
+  loading: false,
+
   token: null,
+
   searchQuery: '',
   editProfileModal: false,
   searched: [],
-  selectedImage: null,
+  // selectedImage: null,
   searchProperties: '',
-  userListing: [],
-  soldListing: [],
 }
 
 const userSlice = createSlice({
@@ -18,6 +48,9 @@ const userSlice = createSlice({
   reducers: {
     setUserProfile: (state, action) => {
       state.userProfile = action.payload
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
     setToken: (state, action) => {
       state.token = action.payload
@@ -31,18 +64,20 @@ const userSlice = createSlice({
     setSearched: (state, action) => {
       state.searched = action.payload
     },
-    setSelectedImage: (state, action) => {
-      state.selectedImage = action.payload
-    },
+    // setSelectedImage: (state, action) => {
+    //   state.selectedImage = action.payload
+    // },
     setSearchProperties: (state, action) => {
       state.searchProperties = action.payload
     },
-    setUserListing: (state, action) => {
-      state.userListing = action.payload
-    },
-    setSoldListing: (state, action) => {
-      state.soldListing = action.payload
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getProfile.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(getProfile.fulfilled, (state) => {
+      state.loading = false
+    })
   },
 })
 
@@ -52,9 +87,8 @@ export const {
   setSearchQuery,
   setEditProfileModal,
   setSearched,
-  setSelectedImage,
+  // setSelectedImage,
   setSearchProperties,
-  setUserListing,
-  setSoldListing,
+  setLoading,
 } = userSlice.actions
 export default userSlice.reducer

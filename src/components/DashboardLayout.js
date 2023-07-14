@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 import { Field, Form, Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Image from 'next/image'
 
@@ -9,24 +9,18 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import SideBarNavigation from './sidebar'
 import DashboardHeader from './DashboardHeader'
-import {
-  setEditProfileModal,
-  setSelectedImage,
-  setUserProfile,
-} from '@/slice/userSlice'
-import {
-  setListingDetail,
-  setListings,
-  setLoading,
-  setModal,
-  setTotalPages,
-} from '@/slice/listingSlice'
+import { setListingDetail, setLoading, setModal } from '@/slice/listingSlice'
 
 import TextareaField from '@/hooks/Textarea'
 import InputField from '@/hooks/InputField'
 import SelectField from '@/hooks/SelectField'
 import Button from '@/hooks/button'
 import AddListingModal from './addListing'
+import {
+  setProfileModal,
+  setSelectedImage,
+  updateUserProfile,
+} from '@/slice/updateProfileSlice'
 
 const propertyType = [
   { id: 1, name: 'House' },
@@ -65,10 +59,15 @@ const DashboardLayout = ({ children }) => {
     { value: 10, label: 10 },
   ]
 
-  const loading = useSelector((state) => state.listings.loading)
+  const loading = useSelector((state) => state.updateProfile.loading)
   const userProfile = useSelector((state) => state.user.userProfile)
-  const editProfileModal = useSelector((state) => state.user.editProfileModal)
-  const selectedImage = useSelector((state) => state.user.selectedImage)
+  const editProfileModal = useSelector(
+    (state) => state.updateProfile.profileModal
+  )
+  const selectedImage = useSelector(
+    (state) => state.updateProfile.selectedImage
+  )
+  console.log(selectedImage, 'as select image')
   const modal = useSelector((state) => state.listings.modal)
   const listingDetails = useSelector((state) => state.listings.listingDetail)
   const addListingModal = useSelector((state) => state.listings.addListingModal)
@@ -89,56 +88,18 @@ const DashboardLayout = ({ children }) => {
     }
   }
 
-  const updateUserProfile = async (values) => {
-    const token = localStorage.getItem('token')
-    const userId = localStorage.getItem('userId')
-    const updatedProfile = {
-      ...userProfile,
-      ...values,
-      avatarUrl: selectedImage || userProfile?.avatarUrl,
-    }
-
+  // Function handling the profile update
+  const handleProfileUpdate = async (values) => {
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedProfile),
-        }
-      )
-
-      const data = await response.json()
-
-      if (data?.status === true) {
-        dispatch(setUserProfile(updatedProfile))
-        dispatch(setLoading(false))
-        toast.success(data.message, {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-        })
-        dispatch(setEditProfileModal(false))
-      } else {
-        toast.failure('Failed to update your profile', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-        })
+      const updateProfileData = {
+        ...values,
+        avatarUrl: selectedImage || userProfile?.avatarUrl,
       }
+      await dispatch(updateUserProfile(updateProfileData))
+      // Profile update successful
+      // Add any necessary actions or state updates after the profile update
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -215,48 +176,6 @@ const DashboardLayout = ({ children }) => {
     }
   }
 
-  const getRentingListings = async (page) => {
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/listings?page=${page}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-
-      // Introduce a timeout here (e.g., 5 seconds)
-      const TIMEOUT_DURATION = 40000 // 5 seconds
-      const timeoutPromise = new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(null) // Resolve with null to indicate a timeout
-        }, TIMEOUT_DURATION)
-      })
-
-      const dataPromise = response.json()
-      const data = await Promise.race([dataPromise, timeoutPromise])
-
-      if (data === null) {
-        // Handle timeout here (e.g., show a message or retry)
-        console.log('Request timed out')
-      } else if (data.status === true) {
-        dispatch(setListings(data.listings))
-        dispatch(setTotalPages(data.totalPages))
-        dispatch(setLoading(false))
-      } else {
-        console.log('There is an error')
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  // useEffect(() => {
-  //   getRentingListings()
-  // }, [])
-
   // Function to handle category selection
   const handleCategorySelection = (categoryId) => {
     setSelectedCategoryId(categoryId)
@@ -307,7 +226,7 @@ const DashboardLayout = ({ children }) => {
           <>
             <div
               className='bg-[#000000d8] fixed w-full h-full top-0 left-0 '
-              onClick={() => dispatch(setEditProfileModal(false))}
+              onClick={() => dispatch(setProfileModal(false))}
             ></div>
             <section
               className='absolute top-0 bg-white rounded-lg flex flex-col gap-7 2xl:m-auto 2xl:w-[70%] 2xl:p-10 2xl:left-[15rem] xl:w-[70%] xl:left-[11rem] md:w-full md:left-0 
@@ -346,7 +265,7 @@ const DashboardLayout = ({ children }) => {
               <Formik
                 initialValues={userProfile}
                 onSubmit={(values) => {
-                  updateUserProfile(values)
+                  handleProfileUpdate(values)
                 }}
               >
                 <Form className='flex flex-col gap-5 w-full'>
@@ -463,7 +382,7 @@ const DashboardLayout = ({ children }) => {
                     className='bg-color3 text-white px-4 py-2 rounded-lg  h-[45px] flex justify-center items-center ml-auto xl:mt-10 lg:mt-5 lg:w-[150px] 
                     md:w-[150px] sm:w-full '
                   >
-                    {loading ? 'Loading...' : 'Save'}
+                    {loading ? 'Updating...' : 'Update'}
                   </button>
                 </Form>
               </Formik>

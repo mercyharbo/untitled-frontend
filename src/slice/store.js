@@ -6,6 +6,7 @@ import listingSlice from './listingSlice'
 import favoriteSlice from './favoriteSlice'
 import listingDetailSlice from './listingDetailSlice'
 import userProfile from './userProfile'
+import updateProfileSlice from './updateProfileSlice'
 
 export default configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
     listingDetail: listingDetailSlice,
     userProfileDetails: userProfile,
     favorite: favoriteSlice,
+    updateProfile: updateProfileSlice
   },
   devTools: process.env.NODE_ENV !== 'production',
 })
