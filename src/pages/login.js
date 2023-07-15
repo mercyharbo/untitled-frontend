@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import NavHeader from '@/components/navHeader'
 const Login = () => {
   const router = useRouter()
   const [errorMsg, setErrorMsg] = useState(null)
-  const [isLoading, setIsloading] = useState(true)
+  const [isLoading, setIsloading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const validationSchema = Yup.object({
@@ -25,6 +25,7 @@ const Login = () => {
   })
 
   const handleSubmit = async (values) => {
+    setIsloading(true)
     try {
       const response = await fetch(
         `${process.env.API_ENDPOINT_RENDER}/api/login`,
@@ -43,9 +44,9 @@ const Login = () => {
       const data = await response.json()
 
       if (data?.status === true) {
-        setIsloading(false)
         localStorage.setItem('userId', data.userId)
         localStorage.setItem('token', data.token)
+        setIsloading(false)
         router.push('/listings')
       } else {
         setIsloading(false)
@@ -57,35 +58,6 @@ const Login = () => {
       setErrorMsg('An error occurred. Please try again.')
     }
   }
-
-  const getProtectedRoute = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/protected`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-      if (data.status === true) {
-        router.push('/listings')
-      } else {
-        router.push('/login')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    getProtectedRoute()
-  }, [])
 
   return (
     <>
@@ -187,7 +159,7 @@ const Login = () => {
 
               <Button
                 type='submit'
-                label='Login'
+                label={isLoading ? 'Loggin...' : 'Login'}
                 name='login'
                 className='h-[50px] rounded-md '
               />

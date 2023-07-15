@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import SignupStep1 from '@/components/signupStep1'
 import SignupStep2 from '@/components/signupStep2'
@@ -8,35 +8,6 @@ import NavHeader from '@/components/navHeader'
 
 const Signup = () => {
   const [step, setStep] = useState(1)
-
-  const getProtectedRoute = async () => {
-    const token = localStorage.getItem('token')
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/protected`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      const data = await response.json()
-      if (data.status === true) {
-        router.push('/listings')
-      } else {
-        router.push('/login')
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    getProtectedRoute()
-  }, [])
 
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1)
@@ -67,7 +38,7 @@ const Signup = () => {
             alt='images'
             width={1000}
             height={1000}
-            className='h-auto xl:w-full xl:flex md:w-[35rem] md:hidden sm:w-full sm:hidden object-cover'
+            className='h-auto xl:w-full xl:flex md:w-[35rem] md:hidden sm:w-full sm:hidden object-cover '
           />
 
           <section className='flex flex-col justify-start w-full m-auto py-10'>

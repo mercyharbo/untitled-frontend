@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
-import { setToken } from '@/slice/userSlice'
 import Button from '@/hooks/button'
+import { setToken } from '@/slice/logoutSlice'
 
 const NavHeader = () => {
   const router = useRouter()
@@ -17,23 +17,10 @@ const NavHeader = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/logout`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await response.json()
-      console.log(data.status, 'data status...')
-
-      if (data.status === true) {
-        localStorage.removeItem('token')
-        dispatch(setToken(null)) // Update token to null
-        router.push('/login')
-      }
+      await dispatch(logout())
+      router.push('/')
     } catch (error) {
-      console.error('An error occurred during logout', error)
+      console.log(error)
     }
   }
 

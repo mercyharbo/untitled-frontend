@@ -32,14 +32,7 @@ export const getProfile = createAsyncThunk(
 const initialState = {
   userProfile: [],
   loading: false,
-
   token: null,
-
-  searchQuery: '',
-  editProfileModal: false,
-  searched: [],
-  // selectedImage: null,
-  searchProperties: '',
 }
 
 const userSlice = createSlice({
@@ -52,24 +45,6 @@ const userSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload
     },
-    setToken: (state, action) => {
-      state.token = action.payload
-    },
-    setSearchQuery: (state, action) => {
-      state.searchQuery = action.payload
-    },
-    setEditProfileModal: (state, action) => {
-      state.editProfileModal = action.payload
-    },
-    setSearched: (state, action) => {
-      state.searched = action.payload
-    },
-    // setSelectedImage: (state, action) => {
-    //   state.selectedImage = action.payload
-    // },
-    setSearchProperties: (state, action) => {
-      state.searchProperties = action.payload
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state) => {
@@ -81,14 +56,5 @@ const userSlice = createSlice({
   },
 })
 
-export const {
-  setUserProfile,
-  setToken,
-  setSearchQuery,
-  setEditProfileModal,
-  setSearched,
-  // setSelectedImage,
-  setSearchProperties,
-  setLoading,
-} = userSlice.actions
+export const { setUserProfile, setLoading } = userSlice.actions
 export default userSlice.reducer

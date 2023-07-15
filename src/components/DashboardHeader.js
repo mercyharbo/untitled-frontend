@@ -8,15 +8,11 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
-import { setAddListingModal, setLoading } from '@/slice/listingSlice'
-import {
-  getProfile,
-  setSearchQuery,
-  setSearched,
-  setToken,
-  setUserProfile,
-} from '@/slice/userSlice'
+import { setAddListingModal } from '@/slice/listingSlice'
+import { getProfile } from '@/slice/userSlice'
 import Button from '@/hooks/button'
+import Search from '@/hooks/search'
+import { logout } from '@/slice/logoutSlice'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -28,115 +24,27 @@ const DashboardHeader = () => {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
-  const searchQuery = useSelector((state) => state.user.searchQuery)
   const userProfile = useSelector((state) => state.user.userProfile)
-  const searchedKeywords = useSelector((state) => state.user.searched)
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/logout`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await response.json()
-
-      if (data.status === true) {
-        localStorage.removeItem('token')
-        dispatch(setToken(null)) // Update token to null
-        router.push('/login')
-      }
+      await dispatch(logout())
+      router.push('/')
     } catch (error) {
-      console.error('An error occurred during logout', error)
+      console.log(error)
     }
   }
 
-  const getSearchDatas = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/search?q=${searchQuery}`,
-        {
-          method: 'GET',
-        }
-      )
-
-      const data = await response.json()
-      if (data.status === true) {
-        dispatch(setSearched(data))
-      } else {
-        console.log('Cannot find the searched keywords')
-      }
-    } catch (error) {}
-  }
-
-  useEffect(() => {
-    const delayTimer = setTimeout(() => {
-      if (searchQuery.trim() !== '') {
-        getSearchDatas()
-      }
-    }, 500) // Adjust the delay duration (in milliseconds) to your desired value
-
-    return () => {
-      clearTimeout(delayTimer) // Clear the timeout when component unmounts or searchQuery changes
-    }
-  }, [searchQuery])
-
+  // get profile
   useEffect(() => {
     const userId = localStorage.getItem('userId')
-
     dispatch(getProfile(userId))
   }, [dispatch])
 
   return (
     <>
       <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center '>
-        <div className='relative xl:w-[50%] md:w-[50%] sm:w-full'>
-          <input
-            type='text'
-            name='search'
-            placeholder='Search estate agent'
-            className='h-[55px] lg:w-[400px] md:w-[400px] sm:w-full sm:h-[55px] py-4 rounded-full outline-none border-2 border-color2 focus:border-hover indent-3 '
-            value={searchQuery}
-            onChange={(e) => {
-              dispatch(setSearchQuery(e.target.value))
-            }}
-          />
-          {searchQuery && (
-            <div className='xl:w-auto md:w-full sm:w-full h-auto absolute top-20 left-0 p-5 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-5 '>
-              {searchedKeywords?.users?.map((usersFound) => {
-                return (
-                  <Link
-                    key={usersFound._id}
-                    href={`/users/${usersFound._id}`}
-                    onClick={() => dispatch(setSearchQuery(''))}
-                    className='flex justify-start items-center gap-5 bg-white shadow-2xl p-2 rounded-lg w-full'
-                  >
-                    <Image
-                      src={usersFound.avatarUrl}
-                      alt={usersFound.username}
-                      width={500}
-                      height={500}
-                      className='h-[70px] w-[70px] rounded-full object-cover '
-                    />
-                    <div className='flex flex-col gap-1'>
-                      <h1 className='text-xl font-semibold'>
-                        {usersFound.firstname} {usersFound.lastname}
-                      </h1>
-                      <span className='text-sm text-[gray]'>
-                        @{usersFound.username}
-                      </span>
-                      <span className='text-sm text-[gray]'>
-                        {usersFound.address}
-                      </span>
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-          )}
-        </div>
+        <Search />
 
         <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center md:w-[50%] md:gap-8 md:justify-end md:items-center '>
           <button

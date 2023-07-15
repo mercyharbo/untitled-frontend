@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 
 export const getFavorites = createAsyncThunk(
-  'listings/getFavorites',
-  async ({ dispatch }) => {
+  'listing/favorites',
+  async (_, { dispatch, getState }) => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
@@ -23,13 +23,14 @@ export const getFavorites = createAsyncThunk(
       } else {
         toast.error(data.error)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
   }
 )
 
 const initialState = {
   favListing: [],
-  loading: false,
 }
 
 const favoritesSlice = createSlice({
@@ -37,9 +38,6 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     setFavListing: (state, action) => {
-      state.favListing = action.payload
-    },
-    setLoading: (state, action) => {
       state.favListing = action.payload
     },
   },
@@ -53,5 +51,5 @@ const favoritesSlice = createSlice({
   },
 })
 
-export const { setFavListing, setLoading } = favoritesSlice.actions
+export const { setFavListing } = favoritesSlice.actions
 export default favoritesSlice.reducer

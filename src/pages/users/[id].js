@@ -12,6 +12,7 @@ import {
   faPhone,
   faShower,
   faStar,
+  faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding } from '@fortawesome/free-regular-svg-icons'
 
@@ -19,10 +20,11 @@ import DashboardLayout from '@/components/DashboardLayout'
 import { getUser } from '@/slice/userProfile'
 import Spinner from '@/hooks/LoadingSpinner'
 import { getFavorites } from '@/slice/favoriteSlice'
+import Button from '@/hooks/button'
 
 const User = () => {
   const router = useRouter()
-  const { id } = router.query // Get the id parameter from the router query
+  const { id } = router.query
 
   const dispatch = useDispatch()
   const [profileTab, setProfileTab] = useState('listings')
@@ -33,6 +35,7 @@ const User = () => {
   const soldListings = useSelector(
     (state) => state.userProfileDetails.soldListing
   )
+  const favorite = useSelector((state) => state.favorite.favListing)
 
   useEffect(() => {
     dispatch(getUser(id))
@@ -71,10 +74,10 @@ const User = () => {
                 {user?.firstname} {user?.lastname}
               </h1>
               <div className='flex gap-3 divide-x-2'>
-                <span className='text-sm text-gray-500 font-medium'>
+                <span className='text-sm text-[gray] font-medium'>
                   @{user.username}
                 </span>
-                <span className='text-sm text-gray-500 font-medium flex items-center gap-1 px-3'>
+                <span className='text-sm text-[gray] font-medium flex items-center gap-1 px-3'>
                   <FontAwesomeIcon icon={faLocationDot} />
                   {user.address}
                 </span>
@@ -86,21 +89,21 @@ const User = () => {
           <div className='flex justify-center items-center gap-3'>
             <Link
               href={`tel:${user.phoneNumber}`}
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faPhone} />
               Contact
             </Link>
             <button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faMessage} />
               Message
             </button>
             <button
               type='button'
-              className='bg-gray-200 font-semibold p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
             >
               <FontAwesomeIcon icon={faStar} />
               Rate
@@ -108,7 +111,7 @@ const User = () => {
           </div>
         </header>
 
-        <div className='flex justify-center items-center gap-5 w-full py-4 font-semibold'>
+        <div className='flex justify-center items-center gap-5 w-full py-4 font-medium'>
           <button
             type='button'
             onClick={() => setProfileTab('listings')}
@@ -139,7 +142,7 @@ const User = () => {
         </div>
 
         {profileTab === 'sold' && (
-          <section className='grid p-5 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+          <section className='grid p-5 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {soldListings?.map((aptListing) => {
               return (
                 <Link
@@ -191,14 +194,14 @@ const User = () => {
 
                   <span>
                     {aptListing.isPropertyForSale === true ? (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </div>
                     ) : (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
@@ -214,8 +217,9 @@ const User = () => {
             })}
           </section>
         )}
+
         {profileTab === 'listings' && (
-          <section className='grid p-5 2xl:grid-cols-4 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+          <section className='grid p-5 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {listings?.map((aptListing) => {
               return (
                 <Link
@@ -267,20 +271,112 @@ const User = () => {
 
                   <span>
                     {aptListing.isPropertyForSale === true ? (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                       </div>
                     ) : (
-                      <div className='font-semibold'>
+                      <div className='font-medium'>
                         {aptListing?.price?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'NGN',
                         })}
                         <span className='text-[gray] text-sm font-normal '>
                           /{aptListing.paymentOption}
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                </Link>
+              )
+            })}
+          </section>
+        )}
+
+        {profileTab === 'favorite' && (
+          <section className='grid 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+            {favorite?.map((listing) => {
+              return (
+                <Link
+                  key={listing._id}
+                  href={`/listings/${listing._id}`}
+                  className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg relative'
+                >
+                  <Image
+                    src={listing?.images?.[0]}
+                    alt='image'
+                    width={500}
+                    height={500}
+                    className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
+                  />
+                  <Button
+                    type='button'
+                    label={
+                      listing.favorites ? (
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className='text-xl text-red'
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faHeart} className='text-xl ' />
+                      )
+                    }
+                    className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-6 top-5 hover:bg-hover ${
+                      listing.favorites
+                        ? 'bg-[#ffffffc4] shadow-2xl '
+                        : 'bg-[#0b0101c3] shadow-2xl'
+                    }`}
+                  />
+                  <div className='h-full flex flex-col justify-between items-start gap-4'>
+                    <div className='flex flex-col gap-2'>
+                      <h1 className='2xl:text-lg '>{listing.title}</h1>
+                      <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
+                        <FontAwesomeIcon icon={faLocationDot} />
+                        {listing.address}
+                      </span>
+                    </div>
+
+                    <div className='flex justify-between items-center flex-wrap w-full'>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faBuilding} color='grey' />
+                        {listing.isNewProperty === true
+                          ? 'Newly Built'
+                          : 'Used Property'}
+                      </span>
+                      <span className='flex items-center gap-1 font-medium text-sm'>
+                        <FontAwesomeIcon icon={faStar} color='grey' />
+                        {listing.isPropertyForSale === true
+                          ? 'Selling'
+                          : 'Renting'}
+                      </span>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faBed} color='grey' />
+                        {listing.bedrooms}
+                      </p>
+                      <p className='font-medium flex items-center gap-2 text-sm'>
+                        <FontAwesomeIcon icon={faShower} color='grey' />
+                        {listing.bathroom}
+                      </p>
+                    </div>
+                  </div>
+                  <span>
+                    {listing.isPropertyForSale === true ? (
+                      <div className='font-medium'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                      </div>
+                    ) : (
+                      <div className='font-medium'>
+                        {listing?.price?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'NGN',
+                        })}
+                        <span className='text-[gray] text-sm font-normal '>
+                          /{listing.paymentOption}
                         </span>
                       </div>
                     )}

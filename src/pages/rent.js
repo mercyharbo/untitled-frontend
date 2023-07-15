@@ -18,7 +18,7 @@ import { toast } from 'react-toastify'
 
 const Rent = () => {
   const listings = useSelector((state) => state.listings.listings)
-  const searchProperties = useSelector((state) => state.user.searchProperties)
+  const searchListing = useSelector((state) => state.search.searchListing)
 
   const AddFavorites = async (event, listing_id) => {
     event.stopPropagation()
@@ -59,9 +59,7 @@ const Rent = () => {
           {listings
             ?.filter((homes) => homes.isPropertyForSale !== true)
             .filter((homes) =>
-              homes.title
-                ?.toLowerCase()
-                .includes(searchProperties?.toLowerCase())
+              homes.title?.toLowerCase().includes(searchListing?.toLowerCase())
             )
             ?.map((homes) => {
               return (

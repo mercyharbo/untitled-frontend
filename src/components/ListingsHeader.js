@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { setSearchProperties } from '@/slice/userSlice'
+import { setSearchListing } from '@/slice/searchSlice'
 
 const CategoriesData = [
   { id: 1, name: 'All' },
@@ -25,7 +25,7 @@ const ListingHeader = () => {
   }
 
   const listing = useSelector((state) => state.listings.listings)
-  const searchProperties = useSelector((state) => state.user.searchProperties)
+  const searchListing = useSelector((state) => state.search.searchListing)
 
   return (
     <main className='flex flex-col gap-5 py-5'>
@@ -44,9 +44,9 @@ const ListingHeader = () => {
             placeholder='Search House, Apartment, etc'
             className='w-full indent-5 bg-transparent py-4 rounded-lg outline-none border-2 border-color2 focus:border-hover '
             style={{ borderRadius: '100px' }}
-            value={searchProperties}
+            value={searchListing}
             onChange={(e) => {
-              dispatch(setSearchProperties(e.target.value))
+              dispatch(setSearchListing(e.target.value))
             }}
           />
         </div>
