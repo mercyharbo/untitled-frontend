@@ -43,15 +43,9 @@ export const fetchListings = createAsyncThunk(
 
 const initialState = {
   listings: [],
-  listingDetail: [],
   loading: false,
-  total: null,
   addListingModal: false,
   totalPages: 0,
-  filteredListing: [],
-  editListing: [],
-  modal: false,
-  userListings: [],
 }
 
 const listingsSlice = createSlice({
@@ -61,32 +55,16 @@ const listingsSlice = createSlice({
     setListings: (state, action) => {
       state.listings = action.payload
     },
-    setListingDetail: (state, action) => {
-      state.listingDetail = action.payload
-    },
+
     setLoading: (state, action) => {
       state.loading = action.payload
     },
-    setTotal: (state, action) => {
-      state.total = action.payload
-    },
+
     setAddListingModal: (state, action) => {
       state.addListingModal = action.payload
     },
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
-    },
-    setFilteredListing: (state, action) => {
-      state.filteredListing = action.payload
-    },
-    setEditListing: (state, action) => {
-      state.editListing = action.payload
-    },
-    setModal: (state, action) => {
-      state.modal = action.payload
-    },
-    setUserListings: (state, action) => {
-      state.userListings = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -99,16 +77,6 @@ const listingsSlice = createSlice({
   },
 })
 
-export const {
-  setListings,
-  setListingDetail,
-  setLoading,
-  setTotal,
-  setAddListingModal,
-  setTotalPages,
-  setFilteredListing,
-  setEditListing,
-  setModal,
-  setUserListings,
-} = listingsSlice.actions
+export const { setListings, setLoading, setAddListingModal, setTotalPages } =
+  listingsSlice.actions
 export default listingsSlice.reducer

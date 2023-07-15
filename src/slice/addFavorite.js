@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 export const AddListingAsFavorite = createAsyncThunk(
   'listing/favorites',
-  async (listing_id, { dispatch }) => {
+  async (listing_id,) => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(

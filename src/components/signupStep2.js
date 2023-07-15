@@ -15,7 +15,7 @@ const SignupStep2 = () => {
   const dispatch = useDispatch()
 
   const [errorMsg, setErrorMsg] = useState(null)
-  const [isLoading, setIsloading] = useState(true)
+  const [isLoading, setIsloading] = useState(false)
 
   const { email } = useSelector((state) => state.signup)
   const selectedImage = useSelector((state) => state.user.selectedImage)
@@ -31,6 +31,7 @@ const SignupStep2 = () => {
   })
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    setIsloading(true)
     try {
       const response = await fetch(
         `${process.env.API_ENDPOINT_RENDER}/api/signup`,
@@ -256,7 +257,7 @@ const SignupStep2 = () => {
             </div>
 
             <Button
-              label='Create account'
+              label={isLoading ? 'Creating account...' : 'Create account'}
               type='submit'
               // disabled={isLoading || isSubmitting}
               className='rounded-md h-[50px]'
