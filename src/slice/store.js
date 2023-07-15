@@ -9,6 +9,7 @@ import userProfile from './userProfile'
 import updateProfileSlice from './updateProfileSlice'
 import searchSlice from './searchSlice'
 import logoutSlice from './logoutSlice'
+import addFavorite from './addFavorite'
 
 export default configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export default configureStore({
     updateProfile: updateProfileSlice,
     search: searchSlice,
     logout: logoutSlice,
+    addFavorites: addFavorite,
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

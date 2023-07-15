@@ -17,10 +17,9 @@ import HeaderFilter from '@/components/ListingsHeader'
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
 import Button from '@/hooks/button'
-
 import { fetchListings } from '@/slice/listingSlice'
 import EmptyState from '@/components/emptyState'
-import { toast } from 'react-toastify'
+import { AddListingAsFavorite } from '@/slice/addFavorite'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -33,31 +32,9 @@ export default function Home() {
   const AddFavorites = async (event, listing_id) => {
     event.stopPropagation()
     event.preventDefault()
-
-    const token = localStorage.getItem('token')
-
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/favorites/add`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ listingId: listing_id }),
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        toast.success(data.message)
-      } else {
-        toast.error(data.error)
-      }
-    } catch (error) {
-      console.error(error)
-    }
+      await dispatch(AddListingAsFavorite(listing_id))
+    } catch (error) {}
   }
 
   useEffect(() => {
