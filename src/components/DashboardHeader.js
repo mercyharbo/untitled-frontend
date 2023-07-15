@@ -9,9 +9,10 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
 import { setAddListingModal } from '@/slice/listingSlice'
-import { getProfile, setToken } from '@/slice/userSlice'
+import { getProfile } from '@/slice/userSlice'
 import Button from '@/hooks/button'
 import Search from '@/hooks/search'
+import { logout } from '@/slice/logoutSlice'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -27,22 +28,10 @@ const DashboardHeader = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/logout`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await response.json()
-
-      if (data.status === true) {
-        localStorage.removeItem('token')
-        dispatch(setToken(null)) // Update token to null
-        router.push('/login')
-      }
+      await dispatch(logout())
+      router.push('/')
     } catch (error) {
-      console.error('An error occurred during logout', error)
+      console.log(error)
     }
   }
 

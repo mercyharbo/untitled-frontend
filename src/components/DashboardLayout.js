@@ -95,8 +95,6 @@ const DashboardLayout = ({ children }) => {
         avatarUrl: selectedImage || userProfile?.avatarUrl,
       }
       await dispatch(updateUserProfile(updateProfileData))
-      // Profile update successful
-      // Add any necessary actions or state updates after the profile update
     } catch (error) {
       console.log(error)
     }

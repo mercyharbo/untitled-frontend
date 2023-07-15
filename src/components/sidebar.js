@@ -14,7 +14,8 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { setToken } from '@/slice/userSlice'
+
+import { logout } from '@/slice/logoutSlice'
 
 const SideBarNavigation = () => {
   const router = useRouter()
@@ -25,22 +26,10 @@ const SideBarNavigation = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/logout`,
-        {
-          method: 'POST',
-        }
-      )
-
-      const data = await response.json()
-
-      if (data.status === true) {
-        localStorage.removeItem('token')
-        dispatch(setToken(null)) // Update token to null
-        router.push('/login')
-      }
+      await dispatch(logout())
+      router.push('/')
     } catch (error) {
-      console.error('An error occurred during logout', error)
+      console.log(error)
     }
   }
 

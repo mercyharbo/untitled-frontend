@@ -259,7 +259,7 @@ const SignupStep2 = () => {
               label='Create account'
               type='submit'
               // disabled={isLoading || isSubmitting}
-              className='rounded-md'
+              className='rounded-md h-[50px]'
             />
 
             {errorMsg && (

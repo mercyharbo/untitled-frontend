@@ -24,7 +24,7 @@ import Button from '@/hooks/button'
 
 const User = () => {
   const router = useRouter()
-  const { id } = router.query // Get the id parameter from the router query
+  const { id } = router.query
 
   const dispatch = useDispatch()
   const [profileTab, setProfileTab] = useState('listings')

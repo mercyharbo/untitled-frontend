@@ -55,7 +55,7 @@ const SignupStep1 = ({ onNext }) => {
             </div>
           </div>
 
-          <Button label='Continue' type='submit' name='continue' className='rounded-md' />
+          <Button label='Continue' type='submit' name='continue' className='rounded-md h-[50px] ' />
 
           <p className='text-sm'>
             By submitting, I accept Untitled {''}
