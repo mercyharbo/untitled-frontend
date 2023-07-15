@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import SideBarNavigation from './sidebar'
 import DashboardHeader from './DashboardHeader'
-import { setListingDetail, setLoading, setModal } from '@/slice/listingSlice'
 
 import TextareaField from '@/hooks/Textarea'
 import InputField from '@/hooks/InputField'
@@ -21,6 +20,11 @@ import {
   setSelectedImage,
   updateUserProfile,
 } from '@/slice/updateProfileSlice'
+import {
+  setListingDetail,
+  setListingUpdateModal,
+  setLoading,
+} from '@/slice/listingDetailSlice'
 
 const propertyType = [
   { id: 1, name: 'House' },
@@ -60,6 +64,7 @@ const DashboardLayout = ({ children }) => {
   ]
 
   const loading = useSelector((state) => state.updateProfile.loading)
+  const isLoading = useSelector((state) => state.listingDetail.loading)
   const userProfile = useSelector((state) => state.user.userProfile)
   const editProfileModal = useSelector(
     (state) => state.updateProfile.profileModal
@@ -67,14 +72,15 @@ const DashboardLayout = ({ children }) => {
   const selectedImage = useSelector(
     (state) => state.updateProfile.selectedImage
   )
-  const modal = useSelector((state) => state.listings.modal)
-  const listingDetails = useSelector((state) => state.listings.listingDetail)
+  const modal = useSelector((state) => state.listingDetail.listingUpdateModal)
+  const listingDetails = useSelector(
+    (state) => state.listingDetail.listingDetail
+  )
   const addListingModal = useSelector((state) => state.listings.addListingModal)
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0]
     const reader = new FileReader()
-
     reader.onload = () => {
       if (reader.readyState === 2) {
         const base64Image = reader.result
@@ -129,7 +135,7 @@ const DashboardLayout = ({ children }) => {
         paymentOption: selectedPaymentOption,
       }
     }
-
+    dispatch(setLoading(true))
     try {
       const response = await fetch(
         `${process.env.API_ENDPOINT_RENDER}/api/listings/${listingDetails._id}`,
@@ -146,7 +152,7 @@ const DashboardLayout = ({ children }) => {
       if (data.status === true) {
         dispatch(setListingDetail(updateListing))
         dispatch(setLoading(false))
-        dispatch(setModal(false))
+        dispatch(setListingUpdateModal(false))
         toast.success('Your listing has been updated successfully', {
           position: 'top-right',
           autoClose: 3000,
@@ -391,7 +397,7 @@ const DashboardLayout = ({ children }) => {
           <>
             <div
               className='bg-[#000000d8] fixed w-full h-full top-0 left-0 '
-              onClick={() => dispatch(setModal(false))}
+              onClick={() => dispatch(setListingUpdateModal(false))}
             ></div>
             <section
               className='absolute top-0 bg-white rounded-lg flex flex-col gap-7 3xl:w-[50%] 3xl:left-[25rem] 2xl:m-auto 2xl:w-[60%] 2xl:p-10 2xl:left-[15rem] xl:w-[70%] xl:left-[11rem] xl:top-8 md:w-full md:left-0 
@@ -563,9 +569,9 @@ const DashboardLayout = ({ children }) => {
 
                   <Button
                     type='submit'
-                    label='Save'
+                    label={isLoading ? 'Updating...' : 'Save'}
                     name='submit'
-                    className='rounded-md'
+                    className='rounded-md h-[50px]'
                   />
                 </Form>
               </Formik>

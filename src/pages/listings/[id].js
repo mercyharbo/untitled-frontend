@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setModal } from '@/slice/listingSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBed,
@@ -22,7 +21,10 @@ import { toast } from 'react-toastify'
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
 import Button from '@/hooks/button'
-import { fetchListingDetails } from '@/slice/listingDetailSlice'
+import {
+  fetchListingDetails,
+  setListingUpdateModal,
+} from '@/slice/listingDetailSlice'
 import { AddListingAsFavorite } from '@/slice/addFavorite'
 
 const ListingDetail = () => {
@@ -143,7 +145,7 @@ const ListingDetail = () => {
             {listingDetails.user?._id === userId && (
               <button
                 type='button'
-                onClick={() => dispatch(setModal(true))}
+                onClick={() => dispatch(setListingUpdateModal(true))}
                 className='flex justify-center items-center gap-2 bg-[#0C3C78] text-white p-2 px-5 mt-5  rounded-md  '
               >
                 <FontAwesomeIcon icon={faPenToSquare} className='text-white ' />

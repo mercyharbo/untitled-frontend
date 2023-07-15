@@ -31,11 +31,7 @@ export const fetchListingDetails = createAsyncThunk(
 const initialState = {
   listingDetail: [],
   loading: false,
-
-  addListingModal: false,
-  editListing: [],
-  modal: false,
-  userListings: [],
+  listingUpdateModal: false,
 }
 
 const listingDetailSlice = createSlice({
@@ -45,19 +41,11 @@ const listingDetailSlice = createSlice({
     setListingDetail: (state, action) => {
       state.listingDetail = action.payload
     },
-
-    setAddListingModal: (state, action) => {
-      state.addListingModal = action.payload
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
-
-    setEditListing: (state, action) => {
-      state.editListing = action.payload
-    },
-    setModal: (state, action) => {
-      state.modal = action.payload
-    },
-    setUserListings: (state, action) => {
-      state.userListings = action.payload
+    setListingUpdateModal: (state, action) => {
+      state.listingUpdateModal = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -70,12 +58,6 @@ const listingDetailSlice = createSlice({
   },
 })
 
-export const {
-  setListingDetail,
-  setLoading,
-  setAddListingModal,
-  setEditListing,
-  setModal,
-  setUserListings,
-} = listingDetailSlice.actions
+export const { setListingDetail, setLoading, setListingUpdateModal } =
+  listingDetailSlice.actions
 export default listingDetailSlice.reducer
