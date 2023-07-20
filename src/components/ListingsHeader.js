@@ -8,11 +8,10 @@ const CategoriesData = [
   { id: 1, name: 'All' },
   { id: 2, name: 'House' },
   { id: 3, name: 'Apartment' },
-  { id: 4, name: 'House' },
-  { id: 5, name: 'Villa' },
-  { id: 6, name: 'Self-contain' },
-  { id: 7, name: 'Duplex' },
-  { id: 8, name: 'Bungalow' },
+  { id: 4, name: 'Villa' },
+  { id: 5, name: 'Self-contain' },
+  { id: 6, name: 'Duplex' },
+  { id: 7, name: 'Bungalow' },
 ]
 
 const ListingHeader = () => {

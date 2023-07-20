@@ -52,7 +52,7 @@ export default function Home() {
         <main className='flex flex-col p-5 w-full'>
           <HeaderFilter setActiveTab={setActiveTab} activeTab={activeTab} />
 
-          {listings.length > 1 ? (
+          {filteredListing.length > 1 ? (
             <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
               {filteredListing
                 ?.filter((homes) =>
