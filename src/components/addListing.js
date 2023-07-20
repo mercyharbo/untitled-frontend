@@ -15,11 +15,10 @@ import 'react-toastify/dist/ReactToastify.css'
 const propertyType = [
   { id: 1, name: 'House' },
   { id: 2, name: 'Apartment' },
-  { id: 3, name: 'House' },
-  { id: 4, name: 'Villa' },
-  { id: 5, name: 'Self-contain' },
-  { id: 6, name: 'Duplex' },
-  { id: 7, name: 'Bungalow' },
+  { id: 3, name: 'Villa' },
+  { id: 4, name: 'Self-contain' },
+  { id: 5, name: 'Duplex' },
+  { id: 6, name: 'Bungalow' },
 ]
 
 const paymentOption = [
@@ -44,6 +43,7 @@ const AddListingModal = () => {
   const [categories, setCategories] = useState(propertyType)
   const [selectedCategoryId, setSelectedCategoryId] = useState(null)
   const [selectedPaymentOption, setSelectedPaymentOption] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const initialValues = {
     title: '',
@@ -112,6 +112,7 @@ const AddListingModal = () => {
 
   const handleSubmit = async (values) => {
     const userId = localStorage.getItem('userId')
+    setIsLoading(true)
     try {
       // Perform the post request to the backend with the collected form values
       const response = await fetch(
@@ -141,8 +142,8 @@ const AddListingModal = () => {
       if (data.status === true) {
         toast.success('You listing as been posted successfully')
         router.reload(window.location.pathname)
+        setIsLoading(false)
       } else {
-        // toast.failure(data.errors)
         setErrorMsg(data.errors)
         return
       }
@@ -509,7 +510,7 @@ const AddListingModal = () => {
                             ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
                             : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
                         } category-item`}
-                        onClick={() => handleCategorySelection(category.id)}
+                        onClick={() => handleCategorySelection(category.name)}
                       >
                         {category.name}
                       </div>
@@ -528,7 +529,9 @@ const AddListingModal = () => {
                             ? 'cursor-pointer bg-color3 text-white h-[40px] px-5 flex justify-center items-center rounded-full font-medium '
                             : 'flex justify-center items-center font-medium cursor-pointer bg-color2 h-[40px] px-5 rounded-full hover:bg-color3 hover:text-white '
                         } category-item`}
-                        onClick={() => handlePaymentOptionSelection(option.id)}
+                        onClick={() =>
+                          handlePaymentOptionSelection(option.name)
+                        }
                       >
                         {option.name}
                       </span>
@@ -539,7 +542,7 @@ const AddListingModal = () => {
                 <div className=''>
                   {Array.isArray(errorMsg) ? (
                     errorMsg.map((err, index) => (
-                      <li key={index} className='text-color3'>
+                      <li key={index} className='text-red'>
                         {err}
                       </li>
                     ))
@@ -561,7 +564,7 @@ const AddListingModal = () => {
                     type='submit'
                     className='bg-color3 text-white py-2 px-5 rounded-md '
                   >
-                    Next
+                    {isLoading ? 'Creating...' : 'Create listing'}
                   </button>
                 </div>
               </div>
