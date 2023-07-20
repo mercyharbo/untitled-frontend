@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setSearchListing } from '@/slice/searchSlice'
+import { setFilteredListing } from '@/slice/listingSlice'
 
 const CategoriesData = [
   { id: 1, name: 'All' },
@@ -26,6 +27,20 @@ const ListingHeader = () => {
 
   const listing = useSelector((state) => state.listings.listings)
   const searchListing = useSelector((state) => state.search.searchListing)
+
+  useEffect(() => {
+    // When the selected category changes, update the filtered listings
+    if (selectedCategoryId === 1) {
+      // If 'All' category is selected, show all listings
+      dispatch(setFilteredListing(listing))
+    } else {
+      // Otherwise, filter listings by the selected category
+      const filteredList = listing.filter(
+        (item) => item.propertyType === categories[selectedCategoryId - 1].name
+      )
+      dispatch(setFilteredListing(filteredList))
+    }
+  }, [selectedCategoryId, listing, dispatch])
 
   return (
     <main className='flex flex-col gap-5 py-5'>

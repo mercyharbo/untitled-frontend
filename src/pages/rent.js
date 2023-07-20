@@ -1,3 +1,8 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Image from 'next/image'
+import Link from 'next/link'
+
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 import {
   faBed,
@@ -7,48 +12,30 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useSelector } from 'react-redux'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import ListingHeader from '@/components/ListingsHeader'
 import Button from '@/hooks/button'
-import { toast } from 'react-toastify'
+
+import { AddListingAsFavorite } from '@/slice/addFavorite'
+import { fetchListings } from '@/slice/listingSlice'
 
 const Rent = () => {
-  const listings = useSelector((state) => state.listings.listings)
+  const dispatch = useDispatch()
+  const listings = useSelector((state) => state.listings.filteredListing)
   const searchListing = useSelector((state) => state.search.searchListing)
 
   const AddFavorites = async (event, listing_id) => {
     event.stopPropagation()
     event.preventDefault()
-
-    const token = localStorage.getItem('token')
-
     try {
-      const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/favorites/add`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ listingId: listing_id }),
-        }
-      )
-      const data = await response.json()
-
-      if (data.status === true) {
-        toast.success(data.message)
-      } else {
-        toast.error(data.error)
-      }
-    } catch (error) {
-      console.error(error)
-    }
+      await dispatch(AddListingAsFavorite(listing_id))
+    } catch (error) {}
   }
+
+  useEffect(() => {
+    dispatch(fetchListings(1))
+  }, [dispatch])
 
   return (
     <DashboardLayout>

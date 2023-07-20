@@ -46,6 +46,7 @@ const initialState = {
   loading: false,
   addListingModal: false,
   totalPages: 0,
+  filteredListing: [],
 }
 
 const listingsSlice = createSlice({
@@ -66,6 +67,9 @@ const listingsSlice = createSlice({
     setTotalPages: (state, action) => {
       state.totalPages = action.payload
     },
+    setFilteredListing: (state, action) => {
+      state.filteredListing = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchListings.pending, (state) => {
@@ -77,6 +81,11 @@ const listingsSlice = createSlice({
   },
 })
 
-export const { setListings, setLoading, setAddListingModal, setTotalPages } =
-  listingsSlice.actions
+export const {
+  setListings,
+  setLoading,
+  setAddListingModal,
+  setTotalPages,
+  setFilteredListing,
+} = listingsSlice.actions
 export default listingsSlice.reducer
