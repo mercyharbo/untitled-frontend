@@ -27,6 +27,7 @@ export default function Home() {
 
   const loading = useSelector((state) => state.listings.loading)
   const listings = useSelector((state) => state.listings.listings)
+  const filteredListing = useSelector((state) => state.listings.filteredListing)
   const searchListing = useSelector((state) => state.search.searchListing)
 
   const AddFavorites = async (event, listing_id) => {
@@ -53,7 +54,7 @@ export default function Home() {
 
           {listings.length > 1 ? (
             <article className='grid 3xl:grid-cols-4 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 lg:gap-5 md:grid-cols-2 sm:grid-cols-1 sm:gap-5'>
-              {listings
+              {filteredListing
                 ?.filter((homes) =>
                   homes.title
                     ?.toLowerCase()
