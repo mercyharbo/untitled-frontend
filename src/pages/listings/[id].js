@@ -7,15 +7,13 @@ import {
   faBed,
   faCheckDouble,
   faChevronLeft,
-  faEnvelope,
   faHeart,
-  faPhone,
   faShower,
   faTrash,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
-import { faMessage, faPenToSquare } from '@fortawesome/free-regular-svg-icons'
+import { faPenToSquare, faMessage } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
 
 import DashboardLayout from '@/components/DashboardLayout'
@@ -237,6 +235,33 @@ const ListingDetail = () => {
                     </div>
                     <p className='text-[gray] '>{listingDetails.address}</p>
                   </div>
+
+                  <div className='xl:p-4 sm:p-3 flex justify-between items-center bg-color2 shadow-2xl rounded-md'>
+                    <header className=' flex justify-start items-center gap-4 flex-wrap'>
+                      <Image
+                        src={listingDetails?.user?.avatarUrl || '/img3.jpg'}
+                        alt='Selected Image'
+                        width={500}
+                        height={500}
+                        className='object-cover rounded-full border-2 border-black p-1 w-[70px] h-[70px] '
+                      />
+                      <div className='flex flex-col'>
+                        <Link
+                          href={`/users/${listingDetails?.user?._id}`}
+                          className='text-xl font-medium '
+                        >
+                          {listingDetails?.user?.firstname}{' '}
+                        </Link>
+                        <span className='text-sm text-[gray] '>
+                          Realtor Agent
+                        </span>
+                      </div>
+                    </header>
+
+                    <Link href={`/message`}>
+                      <FontAwesomeIcon icon={faMessage} className='text-2xl' />
+                    </Link>
+                  </div>
                   <div className='flex flex-wrap gap-5 xl:justify-between xl:items-center md:justify-between md:items-center'>
                     <div className='flex lg:justify-between lg:items-center 2xl:w-[40%] lg:w-[40%] md:w-[40%] md:justify-between sm:w-full sm:justify-between '>
                       <span className='flex flex-col justify-start items-start gap-2 font-medium'>
@@ -288,57 +313,11 @@ const ListingDetail = () => {
               </section>
             </section>
 
-            <section className='flex flex-col gap-5 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:w-full sm:w-full  '>
-              <header className='flex justify-start items-center gap-4 flex-wrap'>
-                <Image
-                  src={listingDetails?.user?.avatarUrl || '/img3.jpg'}
-                  alt='Selected Image'
-                  width={500}
-                  height={500}
-                  className='object-cover rounded-full border-2 border-black p-1 2xl:w-[60px] 2xl:h-[60px] lg:h-[100px] lg:w-[100px] md:w-[80px] 
-              md:h-[80px] sm:h-[60px] sm:w-[60px] '
-                />
-                <div className='flex flex-col gap-1'>
-                  <h1 className='2xl:text-2xl lg:text-2xl md:text-xl sm:text-lg font-medium '>
-                    {listingDetails?.user?.firstname}{' '}
-                    {listingDetails?.user?.lastname}
-                  </h1>
-                  <span className='text-sm text-gray-400'>
-                    Joined in June 01, 2023
-                  </span>
-                </div>
-              </header>
+            {/* <section className='flex flex-col gap-5 2xl:w-[30%] xl:w-[30%] lg:w-[30%] md:w-full sm:w-full  '>
               <p className='leading-[30px] text-sm'>
                 {listingDetails?.user?.bio}
               </p>
-
-              <div className='flex flex-col justify-start items-start gap-3'>
-                <h3 className='font-medium'>Contact with host:</h3>
-                <div className='flex lg:flex-row lg:gap-2 md:gap-4 sm:gap-5'>
-                  <Link
-                    href={`mailto:${listingDetails?.user?.email}`}
-                    className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
-                  >
-                    <FontAwesomeIcon icon={faEnvelope} />
-                    Email
-                  </Link>
-                  <Link
-                    href={`tel:${listingDetails?.user?.phoneNumber}`}
-                    className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
-                  >
-                    <FontAwesomeIcon icon={faPhone} />
-                    Call
-                  </Link>
-                  <Link
-                    href={`tel:${listingDetails?.user?.phoneNumber}`}
-                    className='border-2 border-black h-[40px] px-4 rounded-full flex justify-center items-center gap-2 '
-                  >
-                    <FontAwesomeIcon icon={faMessage} />
-                    Message
-                  </Link>
-                </div>
-              </div>
-            </section>
+            </section> */}
           </main>
         </div>
       )}
