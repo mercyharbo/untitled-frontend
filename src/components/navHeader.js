@@ -13,7 +13,7 @@ const NavHeader = () => {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
-  const token = useSelector((state) => state.user.token)
+  const token = useSelector((state) => state.logout.token)
 
   const handleLogout = async () => {
     try {

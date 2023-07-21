@@ -166,6 +166,9 @@ const ListingDetail = () => {
                       className='w-full object-cover rounded-lg 2xl:h-[600px] lg:h-[450px] md:h-[400px] sm:h-[270px] '
                     />
                   )}
+                  <span className='absolute top-5 left-0 h-[40px] w-[130px] bg-color3 text-white p-2 '>
+                    {listingDetails.propertyType}
+                  </span>
                   <Button
                     type='button'
                     label={
@@ -225,7 +228,7 @@ const ListingDetail = () => {
                               style: 'currency',
                               currency: 'NGN',
                             })}
-                            <span className='text-[gray] text-sm '>
+                            <span className='text-[gray] text-sm font-normal '>
                               /{listingDetails.paymentOption}
                             </span>
                           </span>
