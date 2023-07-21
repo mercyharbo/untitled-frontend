@@ -308,100 +308,106 @@ const Profile = () => {
             </section>
           )}
 
-          {profileTab === 'favorite' && (
-            <section className='grid 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
-              {favorite?.map((listing) => {
-                return (
-                  <Link
-                    key={listing._id}
-                    href={`/listings/${listing._id}`}
-                    className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg relative'
-                  >
-                    <Image
-                      src={listing?.images?.[0]}
-                      alt='image'
-                      width={500}
-                      height={500}
-                      className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
-                    />
-                    <Button
-                      type='button'
-                      label={
-                        listing.favorites ? (
-                          <FontAwesomeIcon
-                            icon={faHeart}
-                            className='text-xl text-red'
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faHeart}
-                            className='text-xl '
-                          />
-                        )
-                      }
-                      className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-6 top-5 hover:bg-hover ${
-                        listing.favorites
-                          ? 'bg-[#ffffffc4] shadow-2xl '
-                          : 'bg-[#0b0101c3] shadow-2xl'
-                      }`}
-                    />
-                    <div className='h-full flex flex-col justify-between items-start gap-4'>
-                      <div className='flex flex-col gap-2'>
-                        <h1 className='2xl:text-lg '>{listing.title}</h1>
-                        <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
-                          <FontAwesomeIcon icon={faLocationDot} />
-                          {listing.address}
-                        </span>
-                      </div>
-
-                      <div className='flex justify-between items-center flex-wrap w-full'>
-                        <span className='flex items-center gap-1 font-medium text-sm'>
-                          <FontAwesomeIcon icon={faBuilding} color='grey' />
-                          {listing.isNewProperty === true
-                            ? 'Newly Built'
-                            : 'Used Property'}
-                        </span>
-                        <span className='flex items-center gap-1 font-medium text-sm'>
-                          <FontAwesomeIcon icon={faStar} color='grey' />
-                          {listing.isPropertyForSale === true
-                            ? 'Selling'
-                            : 'Renting'}
-                        </span>
-                        <p className='font-medium flex items-center gap-2 text-sm'>
-                          <FontAwesomeIcon icon={faBed} color='grey' />
-                          {listing.bedrooms}
-                        </p>
-                        <p className='font-medium flex items-center gap-2 text-sm'>
-                          <FontAwesomeIcon icon={faShower} color='grey' />
-                          {listing.bathroom}
-                        </p>
-                      </div>
-                    </div>
-                    <span>
-                      {listing.isPropertyForSale === true ? (
-                        <div className='font-semibold'>
-                          {listing?.price?.toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'NGN',
-                          })}
-                        </div>
-                      ) : (
-                        <div className='font-semibold'>
-                          {listing?.price?.toLocaleString('en-US', {
-                            style: 'currency',
-                            currency: 'NGN',
-                          })}
-                          <span className='text-[gray] text-sm font-normal '>
-                            /{listing.paymentOption}
+          {profileTab === 'favorite' &&
+            (favorite.length > 0 ? (
+              <section className='grid 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+                {favorite?.map((listing) => {
+                  return (
+                    <Link
+                      key={listing._id}
+                      href={`/listings/${listing._id}`}
+                      className='flex flex-col gap-3 bg-white shadow-2xl p-4 rounded-lg relative'
+                    >
+                      <Image
+                        src={listing?.images?.[0]}
+                        alt='image'
+                        width={500}
+                        height={500}
+                        className='rounded-lg object-cover 3xl:h-[250px] 2xl:h-[250px] xl:h-[250px] md:h-[250px] sm:h-[200px] '
+                      />
+                      <Button
+                        type='button'
+                        label={
+                          listing.favorites ? (
+                            <FontAwesomeIcon
+                              icon={faHeart}
+                              className='text-xl text-red'
+                            />
+                          ) : (
+                            <FontAwesomeIcon
+                              icon={faHeart}
+                              className='text-xl '
+                            />
+                          )
+                        }
+                        className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-6 top-5 hover:bg-hover ${
+                          listing.favorites
+                            ? 'bg-[#ffffffc4] shadow-2xl '
+                            : 'bg-[#0b0101c3] shadow-2xl'
+                        }`}
+                      />
+                      <div className='h-full flex flex-col justify-between items-start gap-4'>
+                        <div className='flex flex-col gap-2'>
+                          <h1 className='2xl:text-lg '>{listing.title}</h1>
+                          <span className='text-[12px] text-[gray] flex justify-start items-center gap-2 '>
+                            <FontAwesomeIcon icon={faLocationDot} />
+                            {listing.address}
                           </span>
                         </div>
-                      )}
-                    </span>
-                  </Link>
-                )
-              })}
-            </section>
-          )}
+
+                        <div className='flex justify-between items-center flex-wrap w-full'>
+                          <span className='flex items-center gap-1 font-medium text-sm'>
+                            <FontAwesomeIcon icon={faBuilding} color='grey' />
+                            {listing.isNewProperty === true
+                              ? 'Newly Built'
+                              : 'Used Property'}
+                          </span>
+                          <span className='flex items-center gap-1 font-medium text-sm'>
+                            <FontAwesomeIcon icon={faStar} color='grey' />
+                            {listing.isPropertyForSale === true
+                              ? 'Selling'
+                              : 'Renting'}
+                          </span>
+                          <p className='font-medium flex items-center gap-2 text-sm'>
+                            <FontAwesomeIcon icon={faBed} color='grey' />
+                            {listing.bedrooms}
+                          </p>
+                          <p className='font-medium flex items-center gap-2 text-sm'>
+                            <FontAwesomeIcon icon={faShower} color='grey' />
+                            {listing.bathroom}
+                          </p>
+                        </div>
+                      </div>
+                      <span>
+                        {listing.isPropertyForSale === true ? (
+                          <div className='font-semibold'>
+                            {listing?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                          </div>
+                        ) : (
+                          <div className='font-semibold'>
+                            {listing?.price?.toLocaleString('en-US', {
+                              style: 'currency',
+                              currency: 'NGN',
+                            })}
+                            <span className='text-[gray] text-sm font-normal '>
+                              /{listing.paymentOption}
+                            </span>
+                          </div>
+                        )}
+                      </span>
+                    </Link>
+                  )
+                })}
+              </section>
+            ) : (
+              <article className='m-autp flex flex-col justify-center items-center p-5'>
+                <h1 className='text-2xl'>Your favorite tab is empty</h1>
+                <p>You can add a listing as favorite and check back again.</p>
+              </article>
+            ))}
         </main>
       )}
     </DashboardLayout>
