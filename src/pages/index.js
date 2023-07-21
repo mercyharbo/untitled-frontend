@@ -172,15 +172,18 @@ export default function Home() {
                 <Link
                   key={home._id}
                   href={`/listings/${home._id}`}
-                  className='flex-shrink-0 2xl:w-[350px] xl:w-[400px] md:w-[350px] sm:w-[350px] bg-white text-black rounded-lg p-3 flex flex-col gap-4'
+                  className='flex-shrink-0 2xl:w-[350px] xl:w-[400px] md:w-[350px] sm:w-[350px] bg-white text-black rounded-lg p-3 flex flex-col gap-4 relative'
                 >
                   <Image
                     src={home?.images?.[0]}
                     alt='homes'
                     width={500}
                     height={500}
-                    className='rounded-lg object-cover w-full 2xl:h-[250px] lg:h-[250px] sm:h-[200px] '
+                    className='rounded-lg object-cover w-full  2xl:h-[250px] lg:h-[250px] sm:h-[200px] '
                   />
+                  <span className='absolute top-8 left-3 h-[35px] w-[120px] bg-color3 text-white p-2 '>
+                    {home.propertyType}
+                  </span>
 
                   <div className='flex flex-col gap-3'>
                     <h1 className='text-xl'>{home.title}</h1>

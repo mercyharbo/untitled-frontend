@@ -74,7 +74,7 @@ export default function Home() {
                         height={500}
                         className='rounded-lg object-cover w-full lg:h-[250px] sm:h-[200px]  '
                       />
-                      <span className='absolute top-8 left-0 h-[35px] w-[120px] bg-color3 text-white p-2 '>
+                      <span className='absolute top-8 left-5 h-[35px] w-[120px] bg-color3 text-white p-2 '>
                         {homes.propertyType}
                       </span>
                       <Button
