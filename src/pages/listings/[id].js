@@ -236,7 +236,7 @@ const ListingDetail = () => {
                     <p className='text-[gray] '>{listingDetails.address}</p>
                   </div>
 
-                  <div className='xl:p-4 sm:p-3 flex justify-between items-center bg-color2 shadow-2xl rounded-md'>
+                  <div className='xl:p-4 sm:p-3 flex justify-between items-center bg-[#faf5f541] shadow-lg rounded-md'>
                     <header className=' flex justify-start items-center gap-4 flex-wrap'>
                       <Image
                         src={listingDetails?.user?.avatarUrl || '/img3.jpg'}
@@ -305,10 +305,16 @@ const ListingDetail = () => {
 
                   <div className=''>
                     <h3 className='font-medium text-xl py-2'>Amenities</h3>
-                    {listingDetails?.amenities?.map((amenty, index) => {
-                      return <li key={index}>{amenty}</li>
-                    })}
-                  </div>
+                    <div className='flex flex-wrap gap-4 justify-start items-center'>
+                      {listingDetails?.amenities?.map((amenty, index) => {
+                        return <span key={index} className='bg-color3 py-2 px-5 rounded-full text-white '>{amenty}</span>
+                      })}
+                    </div>
+                    </div>
+                    
+                    <div className="">
+                      <h1 className="">Reviews</h1>
+                    </div>
                 </article>
               </section>
             </section>

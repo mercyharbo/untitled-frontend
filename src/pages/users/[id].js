@@ -32,10 +32,11 @@ const User = () => {
   const user = useSelector((state) => state.userProfileDetails.user)
   const loading = useSelector((state) => state.userProfileDetails.loading)
   const listings = useSelector((state) => state.userProfileDetails.userListing)
+
   const soldListings = useSelector(
     (state) => state.userProfileDetails.soldListing
   )
-  const favorite = useSelector((state) => state.favorite.favListing)
+  const favorite = useSelector((state) => state.userProfileDetails.favorites)
 
   useEffect(() => {
     dispatch(getUser(id))
@@ -74,10 +75,8 @@ const User = () => {
                 {user?.firstname} {user?.lastname}
               </h1>
               <div className='flex gap-3 divide-x-2'>
-                <span className='text-sm text-[gray] font-medium'>
-                  @{user.username}
-                </span>
-                <span className='text-sm text-[gray] font-medium flex items-center gap-1 px-3'>
+                <span className='text-sm text-[gray]'>@{user.username}</span>
+                <span className='text-sm text-[gray] flex items-center gap-1 px-3'>
                   <FontAwesomeIcon icon={faLocationDot} />
                   {user.address}
                 </span>
@@ -86,24 +85,24 @@ const User = () => {
             <p className='2xl:w-[60%] text-center text-base '>{user?.bio}</p>
           </div>
 
-          <div className='flex justify-center items-center gap-3'>
+          <div className='flex justify-center items-center gap-3 divide-x divide-[gray] '>
             <Link
               href={`tel:${user.phoneNumber}`}
-              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='flex gap-2 justify-center items-center '
             >
               <FontAwesomeIcon icon={faPhone} />
               Contact
             </Link>
             <button
               type='button'
-              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='flex gap-2 justify-center items-center pl-4 '
             >
               <FontAwesomeIcon icon={faMessage} />
               Message
             </button>
             <button
               type='button'
-              className='bg-gray-200 font-medium p-2 px-5 rounded-full flex gap-3 justify-center items-center '
+              className='flex gap-2 justify-center items-center pl-4 '
             >
               <FontAwesomeIcon icon={faStar} />
               Rate
@@ -142,7 +141,7 @@ const User = () => {
         </div>
 
         {profileTab === 'sold' && (
-          <section className='grid p-5 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+          <section className='grid p-5 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {soldListings?.map((aptListing) => {
               return (
                 <Link
@@ -219,7 +218,7 @@ const User = () => {
         )}
 
         {profileTab === 'listings' && (
-          <section className='grid p-5 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
+          <section className='grid p-5 3xl:grid-cols-4 2xl:grid-cols-3 2xl:gap-5 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 sm:gap-5 '>
             {listings?.map((aptListing) => {
               return (
                 <Link
