@@ -18,6 +18,7 @@ export const getUser = createAsyncThunk(
         dispatch(setUser(data.user))
         dispatch(setUserListing(data.listings))
         dispatch(setSoldListing(data.soldListings))
+        dispatch(setFavorites(data.favorites))
         dispatch(setLoading(false))
       } else {
         dispatch(setLoading(false))
@@ -35,6 +36,7 @@ const userProfile = createSlice({
     user: [],
     userListing: [],
     soldListing: [],
+    favorites: [],
     loading: false,
     error: null,
   },
@@ -54,6 +56,9 @@ const userProfile = createSlice({
     setSoldListing: (state, action) => {
       state.soldListing = action.payload
     },
+    setFavorites: (state, action) => {
+      state.favorites = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUser.pending, (state) => {
@@ -71,5 +76,6 @@ export const {
   setUser,
   setSoldListing,
   setUserListing,
+  setFavorites,
 } = userProfile.actions
 export default userProfile.reducer
