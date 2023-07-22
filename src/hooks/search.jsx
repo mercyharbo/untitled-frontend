@@ -52,16 +52,16 @@ const Search = () => {
                 key={foundUsers._id}
                 href={`/users/${foundUsers._id}`}
                 onClick={() => dispatch(setSearchQuery(''))}
-                className='flex justify-start items-center gap-2 bg-white shadow-2xl p-2 rounded-lg w-full h-[60px] '
+                className='flex justify-start items-center gap-2 w-[20%] bg-white shadow-2xl p-2 rounded-lg h-[60px] '
               >
                 <Image
                   src={foundUsers.avatarUrl}
                   alt={foundUsers.username}
                   width={500}
                   height={500}
-                  className='md:w-[70px] md:h-[70px] sm:h-[50px] sm:w-[50px] rounded-full object-cover border-2 border-color3 '
+                  className='w-[50px] h-[50px] rounded-full object-cover border-2 border-color3 '
                 />
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-1 w-[80%] '>
                   <div className='flex flex-col'>
                     <h1 className=' xl:text-lg md:text-lg sm:text-sm font-medium'>
                       {foundUsers.firstname} {foundUsers.lastname}
