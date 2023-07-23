@@ -3,6 +3,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ReactStars from 'react-rating-stars-component'
+
 import {
   faBed,
   faCheckDouble,
@@ -24,6 +26,8 @@ import {
   setListingUpdateModal,
 } from '@/slice/listingDetailSlice'
 import { AddListingAsFavorite } from '@/slice/addFavorite'
+import { Form, Formik } from 'formik'
+import TextareaField from '@/hooks/Textarea'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -31,6 +35,7 @@ const ListingDetail = () => {
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState(null)
   const [userId, setUserId] = useState(null)
+  const [rating, setRating] = useState(0)
 
   const listingDetails = useSelector(
     (state) => state.listingDetail.listingDetail
@@ -112,6 +117,11 @@ const ListingDetail = () => {
     const userId = localStorage.getItem('userId')
     setUserId(userId)
   }, [])
+
+  const ratingChanged = (newRating) => {
+    // Handle the new rating value
+    console.log(newRating)
+  }
 
   return (
     <DashboardLayout>
@@ -307,14 +317,49 @@ const ListingDetail = () => {
                     <h3 className='font-medium text-xl py-2'>Amenities</h3>
                     <div className='flex flex-wrap gap-4 justify-start items-center'>
                       {listingDetails?.amenities?.map((amenty, index) => {
-                        return <span key={index} className='bg-color3 py-2 px-5 rounded-full text-white '>{amenty}</span>
+                        return (
+                          <span
+                            key={index}
+                            className='bg-color3 py-2 px-5 rounded-full text-white '
+                          >
+                            {amenty}
+                          </span>
+                        )
                       })}
                     </div>
-                    </div>
-                    
-                    <div className="">
-                      <h1 className="">Reviews</h1>
-                    </div>
+                  </div>
+
+                  <div className=''>
+                    <h1 className=''>Reviews</h1>
+                    <Formik>
+                      <Form>
+                        <ReactStars
+                          count={5}
+                          size={50}
+                          onChange={ratingChanged}
+                          activeColor='#ffd700'
+                          // You can customize other props as needed
+                        />
+
+                        <div className='flex flex-col gap-2'>
+                          <label htmlFor='comment'>Comment:</label>
+                          <TextareaField
+                            name='comment'
+                            id='comment'
+                            rows={15}
+                              cols={80}
+                              className='w-full'
+                          />
+                        </div>
+                        <Button
+                          label='Submit Review'
+                          name='submit'
+                          type='submit'
+                          className='h-[50px] rounded-md my-5 '
+                        />
+                      </Form>
+                    </Formik>
+                  </div>
                 </article>
               </section>
             </section>
