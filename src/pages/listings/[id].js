@@ -368,9 +368,12 @@ const ListingDetail = () => {
                     <div className='flex flex-col gap-3 py-5'>
                       {listingDetails?.ratings
                         ?.slice(0, 5)
-                        ?.map((userRatings) => {
+                        ?.map((userRatings, index) => {
                           return (
-                            <article className='bg-color2 p-2 rounded-md shadow-md'>
+                            <article
+                              key={index}
+                              className='bg-color2 p-2 rounded-md shadow-md'
+                            >
                               <ReactStars
                                 count={5}
                                 size={20}
