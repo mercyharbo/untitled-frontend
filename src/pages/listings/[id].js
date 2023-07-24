@@ -17,6 +17,7 @@ import {
 import Link from 'next/link'
 import { faPenToSquare, faMessage } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
+import { Form, Formik, resetForm } from 'formik'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
@@ -26,8 +27,9 @@ import {
   setListingUpdateModal,
 } from '@/slice/listingDetailSlice'
 import { AddListingAsFavorite } from '@/slice/addFavorite'
-import { Form, Formik } from 'formik'
+
 import TextareaField from '@/hooks/Textarea'
+import moment from 'moment/moment'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -35,7 +37,8 @@ const ListingDetail = () => {
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState(null)
   const [userId, setUserId] = useState(null)
-  const [rating, setRating] = useState(0)
+  const [ratings, setRatings] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const listingDetails = useSelector(
     (state) => state.listingDetail.listingDetail
@@ -66,6 +69,40 @@ const ListingDetail = () => {
         router.push('/listings')
       } else {
         console.log('there is an error')
+      }
+    } catch (error) {}
+  }
+
+  const RateListing = async (values) => {
+    const token = localStorage.getItem('token')
+    const userId = localStorage.getItem('userId')
+    const ratingsData = {
+      rating: ratings,
+      ...values,
+    }
+    // console.log(ratingsData, 'values...')
+    setIsLoading(true)
+    try {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}/rate`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ratingsData),
+        }
+      )
+      const data = await response.json()
+
+      if (data.status === true) {
+        toast.success(data.message)
+        setIsLoading(false)
+        router.reload()
+      } else {
+        toast.error(data.error)
+        setIsLoading(false)
       }
     } catch (error) {}
   }
@@ -117,11 +154,6 @@ const ListingDetail = () => {
     const userId = localStorage.getItem('userId')
     setUserId(userId)
   }, [])
-
-  const ratingChanged = (newRating) => {
-    // Handle the new rating value
-    console.log(newRating)
-  }
 
   return (
     <DashboardLayout>
@@ -243,7 +275,9 @@ const ListingDetail = () => {
                         )}
                       </div>
                     </div>
-                    <p className='text-[gray] '>{listingDetails.address}</p>
+                    <p className='text-[gray] text-sm '>
+                      {listingDetails.address}
+                    </p>
                   </div>
 
                   <div className='xl:p-4 sm:p-3 flex justify-between items-center bg-[#faf5f541] shadow-lg rounded-md'>
@@ -309,12 +343,12 @@ const ListingDetail = () => {
                   </div>
 
                   <article className='flex flex-col gap-3'>
-                    <h1 className='text-xl font-medium '>Description</h1>
+                    <h1>Description</h1>
                     <p className=''>{listingDetails.description}</p>
                   </article>
 
-                  <div className=''>
-                    <h3 className='font-medium text-xl py-2'>Amenities</h3>
+                  <div className='flex flex-col gap-3'>
+                    <h3>Amenities</h3>
                     <div className='flex flex-wrap gap-4 justify-start items-center'>
                       {listingDetails?.amenities?.map((amenty, index) => {
                         return (
@@ -329,16 +363,45 @@ const ListingDetail = () => {
                     </div>
                   </div>
 
+                  <div>
+                    <h1>User reviews</h1>
+                    <div className='flex flex-col gap-3 py-5'>
+                      {listingDetails?.ratings
+                        ?.slice(0, 5)
+                        ?.map((userRatings) => {
+                          return (
+                            <article className='bg-color2 p-2 rounded-md shadow-md'>
+                              <ReactStars
+                                count={5}
+                                size={20}
+                                value={userRatings.rating}
+                                activeColor='#ffd700'
+                              />
+                              <p>{userRatings.comment}</p>
+                              <span className='text-sm text-[gray] '>
+                                {moment(userRatings.createdAt).format('LLL')}
+                              </span>
+                            </article>
+                          )
+                        })}
+                    </div>
+                  </div>
+                  <hr />
                   <div className=''>
-                    <h1 className=''>Reviews</h1>
-                    <Formik>
+                    <h1>Leave a review</h1>
+                    <Formik
+                      initialValues={{ comment: '' }}
+                      onSubmit={(values) => {
+                        RateListing(values)
+                      }}
+                    >
                       <Form>
                         <ReactStars
                           count={5}
                           size={50}
-                          onChange={ratingChanged}
+                          value={ratings}
+                          onChange={(newRating) => setRatings(newRating)}
                           activeColor='#ffd700'
-                          // You can customize other props as needed
                         />
 
                         <div className='flex flex-col gap-2'>
@@ -347,12 +410,12 @@ const ListingDetail = () => {
                             name='comment'
                             id='comment'
                             rows={15}
-                              cols={80}
-                              className='w-full'
+                            cols={80}
+                            className='w-full'
                           />
                         </div>
                         <Button
-                          label='Submit Review'
+                          label={isLoading ? 'Submiting...' : 'Submit Review'}
                           name='submit'
                           type='submit'
                           className='h-[50px] rounded-md my-5 '
