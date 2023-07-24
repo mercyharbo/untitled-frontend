@@ -10,7 +10,7 @@ const TextareaField = ({ name, id, placeholder, className, style, row, col }) =>
         rows={row || 5}
         cols={col || 50}
         placeholder={placeholder}
-        className={`${className} bg-transparent py-4 rounded-lg indent-2 outline-none border-2 border-color2 focus:border-hover`}
+        className={`${className} bg-transparent p-2 rounded-lg outline-none border-2 border-color2 focus:border-hover`}
         style={style}
       />
       <ErrorMessage
