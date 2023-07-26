@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export const getProfile = createAsyncThunk(
   'profile',
-  async (userId, { dispatch }) => {
+  async (_, { dispatch }) => {
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_RENDER}/api/profile?userId=${userId}`,
+        `${process.env.API_ENDPOINT_RENDER}/api/profile`,
         {
           method: 'GET',
           headers: {

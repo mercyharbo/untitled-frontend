@@ -9,8 +9,8 @@ h2,
 h3,
 h4,
 h5 {
- font-family: 'Inter', sans-serif;
- font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
 }
 
 p,
@@ -20,6 +20,11 @@ input,
 link,
 button {
   font-family: 'Poppins', sans-serif;
+}
+
+hr {
+  background-color: grey;
+  color: grey;
 }
 
 .category-container::-webkit-scrollbar {
