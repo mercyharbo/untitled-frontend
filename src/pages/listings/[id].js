@@ -30,6 +30,7 @@ import { AddListingAsFavorite } from '@/slice/addFavorite'
 
 import TextareaField from '@/hooks/Textarea'
 import moment from 'moment/moment'
+import InputField from '@/hooks/InputField'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -75,7 +76,7 @@ const ListingDetail = () => {
 
   const RateListing = async (values) => {
     const token = localStorage.getItem('token')
-    const userId = localStorage.getItem('userId')
+ 
     const ratingsData = {
       rating: ratings,
       ...values,
@@ -368,10 +369,10 @@ const ListingDetail = () => {
                     <div className='flex flex-col gap-3 py-5'>
                       {listingDetails?.ratings
                         ?.slice(0, 5)
-                        ?.map((userRatings, index) => {
+                        ?.map((userRatings) => {
                           return (
                             <article
-                              key={index}
+                              key={userRatings._id}
                               className='bg-color2 p-2 rounded-md shadow-md'
                             >
                               <ReactStars
@@ -380,6 +381,7 @@ const ListingDetail = () => {
                                 value={userRatings.rating}
                                 activeColor='#ffd700'
                               />
+                              <h1>{userRatings.name}</h1>
                               <p>{userRatings.comment}</p>
                               <span className='text-sm text-[gray] '>
                                 {moment(userRatings.createdAt).format('LLL')}
@@ -393,7 +395,7 @@ const ListingDetail = () => {
                   <div className=''>
                     <h1>Leave a review</h1>
                     <Formik
-                      initialValues={{ comment: '' }}
+                      initialValues={{ comment: '', name: '' }}
                       onSubmit={(values) => {
                         RateListing(values)
                       }}
@@ -408,12 +410,24 @@ const ListingDetail = () => {
                         />
 
                         <div className='flex flex-col gap-2'>
+                          <label htmlFor='name'>Your name:</label>
+                          <InputField
+                            type='text'
+                            name='name'
+                            id='name'
+                            placeholder='Enter your name'
+                            className='w-full'
+                          />
+                        </div>
+
+                        <div className='flex flex-col gap-2'>
                           <label htmlFor='comment'>Comment:</label>
                           <TextareaField
                             name='comment'
                             id='comment'
                             rows={15}
                             cols={80}
+                            placeholder='Leave a comment'
                             className='w-full'
                           />
                         </div>
