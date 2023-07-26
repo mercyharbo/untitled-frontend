@@ -76,12 +76,11 @@ const ListingDetail = () => {
 
   const RateListing = async (values) => {
     const token = localStorage.getItem('token')
- 
+
     const ratingsData = {
-      rating: ratings,
       ...values,
+      rating: ratings,
     }
-    // console.log(ratingsData, 'values...')
     setIsLoading(true)
     try {
       const response = await fetch(
@@ -381,7 +380,7 @@ const ListingDetail = () => {
                                 value={userRatings.rating}
                                 activeColor='#ffd700'
                               />
-                              <h1>{userRatings.name}</h1>
+                              <h1 className='capitalize'>{userRatings.name}</h1>
                               <p>{userRatings.comment}</p>
                               <span className='text-sm text-[gray] '>
                                 {moment(userRatings.createdAt).format('LLL')}
@@ -395,7 +394,7 @@ const ListingDetail = () => {
                   <div className=''>
                     <h1>Leave a review</h1>
                     <Formik
-                      initialValues={{ comment: '', name: '' }}
+                      initialValues={{ name: '', comment: '' }}
                       onSubmit={(values) => {
                         RateListing(values)
                       }}
