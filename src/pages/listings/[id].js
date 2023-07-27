@@ -268,9 +268,11 @@ const ListingDetail = () => {
                               style: 'currency',
                               currency: 'NGN',
                             })}
-                            <span className='text-[gray] text-sm font-normal '>
-                              /{listingDetails.paymentOption}
-                            </span>
+                            {listingDetails.paymentOption && (
+                              <span className='text-[gray] text-sm font-normal '>
+                                /{listingDetails.paymentOption}
+                              </span>
+                            )}
                           </span>
                         )}
                       </div>
@@ -363,33 +365,38 @@ const ListingDetail = () => {
                     </div>
                   </div>
 
-                  <div>
-                    <h1>User reviews</h1>
-                    <div className='flex flex-col gap-3 py-5'>
-                      {listingDetails?.ratings
-                        ?.slice(0, 5)
-                        ?.map((userRatings) => {
-                          return (
-                            <article
-                              key={userRatings._id}
-                              className='bg-color2 p-2 rounded-md shadow-md'
-                            >
-                              <ReactStars
-                                count={5}
-                                size={20}
-                                value={userRatings.rating}
-                                activeColor='#ffd700'
-                              />
-                              <h1 className='capitalize'>{userRatings.name}</h1>
-                              <p>{userRatings.comment}</p>
-                              <span className='text-sm text-[gray] '>
-                                {moment(userRatings.createdAt).format('LLL')}
-                              </span>
-                            </article>
-                          )
-                        })}
+                  {listingDetails.ratings.length !== 0 && (
+                    <div>
+                      <h1>User reviews</h1>
+                      <div className='flex flex-col gap-3 py-5'>
+                        {listingDetails?.ratings
+                          ?.slice(0, 5)
+                          ?.map((userRatings) => {
+                            return (
+                              <article
+                                key={userRatings._id}
+                                className='bg-color2 p-2 rounded-md shadow-md'
+                              >
+                                <ReactStars
+                                  count={5}
+                                  size={20}
+                                  value={userRatings.rating}
+                                  activeColor='#ffd700'
+                                />
+                                <h1 className='capitalize'>
+                                  {userRatings.name}
+                                </h1>
+                                <p>{userRatings.comment}</p>
+                                <span className='text-sm text-[gray] '>
+                                  {moment(userRatings.createdAt).format('LLL')}
+                                </span>
+                              </article>
+                            )
+                          })}
+                      </div>
                     </div>
-                  </div>
+                  )}
+
                   <hr />
                   <div className=''>
                     <h1>Leave a review</h1>
