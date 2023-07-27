@@ -17,7 +17,7 @@ import {
 import Link from 'next/link'
 import { faPenToSquare, faMessage } from '@fortawesome/free-regular-svg-icons'
 import { toast } from 'react-toastify'
-import { Form, Formik, resetForm } from 'formik'
+import { Form, Formik } from 'formik'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
@@ -155,6 +155,15 @@ const ListingDetail = () => {
     setUserId(userId)
   }, [])
 
+  const sumOfRatings = listingDetails?.ratings?.reduce(
+    (total, ratingObj) => total + ratingObj.rating,
+    0
+  )
+  const averageRating =
+    listingDetails?.ratings?.length === 0
+      ? 0
+      : sumOfRatings / listingDetails?.ratings?.length
+
   return (
     <DashboardLayout>
       {loading ? (
@@ -228,6 +237,24 @@ const ListingDetail = () => {
                         : 'bg-[#0b0101c3] shadow-2xl'
                     }`}
                   />
+
+                  <div
+                    className='flex justify-center items-center gap-2 absolute bottom-5 right-5 bg-black text-white px-3 rounded-full shadow-lg 
+                  border border-white p-1'
+                  >
+                    <ReactStars
+                      count={5}
+                      size={25}
+                      value={averageRating} // Use `averageRating` here for the average value
+                      activeColor='#ffd700'
+                      edit={false}
+                      isHalf={true} // Allow half-star increments
+                    />
+                    <span className=' flex flex-col justify-center items-center '>
+                      {' '}
+                      {averageRating.toFixed(1)}
+                    </span>
+                  </div>
                 </div>
                 <div className='flex overflow-x-auto xl:flex-row lg:flex-row lg:justify-start lg:items-start lg:gap-5 md:gap-5 sm:gap-5'>
                   {listingDetails?.images?.map((thumbnail, index) => {
@@ -365,7 +392,7 @@ const ListingDetail = () => {
                     </div>
                   </div>
 
-                  {listingDetails.ratings.length !== 0 && (
+                  {listingDetails?.ratings?.length !== 0 && (
                     <div>
                       <h1>User reviews</h1>
                       <div className='flex flex-col gap-3 py-5'>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
+import ReactStars from 'react-rating-stars-component'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -61,6 +62,14 @@ export default function Home() {
                     .includes(searchListing?.toLowerCase())
                 )
                 ?.map((homes) => {
+                  const sumOfRatings = homes.ratings.reduce(
+                    (total, ratingObj) => total + ratingObj.rating,
+                    0
+                  )
+                  const averageRating =
+                    homes.ratings.length === 0
+                      ? 0
+                      : sumOfRatings / homes.ratings.length
                   return (
                     <Link
                       key={homes._id}
@@ -123,14 +132,14 @@ export default function Home() {
                             <span className='flex items-center gap-1 font-medium text-sm'>
                               <FontAwesomeIcon icon={faBuilding} color='grey' />
                               {homes.isNewProperty === true
-                                ? 'Newly Built'
+                                ? 'New Property'
                                 : 'Used Property'}
                             </span>
                             <span className='flex items-center gap-1 font-medium text-sm'>
                               <FontAwesomeIcon icon={faStar} color='grey' />
                               {homes.isPropertyForSale === true
-                                ? 'Sale'
-                                : 'Rent'}
+                                ? 'Selling'
+                                : 'Renting'}
                             </span>
                             <p className='font-medium flex items-center gap-2 text-sm'>
                               <FontAwesomeIcon icon={faBed} color='grey' />
@@ -142,26 +151,45 @@ export default function Home() {
                             </p>
                           </div>
 
-                          <span>
-                            {homes.isPropertyForSale === true ? (
-                              <div className='font-semibold'>
-                                {homes?.price?.toLocaleString('en-US', {
-                                  style: 'currency',
-                                  currency: 'NGN',
-                                })}
-                              </div>
-                            ) : (
-                              <div className='font-semibold'>
-                                {homes?.price?.toLocaleString('en-US', {
-                                  style: 'currency',
-                                  currency: 'NGN',
-                                })}
-                                <span className='text-[gray] text-sm font-normal '>
-                                  /{homes.paymentOption}
-                                </span>
-                              </div>
-                            )}
-                          </span>
+                          <div className='flex flex-col gap-1'>
+                            <span>
+                              {homes.isPropertyForSale === true ? (
+                                <div className='font-semibold'>
+                                  {homes?.price?.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'NGN',
+                                  })}
+                                </div>
+                              ) : (
+                                <div className='font-semibold'>
+                                  {homes?.price?.toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'NGN',
+                                  })}
+                                  {homes.paymentOption && (
+                                    <span className='text-[gray] text-sm font-normal '>
+                                      /{homes.paymentOption}
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </span>
+
+                            <div className='flex items-center gap-2'>
+                              <ReactStars
+                                count={5}
+                                size={25}
+                                value={averageRating} // Use `averageRating` here for the average value
+                                activeColor='#ffd700'
+                                edit={false}
+                                isHalf={true} // Allow half-star increments
+                              />
+                              <span className='bg-black text-white text-sm rounded-full px-4 w-[55px] h-[30px] flex flex-col justify-center items-center '>
+                                {' '}
+                                {averageRating.toFixed(1)}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </Link>
