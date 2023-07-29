@@ -7,14 +7,13 @@ export const getReviews = createAsyncThunk(
     const token = localStorage.getItem('token')
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/listings/${id}/ratings`,
+        `${process.env.API_ENDPOINT_RENDER}/api/listings/${id}/ratings`,
         {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          //   body: JSON.stringify({ listingId: listing_id }),
         }
       )
       const data = await response.json()

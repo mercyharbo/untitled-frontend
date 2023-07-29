@@ -31,6 +31,7 @@ import { AddListingAsFavorite } from '@/slice/addFavorite'
 import TextareaField from '@/hooks/Textarea'
 import moment from 'moment/moment'
 import InputField from '@/hooks/InputField'
+import { getReviews } from '@/slice/getRatings'
 
 const ListingDetail = () => {
   const router = useRouter()
@@ -45,6 +46,7 @@ const ListingDetail = () => {
     (state) => state.listingDetail.listingDetail
   )
   const loading = useSelector((state) => state.listingDetail.loading)
+  const allListingRatings = useSelector((state) => state.ratings.ratings)
 
   const handleImageClick = (image) => {
     setSelectedImage(image)
@@ -155,14 +157,18 @@ const ListingDetail = () => {
     setUserId(userId)
   }, [])
 
-  const sumOfRatings = listingDetails?.ratings?.reduce(
+  useEffect(() => {
+    dispatch(getReviews(id))
+  }, [])
+
+  const sumOfRatings = allListingRatings?.reduce(
     (total, ratingObj) => total + ratingObj.rating,
     0
   )
   const averageRating =
-    listingDetails?.ratings?.length === 0
+    allListingRatings?.length === 0
       ? 0
-      : sumOfRatings / listingDetails?.ratings?.length
+      : sumOfRatings / allListingRatings?.length
 
   return (
     <DashboardLayout>
@@ -392,44 +398,42 @@ const ListingDetail = () => {
                     </div>
                   </div>
 
-                  {listingDetails?.ratings?.length !== 0 && (
+                  {allListingRatings?.length !== 0 && (
                     <div>
                       <h1 className='text-xl'>User reviews</h1>
                       <div className='flex flex-col gap-5 py-5'>
-                        {listingDetails?.ratings
-                          ?.slice(0, 3)
-                          ?.map((userRatings) => {
-                            return (
-                              <article
-                                key={userRatings._id}
-                                className='bg-white p-2 shadow-md rounded-md border-2 border-softgrey flex flex-col gap-2 cursor-pointer hover:border-color3 '
-                              >
-                                <div className='flex justify-between items-center'>
-                                  <div className='flex flex-col'>
-                                    <h1 className='capitalize'>
-                                      {userRatings.name}
-                                    </h1>
-                                    <span className='text-sm text-[gray] '>
-                                      {moment(userRatings.createdAt).fromNow()}
-                                    </span>
-                                  </div>
-                                  <ReactStars
-                                    count={5}
-                                    size={20}
-                                    value={userRatings.rating}
-                                    activeColor='#ffd700'
-                                    edit={false}
-                                    isHalf={true} // Allow half-star increments
-                                  />
+                        {allListingRatings?.slice(0, 3)?.map((userRatings) => {
+                          return (
+                            <article
+                              key={userRatings._id}
+                              className='bg-white p-2 shadow-md rounded-md border-2 border-softgrey flex flex-col gap-2 cursor-pointer hover:border-color3 '
+                            >
+                              <div className='flex justify-between items-center'>
+                                <div className='flex flex-col'>
+                                  <h1 className='capitalize'>
+                                    {userRatings.name}
+                                  </h1>
+                                  <span className='text-sm text-[gray] '>
+                                    {moment(userRatings.createdAt).fromNow()}
+                                  </span>
                                 </div>
+                                <ReactStars
+                                  count={5}
+                                  size={20}
+                                  value={userRatings.rating}
+                                  activeColor='#ffd700'
+                                  edit={false}
+                                  isHalf={true} // Allow half-star increments
+                                />
+                              </div>
 
-                                <p>{userRatings.comment}</p>
-                              </article>
-                            )
-                          })}
+                              <p>{userRatings.comment}</p>
+                            </article>
+                          )
+                        })}
                         <Link
                           href={`/reviews/${id}`}
-                          className='w-full bg-color3 h-[50px] rounded-lg text-white flex justify-center items-center'
+                          className='w-full bg-color3 h-[50px] rounded-lg text-white flex justify-center items-center hover:bg-hover'
                         >
                           See more
                         </Link>
