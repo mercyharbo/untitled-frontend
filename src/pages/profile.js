@@ -19,6 +19,7 @@ import {
 import { faBuilding, faStar } from '@fortawesome/free-regular-svg-icons'
 import { setProfileModal } from '@/slice/updateProfileSlice'
 import { getFavorites } from '@/slice/favoriteSlice'
+import { getAllRatings } from '@/slice/getRatings'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const Profile = () => {
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.user.loading)
   const favorite = useSelector((state) => state.favorite.favListing)
+  const ratings = useSelector((state) => state.ratings.ratings)
 
   useEffect(() => {
     dispatch(getFavorites())
@@ -35,6 +37,10 @@ const Profile = () => {
   useEffect(() => {
     const userId = localStorage.getItem('userId')
     dispatch(getProfile(userId))
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getAllRatings())
   }, [dispatch])
 
   return (
@@ -88,12 +94,33 @@ const Profile = () => {
             </div>
           </header>
 
-          <div className='flex justify-center items-center gap-5 w-full py-4 font-semibold'>
+          <div className='flex justify-center items-center gap-4 mx-auto w-full '>
+            <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+              <span className='font-medium'>
+                {userProfile?.listings?.length}
+              </span>
+              Listings
+            </div>
+            <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+              <span className='font-medium'>
+                {userProfile?.soldListings?.length}
+              </span>
+              Sold{' '}
+            </div>
+            <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+              <span className='font-medium'>{favorite?.length}</span>
+              Favorites{' '}
+            </div>
+          </div>
+
+          <div className='xl:w-[30%] md:w-full sm:w-full grid grid-cols-3 content-center place-content-center gap-5 mx-auto bg-[#F5F4F8] h-[55px] rounded-full px-2  '>
             <button
               type='button'
               onClick={() => setProfileTab('listings')}
               className={`${
-                profileTab === 'listings' ? 'border-b-[3px] border-color3' : ''
+                profileTab === 'listings'
+                  ? 'bg-white rounded-full py-2 px-5 w-full'
+                  : ''
               }`}
             >
               Listings
@@ -102,7 +129,9 @@ const Profile = () => {
               type='button'
               onClick={() => setProfileTab('sold')}
               className={`${
-                profileTab === 'sold' ? 'border-b-[2px] border-black' : ''
+                profileTab === 'sold'
+                  ? 'bg-white rounded-full py-2 px-5 w-full'
+                  : ''
               }`}
             >
               Sold
@@ -111,7 +140,9 @@ const Profile = () => {
               type='button'
               onClick={() => setProfileTab('favorite')}
               className={`${
-                profileTab === 'favorite' ? 'border-b-[2px] border-black' : ''
+                profileTab === 'favorite'
+                  ? 'bg-white rounded-full py-2 px-5 w-full'
+                  : ''
               }`}
             >
               Favorite

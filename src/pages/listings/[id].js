@@ -394,32 +394,45 @@ const ListingDetail = () => {
 
                   {listingDetails?.ratings?.length !== 0 && (
                     <div>
-                      <h1>User reviews</h1>
-                      <div className='flex flex-col gap-3 py-5'>
+                      <h1 className='text-xl'>User reviews</h1>
+                      <div className='flex flex-col gap-5 py-5'>
                         {listingDetails?.ratings
-                          ?.slice(0, 5)
+                          ?.slice(0, 3)
                           ?.map((userRatings) => {
                             return (
                               <article
                                 key={userRatings._id}
-                                className='bg-color2 p-2 rounded-md shadow-md'
+                                className='bg-white p-2 shadow-md rounded-md border-2 border-softgrey flex flex-col gap-2 cursor-pointer hover:border-color3 '
                               >
-                                <ReactStars
-                                  count={5}
-                                  size={20}
-                                  value={userRatings.rating}
-                                  activeColor='#ffd700'
-                                />
-                                <h1 className='capitalize'>
-                                  {userRatings.name}
-                                </h1>
+                                <div className='flex justify-between items-center'>
+                                  <div className='flex flex-col'>
+                                    <h1 className='capitalize'>
+                                      {userRatings.name}
+                                    </h1>
+                                    <span className='text-sm text-[gray] '>
+                                      {moment(userRatings.createdAt).fromNow()}
+                                    </span>
+                                  </div>
+                                  <ReactStars
+                                    count={5}
+                                    size={20}
+                                    value={userRatings.rating}
+                                    activeColor='#ffd700'
+                                    edit={false}
+                                    isHalf={true} // Allow half-star increments
+                                  />
+                                </div>
+
                                 <p>{userRatings.comment}</p>
-                                <span className='text-sm text-[gray] '>
-                                  {moment(userRatings.createdAt).format('LLL')}
-                                </span>
                               </article>
                             )
                           })}
+                        <Link
+                          href={`/reviews/${id}`}
+                          className='w-full bg-color3 h-[50px] rounded-lg text-white flex justify-center items-center'
+                        >
+                          See more
+                        </Link>
                       </div>
                     </div>
                   )}
