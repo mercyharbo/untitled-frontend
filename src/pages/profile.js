@@ -28,7 +28,6 @@ const Profile = () => {
   const userProfile = useSelector((state) => state.user.userProfile)
   const loading = useSelector((state) => state.user.loading)
   const favorite = useSelector((state) => state.favorite.favListing)
-  const ratings = useSelector((state) => state.ratings.ratings)
 
   useEffect(() => {
     dispatch(getFavorites())
@@ -37,10 +36,6 @@ const Profile = () => {
   useEffect(() => {
     const userId = localStorage.getItem('userId')
     dispatch(getProfile(userId))
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(getAllRatings())
   }, [dispatch])
 
   return (

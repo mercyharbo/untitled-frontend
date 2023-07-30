@@ -91,7 +91,7 @@ const User = () => {
               className='flex gap-2 justify-center items-center '
             >
               <FontAwesomeIcon icon={faPhone} />
-              Contact
+              Call
             </Link>
             <button
               type='button'
@@ -105,17 +105,34 @@ const User = () => {
               className='flex gap-2 justify-center items-center pl-4 '
             >
               <FontAwesomeIcon icon={faStar} />
-              Rate
+              Rate this user
             </button>
           </div>
         </header>
 
-        <div className='flex justify-center items-center gap-5 w-full py-4 font-medium'>
+        <div className='flex justify-center items-center gap-4 mx-auto w-full '>
+          <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+            <span className='font-medium'>{listings?.length}</span>
+            Listings
+          </div>
+          <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+            <span className='font-medium'>{soldListings?.length}</span>
+            Sold{' '}
+          </div>
+          <div className='border border-[#F5F4F8] flex flex-col justify-center items-center gap-1 py-4 px-5 rounded-xl w-[150px] h-[65px] '>
+            <span className='font-medium'>{favorite?.length}</span>
+            Favorites{' '}
+          </div>
+        </div>
+
+        <div className='xl:w-[30%] md:w-full sm:w-full grid grid-cols-3 content-center place-content-center gap-5 mx-auto bg-[#F5F4F8] h-[55px] rounded-full px-2  '>
           <button
             type='button'
             onClick={() => setProfileTab('listings')}
             className={`${
-              profileTab === 'listings' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'listings'
+                ? 'bg-white rounded-full py-2 px-5 w-full'
+                : ''
             }`}
           >
             Listings
@@ -124,7 +141,9 @@ const User = () => {
             type='button'
             onClick={() => setProfileTab('sold')}
             className={`${
-              profileTab === 'sold' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'sold'
+                ? 'bg-white rounded-full py-2 px-5 w-full'
+                : ''
             }`}
           >
             Sold
@@ -133,7 +152,9 @@ const User = () => {
             type='button'
             onClick={() => setProfileTab('favorite')}
             className={`${
-              profileTab === 'favorite' ? 'border-b-[3px] border-black' : ''
+              profileTab === 'favorite'
+                ? 'bg-white rounded-full py-2 px-5 w-full'
+                : ''
             }`}
           >
             Favorite
