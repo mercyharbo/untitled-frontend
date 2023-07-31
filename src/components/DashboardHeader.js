@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
@@ -13,6 +13,9 @@ import { getProfile } from '@/slice/userSlice'
 import Button from '@/hooks/button'
 import Search from '@/hooks/search'
 import { logout } from '@/slice/logoutSlice'
+import { getNotifications, setNotifyModal } from '@/slice/notificationSlice'
+import moment from 'moment'
+import useClickOutsideToClose from '@/hooks/clickOutisdeToClose'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -20,11 +23,20 @@ const variants = {
 }
 
 const DashboardHeader = () => {
+  const ref = useRef()
   const router = useRouter()
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false)
 
   const userProfile = useSelector((state) => state.user.userProfile)
+  const notification = useSelector((state) => state.notifications.activities)
+  const modal = useSelector((state) => state.notifications.notifyModal)
+
+  const handleClose = () => {
+    dispatch(setNotifyModal(false))
+  }
+
+  useClickOutsideToClose(ref, handleClose)
 
   const handleLogout = async () => {
     try {
@@ -41,9 +53,13 @@ const DashboardHeader = () => {
     dispatch(getProfile(userId))
   }, [dispatch])
 
+  useEffect(() => {
+    dispatch(getNotifications())
+  }, [dispatch])
+
   return (
     <>
-      <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center '>
+      <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center relative '>
         <Search />
 
         <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center md:w-[50%] md:gap-8 md:justify-end md:items-center '>
@@ -59,6 +75,7 @@ const DashboardHeader = () => {
 
           <button
             type='button'
+            onClick={() => dispatch(setNotifyModal(true))}
             className='xl:flex xl:bg-color3 xl:w-[50px] xl:h-[50px] xl:justify-center xl:items-center xl:rounded-full md:flex sm:hidden '
           >
             <FontAwesomeIcon icon={faBell} className='text-3xl text-white' />
@@ -86,6 +103,35 @@ const DashboardHeader = () => {
             <FontAwesomeIcon icon={faBarsStaggered} className='text-[30px] ' />
           </button>
         </div>
+
+        {modal && (
+          <article
+            ref={ref}
+            className='absolute top-[5rem] right-10 bg-white shadow-2xl rounded-lg z-20 p-2 flex flex-col divide-y divide-[#9DB2BF] overflow-auto 
+          xl:w-[400px] xl:h-[400px] md:w-full md:h-[400px] sm:w-full sm:h-[400px] '
+          >
+            {notification.map((activities) => {
+              return (
+                <div className='flex justify-start items-center gap-3 py-2'>
+                  <FontAwesomeIcon
+                    icon={faBell}
+                    className='text-xl border border-[#9DB2BF] text-[#9DB2BF] rounded-full p-1'
+                  />
+
+                  <div className='flex flex-col gap-1 '>
+                    <div className='flex flex-col flex-wrap '>
+                      <h1 className='text-sm '>{activities.activity}</h1>
+                      <p className='text-[14px]'>{activities.listing}</p>
+                    </div>
+                    <span className='text-[11px] text-[#8097a5] '>
+                      {moment(activities.createdAt).fromNow()}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
+          </article>
+        )}
       </main>
 
       {showModal && (
