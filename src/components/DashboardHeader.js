@@ -110,9 +110,9 @@ const DashboardHeader = () => {
             className='absolute top-[5rem] right-10 bg-white shadow-2xl rounded-lg z-20 p-2 flex flex-col divide-y divide-[#9DB2BF] overflow-auto 
           xl:w-[400px] xl:h-[400px] md:w-full md:h-[400px] sm:w-full sm:h-[400px] '
           >
-            {notification.map((activities) => {
+            {notification.map((activities, index) => {
               return (
-                <div className='flex justify-start items-center gap-3 py-2'>
+                <div key={index} className='flex justify-start items-center gap-3 py-2'>
                   <FontAwesomeIcon
                     icon={faBell}
                     className='text-xl border border-[#9DB2BF] text-[#9DB2BF] rounded-full p-1'
