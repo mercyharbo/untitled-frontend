@@ -8,7 +8,7 @@ export const getNotifications = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `${process.env.API_ENDPOINT_DEV}/api/notification`,
+        `${process.env.API_ENDPOINT_RENDER}/api/notification`,
         {
           method: 'GET',
           headers: {
