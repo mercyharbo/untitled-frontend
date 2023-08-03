@@ -1,4 +1,5 @@
 import DashboardLayout from '@/components/DashboardLayout'
+import ShortenedText from '@/hooks/ShortenedText'
 import { getNotifications } from '@/slice/notificationSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
