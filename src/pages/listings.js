@@ -86,28 +86,21 @@ export default function Home() {
                       <span className='absolute top-8 left-5 h-[35px] w-[120px] bg-color3 text-white p-2 '>
                         {homes.propertyType}
                       </span>
-                      <Button
-                        type='button'
-                        label={
-                          homes.favorites ? (
-                            <FontAwesomeIcon
-                              icon={faHeart}
-                              className='text-xl text-red'
-                            />
-                          ) : (
-                            <FontAwesomeIcon
-                              icon={faHeart}
-                              className='text-xl '
-                            />
-                          )
-                        }
+                      <div
                         onClick={(event) => AddFavorites(event, homes._id)}
-                        className={`w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-8 top-8 hover:bg-hover ${
+                        className={`bg-color3 w-[50px] h-[50px] shadow-2xl rounded-full flex justify-center items-center absolute right-8 top-8 hover:bg-hover ${
                           homes.favorites
                             ? 'bg-[#ffffffc4] shadow-2xl '
                             : 'bg-[#0b0101c3] shadow-2xl'
                         }`}
-                      />
+                      >
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className={`text-xl ${
+                            homes.favorites ? 'text-red' : 'text-white'
+                          }`}
+                        />
+                      </div>
                       <div className='flex flex-col justify-between xl:gap-2 lg:gap-3 sm:gap-3'>
                         <span className='flex items-center gap-1 text-[gray] sm:text-sm sm:pt-3 '>
                           Posted by

@@ -16,6 +16,7 @@ import { logout } from '@/slice/logoutSlice'
 import { getNotifications, setNotifyModal } from '@/slice/notificationSlice'
 import moment from 'moment'
 import useClickOutsideToClose from '@/hooks/clickOutisdeToClose'
+import ShortenedText from '@/hooks/ShortenedText'
 
 const variants = {
   open: { opacity: 1, x: 0 },
@@ -62,24 +63,33 @@ const DashboardHeader = () => {
       <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center relative '>
         <Search />
 
-        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 xl:items-center md:w-[50%] md:gap-8 md:justify-end md:items-center '>
-          <button
+        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 items-center md:ml-auto sm:gap-5 '>
+          <Button
             type='button'
             onClick={() => {
               dispatch(setAddListingModal(true))
             }}
+            label='Add listing'
             className='bg-color3 text-white h-[50px] justify-center items-center 2xl:px-5 xl:px-5 xl:flex md:px-5 sm:px-5 sm:hidden rounded-full shadow-2xl font-medium '
-          >
-            Add Listing
-          </button>
+          />
 
-          <button
-            type='button'
-            onClick={() => dispatch(setNotifyModal(true))}
-            className='xl:flex xl:bg-color3 xl:w-[50px] xl:h-[50px] xl:justify-center xl:items-center xl:rounded-full md:flex sm:hidden '
-          >
-            <FontAwesomeIcon icon={faBell} className='text-3xl text-white' />
-          </button>
+          <div className='relative'>
+            {notification?.filter((unread) => !unread.isRead).length > 0 && (
+              <span className='absolute -top-2 right-0 bg-red text-white rounded-full w-[25px] h-[25px] text-[11px] flex justify-center items-center font-medium '>
+                {notification?.filter((unread) => !unread.isRead).length}
+              </span>
+            )}
+            <button
+              type='button'
+              onClick={() => dispatch(setNotifyModal(true))}
+              className='xl:flex bg-color3 xl:w-[50px] xl:h-[50px] justify-center items-center rounded-full md:flex md:w-[60px] md:h-[60px] sm:flex sm:w-[40px] sm:h-[40px] '
+            >
+              <FontAwesomeIcon
+                icon={faBell}
+                className='xl:text-3xl md:text-2xl sm:text-xl text-white'
+              />
+            </button>
+          </div>
 
           <Link href={'/profile'} className='xl:flex md:flex sm:hidden'>
             <Image
@@ -105,32 +115,64 @@ const DashboardHeader = () => {
         </div>
 
         {modal && (
-          <article
-            ref={ref}
-            className='absolute top-[5rem] right-10 bg-white shadow-2xl rounded-lg z-20 p-2 flex flex-col divide-y divide-[#9DB2BF] overflow-auto 
-          xl:w-[400px] xl:h-[400px] md:w-full md:h-[400px] sm:w-full sm:h-[400px] '
-          >
-            {notification.map((activities, index) => {
-              return (
-                <div key={index} className='flex justify-start items-center gap-3 py-2'>
-                  <FontAwesomeIcon
-                    icon={faBell}
-                    className='text-xl border border-[#9DB2BF] text-[#9DB2BF] rounded-full p-1'
-                  />
-
-                  <div className='flex flex-col gap-1 '>
-                    <div className='flex flex-col flex-wrap '>
-                      <h1 className='text-sm '>{activities.activity}</h1>
-                      <p className='text-[14px]'>{activities.listing}</p>
-                    </div>
-                    <span className='text-[11px] text-[#8097a5] '>
-                      {moment(activities.createdAt).fromNow()}
-                    </span>
-                  </div>
+          <>
+            <div className='bg-[#000000d8] fixed w-full h-full top-0 left-0 z-10 '></div>
+            <article
+              ref={ref}
+              className='category-container absolute bg-white shadow-2xl rounded-lg z-20 p-4 flex flex-col justify-between gap-3  overflow-auto xl:top-[5rem] xl:right-10
+          xl:w-[400px] xl:h-[500px] md:w-full md:h-[400px] md:right-0 md:top-[7rem] sm:w-full sm:h-[500px] sm:right-0 sm:top-0 '
+            >
+              <div className='flex flex-col gap-4'>
+                <div className='flex justify-between items-center'>
+                  <h1 className=''>Notifications</h1>
+                  <p className='text-sm'>Do not disturb </p>
                 </div>
-              )
-            })}
-          </article>
+                {notification.map((activities, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className='flex justify-start items-start gap-3 relative after:absolute after:w-full after:border-b-2 after:border-softgrey after:-bottom-2 '
+                    >
+                      <div className='p-1 mt-2 rounded-full bg-red shadow-lg'></div>
+
+                      <div className='flex flex-col gap-2 '>
+                        <div className='flex flex-col flex-wrap '>
+                          <h1 className='text-[14px] capitalize '>
+                            {activities.activity}
+                          </h1>
+                          {activities.comment && (
+                            <p className='text-[14px] text-[grey] '>
+                              <ShortenedText
+                                text={activities.comment}
+                                maxLength={150}
+                              />
+                            </p>
+                          )}
+                        </div>
+                        <span className='text-[11px] text-[#8097a5] '>
+                          {moment(activities.createdAt).fromNow()}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
+
+                {notification.length === 0 && (
+                  <div className='flex flex-col justify-center items-center gap-4 mt-[8rem] '>
+                    <h1>There is no activities available</h1>
+                  </div>
+                )}
+              </div>
+
+              {notification.length > 0 && (
+                <Button
+                  type='button'
+                  label='Mark all as read'
+                  className='rounded-lg h-[60px] py-2 '
+                />
+              )}
+            </article>
+          </>
         )}
       </main>
 
@@ -163,7 +205,6 @@ const DashboardHeader = () => {
               <Link href={'/sell'}>Sell</Link>
               <Link href={'/listings'}>Listings</Link>
               <Link href={'/profile'}>Profile</Link>
-
               <Link
                 href={'/messages'}
                 className='flex justify-between items-center relative w-full'
@@ -171,16 +212,6 @@ const DashboardHeader = () => {
                 Messages
                 <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
                   3
-                </span>
-              </Link>
-
-              <Link
-                href={'/notification'}
-                className='flex justify-between items-center relative w-full'
-              >
-                Notifications
-                <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
-                  1
                 </span>
               </Link>
 
@@ -192,14 +223,13 @@ const DashboardHeader = () => {
                   setShowModal(false)
                 }}
                 className='w-full rounded-md h-[50px] '
-                // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               />
+              
               <Button
                 type='button'
                 label='Logout'
                 onClick={handleLogout}
                 className='w-full rounded-md h-[50px] '
-                // className='bg- text-white font-medium h-[45px] px-4 rounded-lg w-full flex justify-center items-center '
               />
             </article>
           </motion.nav>
