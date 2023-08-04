@@ -17,7 +17,6 @@ import {
 import HeaderFilter from '@/components/ListingsHeader'
 import DashboardLayout from '@/components/DashboardLayout'
 import Spinner from '@/hooks/LoadingSpinner'
-import Button from '@/hooks/button'
 import { fetchListings } from '@/slice/listingSlice'
 import EmptyState from '@/components/emptyState'
 import { AddListingAsFavorite } from '@/slice/addFavorite'
@@ -27,7 +26,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('All Listings')
 
   const loading = useSelector((state) => state.listings.loading)
-  const listings = useSelector((state) => state.listings.listings)
+  // const listings = useSelector((state) => state.listings.listings)
   const filteredListing = useSelector((state) => state.listings.filteredListing)
   const searchListing = useSelector((state) => state.search.searchListing)
 
