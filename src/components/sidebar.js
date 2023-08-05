@@ -92,9 +92,9 @@ const SideBarNavigation = () => {
           Message
         </Link>
         <Link
-          href={'/notification'}
+          href={'/notifications'}
           className={
-            router.pathname === '/notification'
+            router.pathname === '/notifications'
               ? 'active relative px-4 text-red-500 bg-[#100f0f1f] h-[50px] flex justify-start items-center gap-3 after:absolute after:border-l-4 after:w-4 after:h-full after:border-red-500 after:left-0 after:top-0 '
               : 'h-[50px] px-4 flex justify-start items-center gap-3 hover:bg-[#100f0f1f] hover:w-full '
           }
