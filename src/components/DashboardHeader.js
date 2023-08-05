@@ -1,10 +1,5 @@
 import { faBell } from '@fortawesome/free-regular-svg-icons'
-import {
-  faBarsStaggered,
-  faCheckCircle,
-  faCheckSquare,
-  faClose,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBarsStaggered, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
@@ -93,7 +88,7 @@ const DashboardHeader = () => {
   return (
     <>
       <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center relative '>
-        <Search />
+        {/* <Search /> */}
 
         <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 items-center md:ml-auto sm:gap-5 '>
           <Button
