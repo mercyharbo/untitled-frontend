@@ -46,7 +46,7 @@ const Notifications = () => {
       <main className='p-10'>
         <div className='flex justify-between items-center py-5'>
           <h1 className='text-2xl'>Notifications</h1>
-          {notification.length > 0 && (
+          {notification?.length > 0 && (
             <Button
               type='button'
               label='Mark all as read'
