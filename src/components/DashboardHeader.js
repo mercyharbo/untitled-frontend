@@ -90,7 +90,7 @@ const DashboardHeader = () => {
       <main className='flex xl:flex-row md:p-5 md:flex-row sm:p-5 sm:gap-5 sm:flex-row items-center relative '>
         {/* <Search /> */}
 
-        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 items-center md:ml-auto sm:gap-5 '>
+        <div className='flex xl:w-[50%] xl:justify-end xl:gap-10 items-center md:ml-auto sm:gap-5 sm:ml-auto '>
           <Button
             type='button'
             onClick={() => {
@@ -101,15 +101,15 @@ const DashboardHeader = () => {
           />
 
           <div className='relative'>
-            {notification?.filter((unread) => !unread.isRead).length > 0 && (
+            {notification?.filter((unread) => !unread.isRead)?.length > 0 && (
               <span className='absolute -top-2 right-0 bg-red text-white rounded-full w-[25px] h-[25px] text-[11px] flex justify-center items-center font-medium '>
-                {notification?.filter((unread) => !unread.isRead).length}
+                {notification?.filter((unread) => !unread.isRead)?.length}
               </span>
             )}
             <button
               type='button'
               onClick={() => dispatch(setNotifyModal(true))}
-              className='xl:flex bg-color3 xl:w-[50px] xl:h-[50px] justify-center items-center rounded-full md:flex md:w-[60px] md:h-[60px] sm:flex sm:w-[40px] sm:h-[40px] '
+              className='xl:flex bg-color3 xl:w-[50px] xl:h-[50px] justify-center items-center rounded-full md:flex md:w-[60px] md:h-[60px] sm:flex sm:w-[50px] sm:h-[50px] '
             >
               <FontAwesomeIcon
                 icon={faBell}
@@ -118,7 +118,7 @@ const DashboardHeader = () => {
             </button>
           </div>
 
-          <Link href={'/profile'} className='xl:flex md:flex sm:hidden'>
+          <Link href={'/profile'} className=''>
             <Image
               src={
                 userProfile.avatarUrl
@@ -128,7 +128,7 @@ const DashboardHeader = () => {
               alt='Profile Picture'
               width={500}
               height={500}
-              className='rounded-full border-[3px] border-color3 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[80px] sm:h-[80px] object-cover'
+              className='rounded-full border-[3px] border-color3 2xl:h-[60px] 2xl:w-[60px] xl:w-[70px] xl:h-[70px] md:w-[70px] md:h-[70px] sm:w-[50px] sm:h-[50px] object-cover'
             />
           </Link>
 
@@ -246,6 +246,18 @@ const DashboardHeader = () => {
                 <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
                   3
                 </span>
+              </Link>
+              <Link
+                href={'/notifications'}
+                className='flex justify-between items-center relative w-full'
+              >
+                Notifications
+                {notification?.filter((unread) => !unread.isRead)?.length >
+                  0 && (
+                  <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
+                    {notification?.filter((unread) => !unread.isRead)?.length}
+                  </span>
+                )}
               </Link>
 
               <Button
