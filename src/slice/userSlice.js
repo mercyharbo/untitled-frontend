@@ -33,7 +33,7 @@ const initialState = {
   userProfile: [],
   loading: false,
   token: null,
-  selectedImage,
+  selectedImage: null,
 }
 
 const userSlice = createSlice({
