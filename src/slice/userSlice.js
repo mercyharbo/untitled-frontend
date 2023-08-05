@@ -33,6 +33,7 @@ const initialState = {
   userProfile: [],
   loading: false,
   token: null,
+  selectedImage,
 }
 
 const userSlice = createSlice({
@@ -45,6 +46,9 @@ const userSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload
     },
+    setSelectedImage: (state, action) => {
+      state.selectedImage = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getProfile.pending, (state) => {
@@ -56,5 +60,6 @@ const userSlice = createSlice({
   },
 })
 
-export const { setUserProfile, setLoading } = userSlice.actions
+export const { setUserProfile, setLoading, setSelectedImage } =
+  userSlice.actions
 export default userSlice.reducer

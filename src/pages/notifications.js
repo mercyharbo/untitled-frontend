@@ -1,10 +1,10 @@
-import DashboardLayout from '@/components/DashboardLayout'
-import ShortenedText from '@/hooks/ShortenedText'
-import Button from '@/hooks/button'
-import { getNotifications } from '@/slice/notificationSlice'
 import moment from 'moment'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+import DashboardLayout from '@/components/DashboardLayout'
+import Button from '@/hooks/button'
+import { getNotifications } from '@/slice/notificationSlice'
 
 const Notifications = () => {
   const dispatch = useDispatch()

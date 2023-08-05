@@ -101,9 +101,9 @@ const DashboardHeader = () => {
           />
 
           <div className='relative'>
-            {notification?.filter((unread) => !unread.isRead).length > 0 && (
+            {notification?.filter((unread) => !unread.isRead)?.length > 0 && (
               <span className='absolute -top-2 right-0 bg-red text-white rounded-full w-[25px] h-[25px] text-[11px] flex justify-center items-center font-medium '>
-                {notification?.filter((unread) => !unread.isRead).length}
+                {notification?.filter((unread) => !unread.isRead)?.length}
               </span>
             )}
             <button
@@ -252,10 +252,10 @@ const DashboardHeader = () => {
                 className='flex justify-between items-center relative w-full'
               >
                 Notifications
-                {notification?.filter((unread) => !unread.isRead).length >
+                {notification?.filter((unread) => !unread.isRead)?.length >
                   0 && (
                   <span className='bg-color3 text-white rounded-full w-[30px] h-[30px] absolute right-0 top-2 flex justify-center items-center text-sm '>
-                    {notification?.filter((unread) => !unread.isRead).length}
+                    {notification?.filter((unread) => !unread.isRead)?.length}
                   </span>
                 )}
               </Link>
