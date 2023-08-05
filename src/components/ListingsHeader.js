@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setSearchListing } from '@/slice/searchSlice'
 import { setFilteredListing } from '@/slice/listingSlice'
+import Search from '@/hooks/search'
 
 const CategoriesData = [
   { id: 1, name: 'All' },
@@ -51,7 +52,9 @@ const ListingHeader = () => {
           </span>
         </h1>
 
-        <div className='xl:w-[50%] xl:ml-auto '>
+        <Search />
+
+        {/* <div className='xl:w-[50%] xl:ml-auto '>
           <input
             type='text'
             name='search'
@@ -63,7 +66,7 @@ const ListingHeader = () => {
               dispatch(setSearchListing(e.target.value))
             }}
           />
-        </div>
+        </div> */}
       </article>
 
       <div className='category-container flex flex-row gap-5 px-5 overflow-x-auto whitespace-nowrap scroll-none '>

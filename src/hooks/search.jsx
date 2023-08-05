@@ -45,7 +45,7 @@ const Search = () => {
       />
 
       {searchQuery && (
-        <div className='w-full h-[400px] absolute top-20 left-0 p-2 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-3 '>
+        <div className='w-full h-[400px] absolute top-20 left-0 p-2 rounded-lg shadow-2xl bg-white z-20 flex flex-col gap-2 '>
           {searchedData?.users?.map((foundUsers) => {
             return (
               <Link
@@ -61,7 +61,7 @@ const Search = () => {
                   height={500}
                   className='w-[50px] h-[50px] rounded-full object-cover border-2 border-color3 '
                 />
-                <div className='flex flex-col gap-1 w-[80%] '>
+                <div className='flex flex-col w-[80%] '>
                   <div className='flex flex-col'>
                     <h1 className=' xl:text-lg md:text-lg sm:text-sm font-medium'>
                       {foundUsers.firstname} {foundUsers.lastname}

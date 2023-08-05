@@ -73,6 +73,16 @@ export default function Home() {
           name='description'
           content='Embark on a remarkable real estate journey with XYZ Realty. Explore a vast collection of extraordinary properties, from luxurious estates to charming starter homes. Our expert agents are ready to guide you every step of the way. Start your search today and find the perfect place to call home.'
         />
+        <meta
+          property='og:description'
+          content='Embark on a remarkable real estate journey with XYZ Realty. Explore a vast collection of extraordinary properties, from luxurious estates to charming starter homes. Our expert agents are ready to guide you every step of the way. Start your search today and find the perfect place to call home.'
+        />
+        <meta property='og:image' content='Your link preview image URL' />
+        <meta
+          property='og:url'
+          content={'https://untitled-frontend-peach.vercel.app/'}
+        />
+
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className='overflow-hidden'>
