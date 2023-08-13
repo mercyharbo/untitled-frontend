@@ -20,6 +20,7 @@ import { faBuilding, faStar } from '@fortawesome/free-regular-svg-icons'
 import { setProfileModal } from '@/slice/updateProfileSlice'
 import { getFavorites } from '@/slice/favoriteSlice'
 import { getAllRatings } from '@/slice/getRatings'
+import { AddListingAsFavorite } from '@/slice/addFavorite'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -37,6 +38,14 @@ const Profile = () => {
     const userId = localStorage.getItem('userId')
     dispatch(getProfile(userId))
   }, [dispatch])
+
+  const AddFavorites = async (event, listing_id) => {
+    event.stopPropagation()
+    event.preventDefault()
+    try {
+      await dispatch(AddListingAsFavorite(listing_id))
+    } catch (error) {}
+  }
 
   return (
     <DashboardLayout>
@@ -257,6 +266,7 @@ const Profile = () => {
                     />
                     <Button
                       type='button'
+                      onClick={(event) => AddFavorites(event, listing._id)}
                       label={
                         listing.favorites ? (
                           <FontAwesomeIcon
