@@ -7,12 +7,6 @@ import { Form, Formik } from 'formik'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import {
-  faFacebook,
-  faInstagram,
-  faLinkedin,
-  faTwitter,
-} from '@fortawesome/fontawesome-free-brands'
 import { motion } from 'framer-motion'
 
 import Carousel from '@/components/Carousel'
@@ -22,6 +16,12 @@ import SelectField from '@/hooks/SelectField'
 
 import InputField from '@/hooks/InputField'
 import Button from '@/hooks/button'
+import {
+  faFacebook,
+  faInstagram,
+  faLinkedin,
+  faTwitter,
+} from '@fortawesome/fontawesome-free-brands'
 
 const options = [
   { value: 'Property Type', label: 'Property Type' },
@@ -272,7 +272,7 @@ export default function Home() {
 
           <div className='xl:w-[50%] xl:mt-[20rem] 2xl: xl:pl-10  '>
             <Carousel autoplay={true} autoplayInterval={5000}>
-              {TestimonialJSON.map((testy, index) => (
+              {TestimonialJSON?.map((testy, index) => (
                 <div
                   key={index}
                   className='flex flex-col flex-grow gap-5 bg-white text-black shadow-md rounded-lg p-5 xl:h-[430px] md:h-[500px] sm:h-[480px] '
@@ -326,11 +326,9 @@ export default function Home() {
           </Formik>
         </section>
 
-        <footer
-          className='xl:h-[500px] xl:mt-0 xl:flex-row xl:justify-between xl:items-start xl:gap-8 xl:p-10 md:flex-col md:justify-center md:items-center 
-      md:gap-10 md:p-10 md:mt-0 sm:mt-0 sm:flex-col sm:justify-center sm:items-center sm:gap-5 sm:p-5 bg-color2 flex   '
-        >
-          <article className='xl:w-[30%] lg:w-[30%] md:w-full sm:w-full flex flex-col gap-8 '>
+        <footer className='xl:h-[500px] grid xl:grid-cols-3 lg:grid-cols-4 lg:px-10 lg:place-items-center md:grid-cols-1 md:place-content-start md:gap-10
+        md:p-10 sm:grid-cols-1 sm:place-items-start sm:gap-10 sm:p-5  '>
+          <article className='flex flex-col gap-8 '>
             <h1 className='xl:text-5xl md:text-4xl sm:text-4xl'>Untitled</h1>
             <p className='text-base xl:w-[400px] md:text-xl sm:text-xl'>
               No matter how quickly you need to make an offer, our data and
@@ -351,7 +349,8 @@ export default function Home() {
               </Link>
             </div>
           </article>
-          <article className='xl:w-[20%] md:w-full sm:w-full flex flex-col gap-5 '>
+
+          <article className=' flex flex-col gap-5 '>
             <h3 className='md:text-2xl sm:text-2xl'>Company</h3>
             <nav className='flex flex-col gap-5 text-lg'>
               <Link href='/about'>About us</Link>
@@ -360,7 +359,8 @@ export default function Home() {
               <Link href='/blog'>Blog</Link>
             </nav>
           </article>
-          <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
+
+          <article className='flex flex-col gap-5 '>
             <h3 className='md:text-2xl sm:text-2xl'>Support</h3>
             <nav className='flex flex-col gap-5 text-lg'>
               <Link href='/helpcenter'>Help center</Link>
@@ -368,9 +368,6 @@ export default function Home() {
               <Link href='/legal'>Legal</Link>
               <Link href='/privacypolicy'>Privacy policy</Link>
             </nav>
-          </article>
-          <article className='xl:w-[25%] md:w-full sm:w-full flex flex-col gap-5 '>
-            <h3 className='text-xl uppercase'>Our app is coming soon</h3>
           </article>
         </footer>
       </main>
